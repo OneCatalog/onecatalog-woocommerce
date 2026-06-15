@@ -1,0 +1,466 @@
+# Copyright (C) 2026 OneCatalog
+# This file is distributed under the same license as the OneCatalog Import plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: OneCatalog Import 1.5.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/onecatalog-import\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-06-15T17:41:26+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: onecatalog-import\n"
+
+#. Plugin Name of the plugin
+#: onecatalog-import.php
+msgid "OneCatalog Import"
+msgstr ""
+
+#. Description of the plugin
+#: onecatalog-import.php
+msgid "Import products from OneCatalog (Wiki API) into WooCommerce: product picker modal, background queue, dependencies (categories, attributes, collections, brands), images with quality tracking, separate article numbers."
+msgstr ""
+
+#. Author of the plugin
+#: onecatalog-import.php
+msgid "OneCatalog"
+msgstr ""
+
+#. Author URI of the plugin
+#: onecatalog-import.php
+msgid "https://docs.onecatalog.net/"
+msgstr ""
+
+#: includes/class-admin-ui.php:63
+#: includes/class-settings.php:419
+msgid "OneCatalog (Products)"
+msgstr ""
+
+#: includes/class-admin-ui.php:64
+msgid "Loading OneCatalog…"
+msgstr ""
+
+#. translators: %1$s: number of products
+#: includes/class-admin-ui.php:66
+#, php-format
+msgid "OneCatalog: queueing %1$s product(s)…"
+msgstr ""
+
+#. translators: 1: products, 2: batches, 3: step
+#: includes/class-admin-ui.php:68
+#, php-format
+msgid "OneCatalog: %1$s product(s) queued, %2$s batch(es) of %3$s. Running in background…"
+msgstr ""
+
+#. translators: 1: batches left, 2: total batches
+#: includes/class-admin-ui.php:70
+#, php-format
+msgid "OneCatalog: running in background — %1$s of %2$s batch(es) left…"
+msgstr ""
+
+#. translators: 1: imported, 2: total
+#: includes/class-admin-ui.php:72
+#, php-format
+msgid "OneCatalog: imported %1$s of %2$s."
+msgstr ""
+
+#: includes/class-admin-ui.php:73
+msgid "Errors:"
+msgstr ""
+
+#: includes/class-admin-ui.php:74
+msgid "Refresh list"
+msgstr ""
+
+#: includes/class-admin-ui.php:75
+msgid "OneCatalog: error — "
+msgstr ""
+
+#: includes/class-admin-ui.php:76
+msgid "OneCatalog: network error — "
+msgstr ""
+
+#: includes/class-admin-ui.php:86
+msgid "OneCatalog SKU"
+msgstr ""
+
+#: includes/class-admin-ui.php:88
+msgid "OneCatalog product identifier (public_id). Filled by the import and used to update the product on re-import."
+msgstr ""
+
+#: includes/class-plugin.php:45
+msgid "Documentation"
+msgstr ""
+
+#: includes/class-plugin.php:56
+msgid "Settings"
+msgstr ""
+
+#: includes/class-product-importer.php:64
+msgid "product not found in the OneCatalog API"
+msgstr ""
+
+#: includes/class-rest.php:47
+msgid "WooCommerce is not active"
+msgstr ""
+
+#: includes/class-rest.php:52
+msgid "Empty ID list"
+msgstr ""
+
+#: includes/class-settings.php:255
+#: includes/class-settings.php:412
+msgid "OneCatalog Settings"
+msgstr ""
+
+#: includes/class-settings.php:269
+#: includes/class-settings.php:270
+#: includes/class-settings.php:806
+#: includes/class-settings.php:863
+msgid "Characteristics"
+msgstr ""
+
+#: includes/class-settings.php:399
+#: includes/class-settings.php:535
+#: includes/class-settings.php:610
+#: includes/class-settings.php:678
+msgid "— select —"
+msgstr ""
+
+#. translators: 1: link to the Products admin page, 2: import button label
+#: includes/class-settings.php:417
+#, php-format
+msgid "Product import lives on the %1$s page — use the “%2$s” button next to “Export”."
+msgstr ""
+
+#: includes/class-settings.php:418
+msgid "Products"
+msgstr ""
+
+#: includes/class-settings.php:424
+msgid "OneCatalog documentation"
+msgstr ""
+
+#: includes/class-settings.php:429
+msgid "Settings saved."
+msgstr ""
+
+#: includes/class-settings.php:436
+msgid "Wiki API token"
+msgstr ""
+
+#. translators: %s: Wiki API base URL
+#: includes/class-settings.php:445
+#, php-format
+msgid "Sent as the X-API-Key header to Wiki API requests and to the product picker. API: %s. With a token, images are downloaded in maximum quality; files previously downloaded in lower quality are replaced automatically when the product is imported again."
+msgstr ""
+
+#: includes/class-settings.php:449
+msgid "Warning:"
+msgstr ""
+
+#: includes/class-settings.php:450
+msgid "a token environment variable is set — it takes priority over this field."
+msgstr ""
+
+#: includes/class-settings.php:457
+msgid "Import step"
+msgstr ""
+
+#. translators: %d: minimum step value
+#: includes/class-settings.php:467
+#, php-format
+msgid "Number of products processed per background queue run (minimum %d). Selected products are never loaded all at once."
+msgstr ""
+
+#: includes/class-settings.php:475
+msgid "Products language"
+msgstr ""
+
+#: includes/class-settings.php:485
+msgid "Language of product names and specifications loaded from OneCatalog (Wiki API “lang” parameter; en, ru, ar, zh and kk are supported). Defaults to English."
+msgstr ""
+
+#: includes/class-settings.php:490
+msgid "New product status"
+msgstr ""
+
+#: includes/class-settings.php:497
+msgid "Status assigned to products created by the import. Existing products keep their current status on re-import."
+msgstr ""
+
+#: includes/class-settings.php:501
+msgid "Collections"
+msgstr ""
+
+#: includes/class-settings.php:504
+msgid "Import collections"
+msgstr ""
+
+#: includes/class-settings.php:508
+msgid "Create/update collections together with products"
+msgstr ""
+
+#: includes/class-settings.php:513
+msgid "Store collections as"
+msgstr ""
+
+#: includes/class-settings.php:517
+#: includes/class-settings.php:592
+#: includes/class-settings.php:664
+msgid "Attribute (characteristic)"
+msgstr ""
+
+#: includes/class-settings.php:521
+#: includes/class-settings.php:596
+#: includes/class-settings.php:668
+msgid "Taxonomy"
+msgstr ""
+
+#: includes/class-settings.php:525
+#: includes/class-settings.php:600
+msgid "Post type"
+msgstr ""
+
+#: includes/class-settings.php:527
+msgid "Whether each collection becomes a product attribute pa_*, a taxonomy term, or a post (CPT). Select the specific target below."
+msgstr ""
+
+#: includes/class-settings.php:531
+msgid "Collection attribute"
+msgstr ""
+
+#. translators: %s: link to the WooCommerce attributes admin page
+#: includes/class-settings.php:543
+#, php-format
+msgid "Used when the collection is stored as a product attribute. No collection attribute yet? Create one under %s."
+msgstr ""
+
+#: includes/class-settings.php:544
+#: includes/class-settings.php:619
+#: includes/class-settings.php:687
+#: includes/class-settings.php:939
+msgid "Products → Attributes"
+msgstr ""
+
+#: includes/class-settings.php:550
+#: includes/class-settings.php:625
+#: includes/class-settings.php:693
+msgid "Target taxonomy"
+msgstr ""
+
+#: includes/class-settings.php:557
+msgid "Used when collections are stored as a taxonomy."
+msgstr ""
+
+#: includes/class-settings.php:561
+#: includes/class-settings.php:636
+msgid "Target post type"
+msgstr ""
+
+#: includes/class-settings.php:568
+msgid "Used when collections are stored as a post type."
+msgstr ""
+
+#: includes/class-settings.php:572
+msgid "Imported collection fields: title, slug, OneCatalog ID, cover image, 3D link, official site link."
+msgstr ""
+
+#: includes/class-settings.php:576
+msgid "Brand"
+msgstr ""
+
+#: includes/class-settings.php:579
+msgid "Import brands"
+msgstr ""
+
+#: includes/class-settings.php:583
+msgid "Assign the product brand on import"
+msgstr ""
+
+#: includes/class-settings.php:588
+msgid "Store brand as"
+msgstr ""
+
+#: includes/class-settings.php:602
+msgid "Attribute — a product attribute pa_* (legacy WooCommerce, brand shown among attributes). Taxonomy — the product_brand taxonomy (current WooCommerce brands). Post type — a CPT. Select the specific target below."
+msgstr ""
+
+#: includes/class-settings.php:606
+msgid "Brand attribute"
+msgstr ""
+
+#. translators: %s: link to the WooCommerce attributes admin page
+#: includes/class-settings.php:618
+#, php-format
+msgid "Used when the brand is stored as a product attribute (legacy way). Don’t have a brand attribute? Create one under %s."
+msgstr ""
+
+#: includes/class-settings.php:632
+msgid "Used when brands are stored as a taxonomy."
+msgstr ""
+
+#: includes/class-settings.php:643
+msgid "Used when brands are stored as a post type."
+msgstr ""
+
+#: includes/class-settings.php:648
+msgid "Country of origin"
+msgstr ""
+
+#: includes/class-settings.php:651
+msgid "Import country"
+msgstr ""
+
+#: includes/class-settings.php:655
+msgid "Assign the country of origin on import"
+msgstr ""
+
+#: includes/class-settings.php:660
+msgid "Store country as"
+msgstr ""
+
+#: includes/class-settings.php:670
+msgid "Country is most often a product attribute. Pick the target below."
+msgstr ""
+
+#: includes/class-settings.php:674
+msgid "Country attribute"
+msgstr ""
+
+#. translators: %s: link to the WooCommerce attributes admin page
+#: includes/class-settings.php:686
+#, php-format
+msgid "Used when the country is stored as a product attribute. No country attribute yet? Create one under %s."
+msgstr ""
+
+#: includes/class-settings.php:700
+msgid "Used when the country is stored as a taxonomy."
+msgstr ""
+
+#: includes/class-settings.php:705
+msgid "Tags"
+msgstr ""
+
+#: includes/class-settings.php:708
+msgid "Import tags"
+msgstr ""
+
+#: includes/class-settings.php:712
+msgid "Import product tags into the product_tag taxonomy"
+msgstr ""
+
+#: includes/class-settings.php:714
+msgid "Tags are matched by name (label) — an existing tag is reused, otherwise created."
+msgstr ""
+
+#: includes/class-settings.php:719
+msgid "Characteristic mapping"
+msgstr ""
+
+#: includes/class-settings.php:722
+msgid "Manual mapping"
+msgstr ""
+
+#: includes/class-settings.php:726
+msgid "Bind OneCatalog characteristics to existing WooCommerce attributes"
+msgstr ""
+
+#: includes/class-settings.php:728
+msgid "Off: each characteristic is matched to a global attribute by name, creating it if missing (default). On: only the characteristics bound on the “Characteristics” page are imported — unbound ones are skipped."
+msgstr ""
+
+#: includes/class-settings.php:732
+msgid "Configure characteristics →"
+msgstr ""
+
+#: includes/class-settings.php:736
+msgid "Enable and save — a “Characteristics” submenu will appear under OneCatalog for configuring the bindings."
+msgstr ""
+
+#: includes/class-settings.php:743
+msgid "Save settings"
+msgstr ""
+
+#: includes/class-settings.php:807
+msgid "Manual mapping is off. Enable it on the OneCatalog settings page first."
+msgstr ""
+
+#: includes/class-settings.php:808
+msgid "← OneCatalog settings"
+msgstr ""
+
+#. translators: %d: characteristic id
+#: includes/class-settings.php:854
+#, php-format
+msgid "characteristic #%d (not in list)"
+msgstr ""
+
+#: includes/class-settings.php:864
+msgid "For each OneCatalog characteristic pick the WooCommerce attribute to bind it to. Characteristics left unbound are skipped on import."
+msgstr ""
+
+#: includes/class-settings.php:867
+msgid "Bindings saved."
+msgstr ""
+
+#: includes/class-settings.php:870
+msgid "Could not load the characteristics list from the Wiki API (check the token / connection). Already-saved bindings are kept."
+msgstr ""
+
+#: includes/class-settings.php:879
+msgid "OneCatalog characteristic"
+msgstr ""
+
+#: includes/class-settings.php:880
+msgid "WooCommerce attribute"
+msgstr ""
+
+#: includes/class-settings.php:888
+msgid "yes / no"
+msgstr ""
+
+#: includes/class-settings.php:892
+msgid "— skip (no binding) —"
+msgstr ""
+
+#: includes/class-settings.php:902
+msgid "— not set —"
+msgstr ""
+
+#: includes/class-settings.php:916
+msgid "value for “true”"
+msgstr ""
+
+#: includes/class-settings.php:918
+msgid "value for “false”"
+msgstr ""
+
+#: includes/class-settings.php:921
+msgid "Boolean characteristic: pick a term from the bound attribute for true / false. Empty (or no value from OneCatalog) counts as false."
+msgstr ""
+
+#: includes/class-settings.php:929
+msgid "No characteristics found. Set the Wiki API token, then use “Refresh characteristics”."
+msgstr ""
+
+#: includes/class-settings.php:932
+msgid "↻ Refresh characteristics"
+msgstr ""
+
+#. translators: %s: link to the WooCommerce attributes admin page
+#: includes/class-settings.php:938
+#, php-format
+msgid "No WooCommerce attributes exist yet — create them under %s, then bind here."
+msgstr ""
+
+#: includes/class-settings.php:943
+msgid "The characteristics list is loaded from the Wiki API (cached). Values are still matched by name (or created) inside the bound attribute."
+msgstr ""
+
+#: includes/class-settings.php:944
+msgid "Save bindings"
+msgstr ""
