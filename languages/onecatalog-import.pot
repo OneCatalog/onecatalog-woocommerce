@@ -1,41 +1,24 @@
-# Copyright (C) 2026 OneCatalog
-# This file is distributed under the same license as the OneCatalog Import plugin.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the OneCatalog Import package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: OneCatalog Import 1.5.1\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/onecatalog-import\n"
+"Project-Id-Version: OneCatalog Import 1.8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-20 02:17+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-15T17:41:26+00:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: onecatalog-import\n"
 
-#. Plugin Name of the plugin
-#: onecatalog-import.php
-msgid "OneCatalog Import"
-msgstr ""
-
-#. Description of the plugin
-#: onecatalog-import.php
-msgid "Import products from OneCatalog (Wiki API) into WooCommerce: product picker modal, background queue, dependencies (categories, attributes, collections, brands), images with quality tracking, separate article numbers."
-msgstr ""
-
-#. Author of the plugin
-#: onecatalog-import.php
-msgid "OneCatalog"
-msgstr ""
-
-#. Author URI of the plugin
-#: onecatalog-import.php
-msgid "https://docs.onecatalog.net/"
-msgstr ""
-
-#: includes/class-admin-ui.php:63
-#: includes/class-settings.php:419
+#: includes/class-admin-ui.php:63 includes/class-settings.php:419
 msgid "OneCatalog (Products)"
 msgstr ""
 
@@ -52,7 +35,9 @@ msgstr ""
 #. translators: 1: products, 2: batches, 3: step
 #: includes/class-admin-ui.php:68
 #, php-format
-msgid "OneCatalog: %1$s product(s) queued, %2$s batch(es) of %3$s. Running in background…"
+msgid ""
+"OneCatalog: %1$s product(s) queued, %2$s batch(es) of %3$s. Running in "
+"background…"
 msgstr ""
 
 #. translators: 1: batches left, 2: total batches
@@ -88,15 +73,309 @@ msgid "OneCatalog SKU"
 msgstr ""
 
 #: includes/class-admin-ui.php:88
-msgid "OneCatalog product identifier (public_id). Filled by the import and used to update the product on re-import."
+msgid ""
+"OneCatalog product identifier (public_id). Filled by the import and used to "
+"update the product on re-import."
 msgstr ""
 
-#: includes/class-plugin.php:45
+#: includes/class-b2b-settings.php:117
+msgid "Off (manual only)"
+msgstr ""
+
+#: includes/class-b2b-settings.php:118
+msgid "Every hour"
+msgstr ""
+
+#: includes/class-b2b-settings.php:119
+msgid "Every 3 hours"
+msgstr ""
+
+#: includes/class-b2b-settings.php:120
+msgid "Every 6 hours"
+msgstr ""
+
+#: includes/class-b2b-settings.php:121
+msgid "Every day"
+msgstr ""
+
+#: includes/class-b2b-settings.php:122
+msgid "Every week"
+msgstr ""
+
+#: includes/class-b2b-settings.php:183 includes/class-b2b-settings.php:184
+#: includes/class-b2b-settings.php:352
+msgid "B2B connection"
+msgstr ""
+
+#: includes/class-b2b-settings.php:191 includes/class-b2b-settings.php:192
+#: includes/class-b2b-settings.php:347 includes/class-b2b-settings.php:380
+msgid "Prices & stock"
+msgstr ""
+
+#: includes/class-b2b-settings.php:237
+msgid "OneCatalog — B2B connection"
+msgstr ""
+
+#: includes/class-b2b-settings.php:238
+msgid ""
+"Credentials for the B2B price & stock feed. These are separate from the Wiki "
+"API token: a retailer key in the URL path plus a private key."
+msgstr ""
+
+#: includes/class-b2b-settings.php:241
+msgid "Saved."
+msgstr ""
+
+#: includes/class-b2b-settings.php:244
+msgid "Could not load the feed — check the keys and try again."
+msgstr ""
+
+#. translators: 1: regions count, 2: warehouses count, 3: suppliers count
+#: includes/class-b2b-settings.php:249
+#, php-format
+msgid ""
+"Feed loaded: %1$d regions, %2$d warehouses, %3$d suppliers. Configure them "
+"on the “Prices & stock” page."
+msgstr ""
+
+#: includes/class-b2b-settings.php:261
+msgid "Retailer key (URL)"
+msgstr ""
+
+#: includes/class-b2b-settings.php:266
+msgid "The key from the share URL path (…/retailer-share-products/KEY/)."
+msgstr ""
+
+#: includes/class-b2b-settings.php:268 includes/class-settings.php:449
+msgid "Warning:"
+msgstr ""
+
+#: includes/class-b2b-settings.php:269
+msgid "an environment variable is set — it overrides this field."
+msgstr ""
+
+#: includes/class-b2b-settings.php:275
+msgid "Private key"
+msgstr ""
+
+#: includes/class-b2b-settings.php:279
+msgid "The private_key query parameter from the share URL."
+msgstr ""
+
+#: includes/class-b2b-settings.php:284
+msgid "Save"
+msgstr ""
+
+#: includes/class-b2b-settings.php:286
+msgid "Save & load (test)"
+msgstr ""
+
+#. translators: %s: link to the B2B connection page
+#: includes/class-b2b-settings.php:351
+#, php-format
+msgid "Configure the B2B connection first: %s."
+msgstr ""
+
+#: includes/class-b2b-settings.php:372
+msgid "Starting…"
+msgstr ""
+
+#: includes/class-b2b-settings.php:373
+msgid "Syncing…"
+msgstr ""
+
+#: includes/class-b2b-settings.php:374
+msgid "Done."
+msgstr ""
+
+#: includes/class-b2b-settings.php:375
+msgid "Error."
+msgstr ""
+
+#: includes/class-b2b-settings.php:381
+msgid ""
+"Updates regular/sale price and stock of products matched by public_id from "
+"the B2B feed. This overwrites price/stock of synced products on every run "
+"(it is a live feed)."
+msgstr ""
+
+#: includes/class-b2b-settings.php:384 includes/class-settings.php:429
+msgid "Settings saved."
+msgstr ""
+
+#: includes/class-b2b-settings.php:391
+msgid "Price strategy"
+msgstr ""
+
+#: includes/class-b2b-settings.php:394
+msgid "Supplier priority (fallback: lowest)"
+msgstr ""
+
+#: includes/class-b2b-settings.php:395
+msgid "Lowest base price"
+msgstr ""
+
+#: includes/class-b2b-settings.php:396
+msgid "Specific supplier only"
+msgstr ""
+
+#: includes/class-b2b-settings.php:398
+msgid ""
+"Stock is always summed across suppliers and selected warehouses; this "
+"controls the price only."
+msgstr ""
+
+#: includes/class-b2b-settings.php:402
+msgid "Supplier"
+msgstr ""
+
+#: includes/class-b2b-settings.php:405 includes/class-settings.php:399
+#: includes/class-settings.php:535 includes/class-settings.php:610
+#: includes/class-settings.php:678
+msgid "— select —"
+msgstr ""
+
+#: includes/class-b2b-settings.php:413
+msgid "Region priority"
+msgstr ""
+
+#: includes/class-b2b-settings.php:416
+msgid ""
+"Drag to order. Price is taken from the first region that has a valid price."
+msgstr ""
+
+#: includes/class-b2b-settings.php:420
+msgid "Supplier priority"
+msgstr ""
+
+#: includes/class-b2b-settings.php:423
+msgid "Drag to order. Used when the price strategy is “Supplier priority”."
+msgstr ""
+
+#: includes/class-b2b-settings.php:427
+msgid "Stock options"
+msgstr ""
+
+#: includes/class-b2b-settings.php:429
+msgid "Manage stock quantity (set quantity, not just in/out)"
+msgstr ""
+
+#: includes/class-b2b-settings.php:430
+msgid "Allow fractional stock (e.g. m²) — enables decimal stock amounts"
+msgstr ""
+
+#: includes/class-b2b-settings.php:431
+msgid "Set products NOT present in the feed to out of stock"
+msgstr ""
+
+#: includes/class-b2b-settings.php:435
+msgid "Price options"
+msgstr ""
+
+#: includes/class-b2b-settings.php:437
+msgid "Use promo_price as the WooCommerce sale price (when 0 < promo < base)"
+msgstr ""
+
+#: includes/class-b2b-settings.php:441
+msgid "Known products not in store"
+msgstr ""
+
+#: includes/class-b2b-settings.php:444
+msgid "Skip (only update existing)"
+msgstr ""
+
+#: includes/class-b2b-settings.php:445
+msgid "Import them via the standard Wiki queue"
+msgstr ""
+
+#: includes/class-b2b-settings.php:447
+msgid ""
+"Known products have a public_id, so they can be imported through the normal "
+"Wiki import pipeline and then priced."
+msgstr ""
+
+#: includes/class-b2b-settings.php:451
+msgid "Unknown products (no wiki)"
+msgstr ""
+
+#: includes/class-b2b-settings.php:454
+msgid "Skip (recommended)"
+msgstr ""
+
+#: includes/class-b2b-settings.php:455
+msgid "Create and record the supplier code"
+msgstr ""
+
+#: includes/class-b2b-settings.php:457
+msgid ""
+"Unknown products have no public_id; if created, the supplier code is stored "
+"for future matching. Not recommended."
+msgstr ""
+
+#: includes/class-b2b-settings.php:461
+msgid "Feed page size"
+msgstr ""
+
+#: includes/class-b2b-settings.php:465
+msgid "Auto-sync schedule"
+msgstr ""
+
+#: includes/class-b2b-settings.php:473
+msgid ""
+"Runs the sync automatically in the background (Action Scheduler). Only "
+"changed products are written."
+msgstr ""
+
+#: includes/class-b2b-settings.php:477
+msgid "Next run:"
+msgstr ""
+
+#: includes/class-b2b-settings.php:485
+msgid "Run time"
+msgstr ""
+
+#. translators: %s: site timezone
+#: includes/class-b2b-settings.php:491
+#, php-format
+msgid "Time of day for the daily run, in the site timezone (%s)."
+msgstr ""
+
+#: includes/class-b2b-settings.php:498 includes/class-settings.php:743
+msgid "Save settings"
+msgstr ""
+
+#: includes/class-b2b-settings.php:502
+msgid "Run sync"
+msgstr ""
+
+#: includes/class-b2b-settings.php:503
+msgid "Sync now"
+msgstr ""
+
+#: includes/class-b2b-settings.php:532
+msgid "Nothing loaded."
+msgstr ""
+
+#: includes/class-plugin.php:48
 msgid "Documentation"
 msgstr ""
 
-#: includes/class-plugin.php:56
+#: includes/class-plugin.php:59
 msgid "Settings"
+msgstr ""
+
+#: includes/class-price-stock-sync.php:286
+msgid "feed request failed"
+msgstr ""
+
+#. translators: 1: scanned, 2: changed, 3: unchanged
+#: includes/class-price-stock-sync.php:384
+#, php-format
+msgid "page %1$d: scanned %2$d, changed %3$d, unchanged %4$d"
+msgstr ""
+
+#: includes/class-price-stock-sync.php:521
+msgid "failed to create unknown product"
 msgstr ""
 
 #: includes/class-product-importer.php:64
@@ -111,29 +390,21 @@ msgstr ""
 msgid "Empty ID list"
 msgstr ""
 
-#: includes/class-settings.php:255
-#: includes/class-settings.php:412
+#: includes/class-settings.php:255 includes/class-settings.php:412
 msgid "OneCatalog Settings"
 msgstr ""
 
-#: includes/class-settings.php:269
-#: includes/class-settings.php:270
-#: includes/class-settings.php:806
-#: includes/class-settings.php:863
+#: includes/class-settings.php:269 includes/class-settings.php:270
+#: includes/class-settings.php:806 includes/class-settings.php:863
 msgid "Characteristics"
-msgstr ""
-
-#: includes/class-settings.php:399
-#: includes/class-settings.php:535
-#: includes/class-settings.php:610
-#: includes/class-settings.php:678
-msgid "— select —"
 msgstr ""
 
 #. translators: 1: link to the Products admin page, 2: import button label
 #: includes/class-settings.php:417
 #, php-format
-msgid "Product import lives on the %1$s page — use the “%2$s” button next to “Export”."
+msgid ""
+"Product import lives on the %1$s page — use the “%2$s” button next to "
+"“Export”."
 msgstr ""
 
 #: includes/class-settings.php:418
@@ -144,10 +415,6 @@ msgstr ""
 msgid "OneCatalog documentation"
 msgstr ""
 
-#: includes/class-settings.php:429
-msgid "Settings saved."
-msgstr ""
-
 #: includes/class-settings.php:436
 msgid "Wiki API token"
 msgstr ""
@@ -155,15 +422,16 @@ msgstr ""
 #. translators: %s: Wiki API base URL
 #: includes/class-settings.php:445
 #, php-format
-msgid "Sent as the X-API-Key header to Wiki API requests and to the product picker. API: %s. With a token, images are downloaded in maximum quality; files previously downloaded in lower quality are replaced automatically when the product is imported again."
-msgstr ""
-
-#: includes/class-settings.php:449
-msgid "Warning:"
+msgid ""
+"Sent as the X-API-Key header to Wiki API requests and to the product picker. "
+"API: %s. With a token, images are downloaded in maximum quality; files "
+"previously downloaded in lower quality are replaced automatically when the "
+"product is imported again."
 msgstr ""
 
 #: includes/class-settings.php:450
-msgid "a token environment variable is set — it takes priority over this field."
+msgid ""
+"a token environment variable is set — it takes priority over this field."
 msgstr ""
 
 #: includes/class-settings.php:457
@@ -173,7 +441,9 @@ msgstr ""
 #. translators: %d: minimum step value
 #: includes/class-settings.php:467
 #, php-format
-msgid "Number of products processed per background queue run (minimum %d). Selected products are never loaded all at once."
+msgid ""
+"Number of products processed per background queue run (minimum %d). Selected "
+"products are never loaded all at once."
 msgstr ""
 
 #: includes/class-settings.php:475
@@ -181,7 +451,10 @@ msgid "Products language"
 msgstr ""
 
 #: includes/class-settings.php:485
-msgid "Language of product names and specifications loaded from OneCatalog (Wiki API “lang” parameter; en, ru, ar, zh and kk are supported). Defaults to English."
+msgid ""
+"Language of product names and specifications loaded from OneCatalog (Wiki "
+"API “lang” parameter; en, ru, ar, zh and kk are supported). Defaults to "
+"English."
 msgstr ""
 
 #: includes/class-settings.php:490
@@ -189,7 +462,9 @@ msgid "New product status"
 msgstr ""
 
 #: includes/class-settings.php:497
-msgid "Status assigned to products created by the import. Existing products keep their current status on re-import."
+msgid ""
+"Status assigned to products created by the import. Existing products keep "
+"their current status on re-import."
 msgstr ""
 
 #: includes/class-settings.php:501
@@ -208,25 +483,24 @@ msgstr ""
 msgid "Store collections as"
 msgstr ""
 
-#: includes/class-settings.php:517
-#: includes/class-settings.php:592
+#: includes/class-settings.php:517 includes/class-settings.php:592
 #: includes/class-settings.php:664
 msgid "Attribute (characteristic)"
 msgstr ""
 
-#: includes/class-settings.php:521
-#: includes/class-settings.php:596
+#: includes/class-settings.php:521 includes/class-settings.php:596
 #: includes/class-settings.php:668
 msgid "Taxonomy"
 msgstr ""
 
-#: includes/class-settings.php:525
-#: includes/class-settings.php:600
+#: includes/class-settings.php:525 includes/class-settings.php:600
 msgid "Post type"
 msgstr ""
 
 #: includes/class-settings.php:527
-msgid "Whether each collection becomes a product attribute pa_*, a taxonomy term, or a post (CPT). Select the specific target below."
+msgid ""
+"Whether each collection becomes a product attribute pa_*, a taxonomy term, "
+"or a post (CPT). Select the specific target below."
 msgstr ""
 
 #: includes/class-settings.php:531
@@ -236,18 +510,17 @@ msgstr ""
 #. translators: %s: link to the WooCommerce attributes admin page
 #: includes/class-settings.php:543
 #, php-format
-msgid "Used when the collection is stored as a product attribute. No collection attribute yet? Create one under %s."
+msgid ""
+"Used when the collection is stored as a product attribute. No collection "
+"attribute yet? Create one under %s."
 msgstr ""
 
-#: includes/class-settings.php:544
-#: includes/class-settings.php:619
-#: includes/class-settings.php:687
-#: includes/class-settings.php:939
+#: includes/class-settings.php:544 includes/class-settings.php:619
+#: includes/class-settings.php:687 includes/class-settings.php:939
 msgid "Products → Attributes"
 msgstr ""
 
-#: includes/class-settings.php:550
-#: includes/class-settings.php:625
+#: includes/class-settings.php:550 includes/class-settings.php:625
 #: includes/class-settings.php:693
 msgid "Target taxonomy"
 msgstr ""
@@ -256,8 +529,7 @@ msgstr ""
 msgid "Used when collections are stored as a taxonomy."
 msgstr ""
 
-#: includes/class-settings.php:561
-#: includes/class-settings.php:636
+#: includes/class-settings.php:561 includes/class-settings.php:636
 msgid "Target post type"
 msgstr ""
 
@@ -266,7 +538,9 @@ msgid "Used when collections are stored as a post type."
 msgstr ""
 
 #: includes/class-settings.php:572
-msgid "Imported collection fields: title, slug, OneCatalog ID, cover image, 3D link, official site link."
+msgid ""
+"Imported collection fields: title, slug, OneCatalog ID, cover image, 3D "
+"link, official site link."
 msgstr ""
 
 #: includes/class-settings.php:576
@@ -286,7 +560,10 @@ msgid "Store brand as"
 msgstr ""
 
 #: includes/class-settings.php:602
-msgid "Attribute — a product attribute pa_* (legacy WooCommerce, brand shown among attributes). Taxonomy — the product_brand taxonomy (current WooCommerce brands). Post type — a CPT. Select the specific target below."
+msgid ""
+"Attribute — a product attribute pa_* (legacy WooCommerce, brand shown among "
+"attributes). Taxonomy — the product_brand taxonomy (current WooCommerce "
+"brands). Post type — a CPT. Select the specific target below."
 msgstr ""
 
 #: includes/class-settings.php:606
@@ -296,7 +573,9 @@ msgstr ""
 #. translators: %s: link to the WooCommerce attributes admin page
 #: includes/class-settings.php:618
 #, php-format
-msgid "Used when the brand is stored as a product attribute (legacy way). Don’t have a brand attribute? Create one under %s."
+msgid ""
+"Used when the brand is stored as a product attribute (legacy way). Don’t "
+"have a brand attribute? Create one under %s."
 msgstr ""
 
 #: includes/class-settings.php:632
@@ -334,7 +613,9 @@ msgstr ""
 #. translators: %s: link to the WooCommerce attributes admin page
 #: includes/class-settings.php:686
 #, php-format
-msgid "Used when the country is stored as a product attribute. No country attribute yet? Create one under %s."
+msgid ""
+"Used when the country is stored as a product attribute. No country attribute "
+"yet? Create one under %s."
 msgstr ""
 
 #: includes/class-settings.php:700
@@ -354,7 +635,9 @@ msgid "Import product tags into the product_tag taxonomy"
 msgstr ""
 
 #: includes/class-settings.php:714
-msgid "Tags are matched by name (label) — an existing tag is reused, otherwise created."
+msgid ""
+"Tags are matched by name (label) — an existing tag is reused, otherwise "
+"created."
 msgstr ""
 
 #: includes/class-settings.php:719
@@ -370,7 +653,10 @@ msgid "Bind OneCatalog characteristics to existing WooCommerce attributes"
 msgstr ""
 
 #: includes/class-settings.php:728
-msgid "Off: each characteristic is matched to a global attribute by name, creating it if missing (default). On: only the characteristics bound on the “Characteristics” page are imported — unbound ones are skipped."
+msgid ""
+"Off: each characteristic is matched to a global attribute by name, creating "
+"it if missing (default). On: only the characteristics bound on the "
+"“Characteristics” page are imported — unbound ones are skipped."
 msgstr ""
 
 #: includes/class-settings.php:732
@@ -378,11 +664,9 @@ msgid "Configure characteristics →"
 msgstr ""
 
 #: includes/class-settings.php:736
-msgid "Enable and save — a “Characteristics” submenu will appear under OneCatalog for configuring the bindings."
-msgstr ""
-
-#: includes/class-settings.php:743
-msgid "Save settings"
+msgid ""
+"Enable and save — a “Characteristics” submenu will appear under OneCatalog "
+"for configuring the bindings."
 msgstr ""
 
 #: includes/class-settings.php:807
@@ -400,7 +684,9 @@ msgid "characteristic #%d (not in list)"
 msgstr ""
 
 #: includes/class-settings.php:864
-msgid "For each OneCatalog characteristic pick the WooCommerce attribute to bind it to. Characteristics left unbound are skipped on import."
+msgid ""
+"For each OneCatalog characteristic pick the WooCommerce attribute to bind it "
+"to. Characteristics left unbound are skipped on import."
 msgstr ""
 
 #: includes/class-settings.php:867
@@ -408,7 +694,9 @@ msgid "Bindings saved."
 msgstr ""
 
 #: includes/class-settings.php:870
-msgid "Could not load the characteristics list from the Wiki API (check the token / connection). Already-saved bindings are kept."
+msgid ""
+"Could not load the characteristics list from the Wiki API (check the token / "
+"connection). Already-saved bindings are kept."
 msgstr ""
 
 #: includes/class-settings.php:879
@@ -440,11 +728,15 @@ msgid "value for “false”"
 msgstr ""
 
 #: includes/class-settings.php:921
-msgid "Boolean characteristic: pick a term from the bound attribute for true / false. Empty (or no value from OneCatalog) counts as false."
+msgid ""
+"Boolean characteristic: pick a term from the bound attribute for true / "
+"false. Empty (or no value from OneCatalog) counts as false."
 msgstr ""
 
 #: includes/class-settings.php:929
-msgid "No characteristics found. Set the Wiki API token, then use “Refresh characteristics”."
+msgid ""
+"No characteristics found. Set the Wiki API token, then use “Refresh "
+"characteristics”."
 msgstr ""
 
 #: includes/class-settings.php:932
@@ -454,13 +746,35 @@ msgstr ""
 #. translators: %s: link to the WooCommerce attributes admin page
 #: includes/class-settings.php:938
 #, php-format
-msgid "No WooCommerce attributes exist yet — create them under %s, then bind here."
+msgid ""
+"No WooCommerce attributes exist yet — create them under %s, then bind here."
 msgstr ""
 
 #: includes/class-settings.php:943
-msgid "The characteristics list is loaded from the Wiki API (cached). Values are still matched by name (or created) inside the bound attribute."
+msgid ""
+"The characteristics list is loaded from the Wiki API (cached). Values are "
+"still matched by name (or created) inside the bound attribute."
 msgstr ""
 
 #: includes/class-settings.php:944
 msgid "Save bindings"
+msgstr ""
+
+#: includes/class-supplier-codes-field.php:40
+msgid "Supplier codes"
+msgstr ""
+
+#: includes/class-supplier-codes-field.php:42
+msgid ""
+"Codes used to match this product against the B2B feed (comma or newline "
+"separated). For known products they are maintained automatically by the "
+"price/stock sync."
+msgstr ""
+
+#: includes/class-supplier-codes-field.php:58
+msgid "Recorded by sync:"
+msgstr ""
+
+#: includes/class-supplier-codes-field.php:66
+msgid "Last price/stock sync:"
 msgstr ""

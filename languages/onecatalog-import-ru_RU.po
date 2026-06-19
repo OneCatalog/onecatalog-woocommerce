@@ -1,345 +1,910 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: OneCatalog Import 1.0.0\n"
+"Project-Id-Version: OneCatalog Import 1.8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-20 02:17+0300\n"
+"PO-Revision-Date: 2026-06-20 02:30+0000\n"
+"Last-Translator: OneCatalog\n"
+"Language-Team: Russian\n"
+"Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ru_RU\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 
-msgid "OneCatalog Settings"
-msgstr "Настройки OneCatalog"
-
-#. translators: 1: link to the Products admin page, 2: import button label
-msgid "Product import lives on the %1$s page — use the “%2$s” button next to “Export”."
-msgstr "Импорт товаров — на странице %1$s: кнопка «%2$s» рядом с «Экспорт»."
-
-msgid "Products"
-msgstr "Товары"
-
+#: includes/class-admin-ui.php:63 includes/class-settings.php:419
 msgid "OneCatalog (Products)"
 msgstr "OneCatalog(Товары)"
 
-msgid "OneCatalog documentation"
-msgstr "Документация OneCatalog"
-
-msgid "Settings saved."
-msgstr "Настройки сохранены."
-
-msgid "Wiki API token"
-msgstr "Токен Wiki API"
-
-#. translators: %s: Wiki API base URL
-msgid "Sent as the X-API-Key header to Wiki API requests and to the product picker. API: %s. With a token, images are downloaded in maximum quality; files previously downloaded in lower quality are replaced automatically when the product is imported again."
-msgstr "Передаётся заголовком X-API-Key в запросы Wiki API и в модалку выбора товаров. API: %s. С токеном изображения загружаются в максимальном качестве; загруженные ранее в низком качестве заменяются автоматически при повторном импорте товара."
-
-msgid "Warning:"
-msgstr "Внимание:"
-
-msgid "a token environment variable is set — it takes priority over this field."
-msgstr "задана переменная окружения с токеном — она имеет приоритет над этим полем."
-
-msgid "Import step"
-msgstr "Шаг импорта"
-
-#. translators: %d: minimum step value
-msgid "Number of products processed per background queue run (minimum %d). Selected products are never loaded all at once."
-msgstr "Сколько товаров обрабатывается за один проход фоновой очереди (минимум %d). Выбранные товары не загружаются все сразу."
-
-msgid "Products language"
-msgstr "Язык товаров"
-
-msgid "Language of product names and specifications loaded from OneCatalog (Wiki API “lang” parameter; en, ru, ar, zh and kk are supported). Defaults to English."
-msgstr "Язык названий и характеристик, загружаемых из OneCatalog (параметр «lang» Wiki API; поддерживаются en, ru, ar, zh и kk). По умолчанию — английский."
-
-msgid "Save settings"
-msgstr "Сохранить настройки"
-
+#: includes/class-admin-ui.php:64
 msgid "Loading OneCatalog…"
 msgstr "Загрузка OneCatalog…"
 
 #. translators: %1$s: number of products
+#: includes/class-admin-ui.php:66
+#, php-format
 msgid "OneCatalog: queueing %1$s product(s)…"
 msgstr "OneCatalog: ставим в очередь %1$s товар(ов)…"
 
 #. translators: 1: products, 2: batches, 3: step
-msgid "OneCatalog: %1$s product(s) queued, %2$s batch(es) of %3$s. Running in background…"
-msgstr "OneCatalog: в очереди %1$s товар(ов), порций: %2$s по %3$s. Выполняется в фоне…"
+#: includes/class-admin-ui.php:68
+#, php-format
+msgid ""
+"OneCatalog: %1$s product(s) queued, %2$s batch(es) of %3$s. Running in "
+"background…"
+msgstr ""
+"OneCatalog: в очереди %1$s товар(ов), порций: %2$s по %3$s. Выполняется в "
+"фоне…"
 
 #. translators: 1: batches left, 2: total batches
+#: includes/class-admin-ui.php:70
+#, php-format
 msgid "OneCatalog: running in background — %1$s of %2$s batch(es) left…"
 msgstr "OneCatalog: выполняется в фоне — осталось порций: %1$s из %2$s…"
 
 #. translators: 1: imported, 2: total
+#: includes/class-admin-ui.php:72
+#, php-format
 msgid "OneCatalog: imported %1$s of %2$s."
 msgstr "OneCatalog: импортировано %1$s из %2$s."
 
+#: includes/class-admin-ui.php:73
 msgid "Errors:"
 msgstr "Ошибки:"
 
+#: includes/class-admin-ui.php:74
 msgid "Refresh list"
 msgstr "Обновить список"
 
+#: includes/class-admin-ui.php:75
 msgid "OneCatalog: error — "
 msgstr "OneCatalog: ошибка — "
 
+#: includes/class-admin-ui.php:76
 msgid "OneCatalog: network error — "
 msgstr "OneCatalog: ошибка сети — "
 
+#: includes/class-admin-ui.php:86
 msgid "OneCatalog SKU"
 msgstr "Артикул OneCatalog"
 
-msgid "OneCatalog product identifier (public_id). Filled by the import and used to update the product on re-import."
-msgstr "Идентификатор товара в OneCatalog (public_id). Заполняется импортом; по нему товар обновляется при повторном импорте."
+#: includes/class-admin-ui.php:88
+msgid ""
+"OneCatalog product identifier (public_id). Filled by the import and used to "
+"update the product on re-import."
+msgstr ""
+"Идентификатор товара в OneCatalog (public_id). Заполняется импортом; по нему "
+"товар обновляется при повторном импорте."
 
-msgid "WooCommerce is not active"
-msgstr "WooCommerce не активен"
+#: includes/class-b2b-settings.php:117
+msgid "Off (manual only)"
+msgstr "Выкл (только вручную)"
 
-msgid "Empty ID list"
-msgstr "Пустой список ID"
+#: includes/class-b2b-settings.php:118
+msgid "Every hour"
+msgstr "Каждый час"
 
-msgid "product not found in the OneCatalog API"
-msgstr "товар не найден в OneCatalog API"
+#: includes/class-b2b-settings.php:119
+msgid "Every 3 hours"
+msgstr "Каждые 3 часа"
 
-msgid "Documentation"
-msgstr "Документация"
+#: includes/class-b2b-settings.php:120
+msgid "Every 6 hours"
+msgstr "Каждые 6 часов"
 
-msgid "Settings"
-msgstr "Настройки"
+#: includes/class-b2b-settings.php:121
+msgid "Every day"
+msgstr "Каждый день"
 
-#. Plugin Name of the plugin
-msgid "OneCatalog Import"
-msgstr "OneCatalog Import"
+#: includes/class-b2b-settings.php:122
+msgid "Every week"
+msgstr "Каждую неделю"
 
-#. Description of the plugin
-msgid "Import products from OneCatalog (Wiki API) into WooCommerce: product picker modal, background queue, dependencies (categories, attributes, collections, brands), images with quality tracking, separate article numbers."
-msgstr "Импорт товаров из OneCatalog (Wiki API) в WooCommerce: модалка выбора товаров, фоновая очередь, зависимости (категории, характеристики, коллекции, бренды), изображения с трекингом качества, раздельные артикулы."
+#: includes/class-b2b-settings.php:183 includes/class-b2b-settings.php:184
+#: includes/class-b2b-settings.php:352
+msgid "B2B connection"
+msgstr "Подключение B2B"
 
-#. Author URI of the plugin
-msgid "https://docs.onecatalog.net/"
-msgstr "https://docs.onecatalog.net/"
+#: includes/class-b2b-settings.php:191 includes/class-b2b-settings.php:192
+#: includes/class-b2b-settings.php:347 includes/class-b2b-settings.php:380
+msgid "Prices & stock"
+msgstr "Цены и остатки"
 
-msgid "OneCatalog"
-msgstr "OneCatalog"
+#: includes/class-b2b-settings.php:237
+msgid "OneCatalog — B2B connection"
+msgstr "OneCatalog — подключение B2B"
 
-msgid "Collections"
-msgstr "Коллекции"
+#: includes/class-b2b-settings.php:238
+msgid ""
+"Credentials for the B2B price & stock feed. These are separate from the Wiki "
+"API token: a retailer key in the URL path plus a private key."
+msgstr ""
+"Доступы к B2B-фиду цен и остатков. Отличаются от токена Wiki API: ключ "
+"ритейлера в пути URL и приватный ключ."
 
-msgid "Import collections"
-msgstr "Импортировать коллекции"
+#: includes/class-b2b-settings.php:241
+msgid "Saved."
+msgstr "Сохранено."
 
-msgid "Create/update collections together with products"
-msgstr "Создавать/обновлять коллекции вместе с товарами"
+#: includes/class-b2b-settings.php:244
+msgid "Could not load the feed — check the keys and try again."
+msgstr "Не удалось загрузить фид — проверьте ключи и попробуйте снова."
 
-msgid "Store collections as"
-msgstr "Хранить коллекции как"
+#. translators: 1: regions count, 2: warehouses count, 3: suppliers count
+#: includes/class-b2b-settings.php:249
+#, php-format
+msgid ""
+"Feed loaded: %1$d regions, %2$d warehouses, %3$d suppliers. Configure them "
+"on the “Prices & stock” page."
+msgstr ""
+"Фид загружен: регионов — %1$d, складов — %2$d, поставщиков — %3$d. Настройте "
+"их на странице «Цены и остатки»."
 
-msgid "Post type"
-msgstr "Тип записи"
+#: includes/class-b2b-settings.php:261
+msgid "Retailer key (URL)"
+msgstr "Ключ ритейлера (URL)"
 
-msgid "Taxonomy"
-msgstr "Таксономию"
+#: includes/class-b2b-settings.php:266
+msgid "The key from the share URL path (…/retailer-share-products/KEY/)."
+msgstr "Ключ из пути ссылки (…/retailer-share-products/КЛЮЧ/)."
 
-msgid "Whether each collection becomes a post (CPT) or a taxonomy term. Select the specific target below."
-msgstr "Сделать каждую коллекцию записью (CPT) или термином таксономии. Конкретную цель выберите ниже."
+#: includes/class-b2b-settings.php:268 includes/class-settings.php:449
+msgid "Warning:"
+msgstr "Внимание:"
 
-msgid "Target post type"
-msgstr "Целевой тип записи"
+#: includes/class-b2b-settings.php:269
+msgid "an environment variable is set — it overrides this field."
+msgstr "задана переменная окружения — она имеет приоритет над этим полем."
 
-msgid "Used when collections are stored as a post type."
-msgstr "Используется, когда коллекции хранятся как тип записи."
+#: includes/class-b2b-settings.php:275
+msgid "Private key"
+msgstr "Приватный ключ"
 
-msgid "Target taxonomy"
-msgstr "Целевая таксономия"
+#: includes/class-b2b-settings.php:279
+msgid "The private_key query parameter from the share URL."
+msgstr "Параметр private_key из ссылки."
 
-msgid "Used when collections are stored as a taxonomy."
-msgstr "Используется, когда коллекции хранятся как таксономия."
+#: includes/class-b2b-settings.php:284
+msgid "Save"
+msgstr "Сохранить"
 
-msgid "Imported collection fields: title, slug, OneCatalog ID, cover image, 3D link, official site link."
-msgstr "Импортируемые поля коллекции: название, ярлык, ID OneCatalog, обложка, 3D-ссылка, ссылка на официальный сайт."
+#: includes/class-b2b-settings.php:286
+msgid "Save & load (test)"
+msgstr "Сохранить и загрузить (проверка)"
 
+#. translators: %s: link to the B2B connection page
+#: includes/class-b2b-settings.php:351
+#, php-format
+msgid "Configure the B2B connection first: %s."
+msgstr "Сначала настройте подключение B2B: %s."
+
+#: includes/class-b2b-settings.php:372
+msgid "Starting…"
+msgstr "Запуск…"
+
+#: includes/class-b2b-settings.php:373
+msgid "Syncing…"
+msgstr "Синхронизация…"
+
+#: includes/class-b2b-settings.php:374
+msgid "Done."
+msgstr "Готово."
+
+#: includes/class-b2b-settings.php:375
+msgid "Error."
+msgstr "Ошибка."
+
+#: includes/class-b2b-settings.php:381
+msgid ""
+"Updates regular/sale price and stock of products matched by public_id from "
+"the B2B feed. This overwrites price/stock of synced products on every run "
+"(it is a live feed)."
+msgstr ""
+"Обновляет обычную/акционную цену и остаток товаров, сопоставленных по "
+"public_id из B2B-фида. Перезаписывает цену/остаток синхронизируемых товаров "
+"при каждом запуске (это живой фид)."
+
+#: includes/class-b2b-settings.php:384 includes/class-settings.php:429
+msgid "Settings saved."
+msgstr "Настройки сохранены."
+
+#: includes/class-b2b-settings.php:391
+msgid "Price strategy"
+msgstr "Стратегия цены"
+
+#: includes/class-b2b-settings.php:394
+msgid "Supplier priority (fallback: lowest)"
+msgstr "Приоритет поставщиков (фолбэк: минимальная)"
+
+#: includes/class-b2b-settings.php:395
+msgid "Lowest base price"
+msgstr "Минимальная базовая цена"
+
+#: includes/class-b2b-settings.php:396
+msgid "Specific supplier only"
+msgstr "Только конкретный поставщик"
+
+#: includes/class-b2b-settings.php:398
+msgid ""
+"Stock is always summed across suppliers and selected warehouses; this "
+"controls the price only."
+msgstr ""
+"Остаток всегда суммируется по поставщикам и складам; это управляет только "
+"ценой."
+
+#: includes/class-b2b-settings.php:402
+msgid "Supplier"
+msgstr "Поставщик"
+
+#: includes/class-b2b-settings.php:405 includes/class-settings.php:399
+#: includes/class-settings.php:535 includes/class-settings.php:610
+#: includes/class-settings.php:678
 msgid "— select —"
 msgstr "— выберите —"
 
-msgid "Characteristic mapping"
-msgstr "Сопоставление характеристик"
+#: includes/class-b2b-settings.php:413
+msgid "Region priority"
+msgstr "Приоритет регионов"
 
-msgid "Manual mapping"
-msgstr "Ручное сопоставление"
+#: includes/class-b2b-settings.php:416
+msgid ""
+"Drag to order. Price is taken from the first region that has a valid price."
+msgstr ""
+"Перетаскиванием задайте порядок. Цена берётся из первого региона с валидной "
+"ценой."
 
-msgid "Bind OneCatalog characteristics to existing WooCommerce attributes"
-msgstr "Привязать характеристики OneCatalog к существующим атрибутам WooCommerce"
+#: includes/class-b2b-settings.php:420
+msgid "Supplier priority"
+msgstr "Приоритет поставщиков"
 
-msgid "Off: each characteristic is matched to a global attribute by name, creating it if missing (default). On: only the characteristics bound on the “Characteristics” page are imported — unbound ones are skipped."
-msgstr "Выкл: каждая характеристика сопоставляется с глобальным атрибутом по названию, при отсутствии создаётся (по умолчанию). Вкл: импортируются только характеристики, привязанные на странице «Характеристики», — непривязанные пропускаются."
+#: includes/class-b2b-settings.php:423
+msgid "Drag to order. Used when the price strategy is “Supplier priority”."
+msgstr ""
+"Перетаскиванием задайте порядок. Используется при стратегии «Приоритет "
+"поставщиков»."
 
-msgid "Configure characteristics →"
-msgstr "Настроить характеристики →"
+#: includes/class-b2b-settings.php:427
+msgid "Stock options"
+msgstr "Параметры остатка"
 
-msgid "Enable and save — a “Characteristics” submenu will appear under OneCatalog for configuring the bindings."
-msgstr "Включите и сохраните — в меню OneCatalog появится подпункт «Характеристики» для настройки привязок."
+#: includes/class-b2b-settings.php:429
+msgid "Manage stock quantity (set quantity, not just in/out)"
+msgstr "Управлять количеством (задавать количество, не только в наличии/нет)"
 
+#: includes/class-b2b-settings.php:430
+msgid "Allow fractional stock (e.g. m²) — enables decimal stock amounts"
+msgstr "Разрешить дробные остатки (напр. м²) — включает дробное количество"
+
+#: includes/class-b2b-settings.php:431
+msgid "Set products NOT present in the feed to out of stock"
+msgstr "Товары, отсутствующие в фиде, помечать «нет в наличии»"
+
+#: includes/class-b2b-settings.php:435
+msgid "Price options"
+msgstr "Параметры цены"
+
+#: includes/class-b2b-settings.php:437
+msgid "Use promo_price as the WooCommerce sale price (when 0 < promo < base)"
+msgstr ""
+"Использовать promo_price как акционную цену WooCommerce (если 0 < promo < "
+"base)"
+
+#: includes/class-b2b-settings.php:441
+msgid "Known products not in store"
+msgstr "Known-товары, которых нет в магазине"
+
+#: includes/class-b2b-settings.php:444
+msgid "Skip (only update existing)"
+msgstr "Пропускать (обновлять только существующие)"
+
+#: includes/class-b2b-settings.php:445
+msgid "Import them via the standard Wiki queue"
+msgstr "Импортировать через стандартную Wiki-очередь"
+
+#: includes/class-b2b-settings.php:447
+msgid ""
+"Known products have a public_id, so they can be imported through the normal "
+"Wiki import pipeline and then priced."
+msgstr ""
+"У known-товаров есть public_id, поэтому их можно импортировать обычным "
+"механизмом Wiki, а затем проставить цену."
+
+#: includes/class-b2b-settings.php:451
+msgid "Unknown products (no wiki)"
+msgstr "Unknown-товары (без wiki)"
+
+#: includes/class-b2b-settings.php:454
+msgid "Skip (recommended)"
+msgstr "Пропускать (рекомендуется)"
+
+#: includes/class-b2b-settings.php:455
+msgid "Create and record the supplier code"
+msgstr "Создавать и фиксировать код поставщика"
+
+#: includes/class-b2b-settings.php:457
+msgid ""
+"Unknown products have no public_id; if created, the supplier code is stored "
+"for future matching. Not recommended."
+msgstr ""
+"У unknown-товаров нет public_id; при создании сохраняется код поставщика для "
+"будущего сопоставления. Не рекомендуется."
+
+#: includes/class-b2b-settings.php:461
+msgid "Feed page size"
+msgstr "Размер страницы фида"
+
+#: includes/class-b2b-settings.php:465
+msgid "Auto-sync schedule"
+msgstr "Расписание авто-синхронизации"
+
+#: includes/class-b2b-settings.php:473
+msgid ""
+"Runs the sync automatically in the background (Action Scheduler). Only "
+"changed products are written."
+msgstr ""
+"Автоматически запускает синхронизацию в фоне (Action Scheduler). "
+"Записываются только изменившиеся товары."
+
+#: includes/class-b2b-settings.php:477
+msgid "Next run:"
+msgstr "Следующий запуск:"
+
+#: includes/class-b2b-settings.php:485
+msgid "Run time"
+msgstr "Время запуска"
+
+#. translators: %s: site timezone
+#: includes/class-b2b-settings.php:491
+#, php-format
+msgid "Time of day for the daily run, in the site timezone (%s)."
+msgstr "Время суток для ежедневного запуска, в часовом поясе сайта (%s)."
+
+#: includes/class-b2b-settings.php:498 includes/class-settings.php:743
+msgid "Save settings"
+msgstr "Сохранить настройки"
+
+#: includes/class-b2b-settings.php:502
+msgid "Run sync"
+msgstr "Запуск синхронизации"
+
+#: includes/class-b2b-settings.php:503
+msgid "Sync now"
+msgstr "Синхронизировать сейчас"
+
+#: includes/class-b2b-settings.php:532
+msgid "Nothing loaded."
+msgstr "Ничего не загружено."
+
+#: includes/class-plugin.php:48
+msgid "Documentation"
+msgstr "Документация"
+
+#: includes/class-plugin.php:59
+msgid "Settings"
+msgstr "Настройки"
+
+#: includes/class-price-stock-sync.php:286
+msgid "feed request failed"
+msgstr "не удалось получить фид"
+
+#. translators: 1: scanned, 2: changed, 3: unchanged
+#: includes/class-price-stock-sync.php:384
+#, php-format
+msgid "page %1$d: scanned %2$d, changed %3$d, unchanged %4$d"
+msgstr "страница %1$d: просканировано %2$d, изменено %3$d, без изменений %4$d"
+
+#: includes/class-price-stock-sync.php:521
+msgid "failed to create unknown product"
+msgstr "не удалось создать unknown-товар"
+
+#: includes/class-product-importer.php:64
+msgid "product not found in the OneCatalog API"
+msgstr "товар не найден в OneCatalog API"
+
+#: includes/class-rest.php:47
+msgid "WooCommerce is not active"
+msgstr "WooCommerce не активен"
+
+#: includes/class-rest.php:52
+msgid "Empty ID list"
+msgstr "Пустой список ID"
+
+#: includes/class-settings.php:255 includes/class-settings.php:412
+msgid "OneCatalog Settings"
+msgstr "Настройки OneCatalog"
+
+#: includes/class-settings.php:269 includes/class-settings.php:270
+#: includes/class-settings.php:806 includes/class-settings.php:863
 msgid "Characteristics"
 msgstr "Характеристики"
 
-msgid "Manual mapping is off. Enable it on the OneCatalog settings page first."
-msgstr "Ручное сопоставление выключено. Сначала включите его на странице настроек OneCatalog."
+#. translators: 1: link to the Products admin page, 2: import button label
+#: includes/class-settings.php:417
+#, php-format
+msgid ""
+"Product import lives on the %1$s page — use the “%2$s” button next to "
+"“Export”."
+msgstr "Импорт товаров — на странице %1$s: кнопка «%2$s» рядом с «Экспорт»."
 
-msgid "← OneCatalog settings"
-msgstr "← Настройки OneCatalog"
+#: includes/class-settings.php:418
+msgid "Products"
+msgstr "Товары"
 
-msgid "Bind OneCatalog characteristics to existing WooCommerce attributes. On import a bound characteristic is resolved to its attribute; unbound characteristics are skipped."
-msgstr "Привязка характеристик OneCatalog к существующим атрибутам WooCommerce. При импорте привязанная характеристика берёт свой атрибут; непривязанные характеристики пропускаются."
+#: includes/class-settings.php:424
+msgid "OneCatalog documentation"
+msgstr "Документация OneCatalog"
 
-msgid "Bindings saved."
-msgstr "Привязки сохранены."
+#: includes/class-settings.php:436
+msgid "Wiki API token"
+msgstr "Токен Wiki API"
 
-msgid "Could not load the characteristics list from the Wiki API (check the token / connection). Already-saved bindings are kept."
-msgstr "Не удалось загрузить список характеристик из Wiki API (проверьте токен/соединение). Уже сохранённые привязки остаются."
+#. translators: %s: Wiki API base URL
+#: includes/class-settings.php:445
+#, php-format
+msgid ""
+"Sent as the X-API-Key header to Wiki API requests and to the product picker. "
+"API: %s. With a token, images are downloaded in maximum quality; files "
+"previously downloaded in lower quality are replaced automatically when the "
+"product is imported again."
+msgstr ""
+"Передаётся заголовком X-API-Key в запросы Wiki API и в модалку выбора "
+"товаров. API: %s. С токеном изображения загружаются в максимальном качестве; "
+"загруженные ранее в низком качестве заменяются автоматически при повторном "
+"импорте товара."
 
-msgid "OneCatalog characteristic"
-msgstr "Характеристика OneCatalog"
+#: includes/class-settings.php:450
+msgid ""
+"a token environment variable is set — it takes priority over this field."
+msgstr ""
+"задана переменная окружения с токеном — она имеет приоритет над этим полем."
 
-msgid "WooCommerce attribute"
-msgstr "Атрибут WooCommerce"
+#: includes/class-settings.php:457
+msgid "Import step"
+msgstr "Шаг импорта"
 
-msgid "— select characteristic —"
-msgstr "— выберите характеристику —"
+#. translators: %d: minimum step value
+#: includes/class-settings.php:467
+#, php-format
+msgid ""
+"Number of products processed per background queue run (minimum %d). Selected "
+"products are never loaded all at once."
+msgstr ""
+"Сколько товаров обрабатывается за один проход фоновой очереди (минимум %d). "
+"Выбранные товары не загружаются все сразу."
 
-msgid "characteristic #%d (not in list)"
-msgstr "характеристика №%d (нет в списке)"
+#: includes/class-settings.php:475
+msgid "Products language"
+msgstr "Язык товаров"
 
-msgid "— skip (no binding) —"
-msgstr "— пропустить (без привязки) —"
+#: includes/class-settings.php:485
+msgid ""
+"Language of product names and specifications loaded from OneCatalog (Wiki "
+"API “lang” parameter; en, ru, ar, zh and kk are supported). Defaults to "
+"English."
+msgstr ""
+"Язык названий и характеристик, загружаемых из OneCatalog (параметр «lang» "
+"Wiki API; поддерживаются en, ru, ar, zh и kk). По умолчанию — английский."
 
-msgid "+ Add binding"
-msgstr "+ Добавить привязку"
-
-msgid "↻ Refresh characteristics"
-msgstr "↻ Обновить характеристики"
-
-msgid "No WooCommerce attributes exist yet — create them under %s, then bind here."
-msgstr "Атрибутов WooCommerce пока нет — создайте их в %s, затем настройте привязку здесь."
-
-msgid "Products → Attributes"
-msgstr "Товары → Атрибуты"
-
-msgid "The characteristics list is loaded from the Wiki API (cached). Values are still matched by name (or created) inside the bound attribute."
-msgstr "Список характеристик загружается из Wiki API (с кэшем). Значения по-прежнему сопоставляются по названию (или создаются) внутри привязанного атрибута."
-
-msgid "Save bindings"
-msgstr "Сохранить привязки"
-
+#: includes/class-settings.php:490
 msgid "New product status"
 msgstr "Статус новых товаров"
 
-msgid "Status assigned to products created by the import. Existing products keep their current status on re-import."
-msgstr "Статус, который присваивается товарам, созданным импортом. У существующих товаров статус при переимпорте не меняется."
+#: includes/class-settings.php:497
+msgid ""
+"Status assigned to products created by the import. Existing products keep "
+"their current status on re-import."
+msgstr ""
+"Статус, который присваивается товарам, созданным импортом. У существующих "
+"товаров статус при переимпорте не меняется."
 
-msgid "Brand"
-msgstr "Производитель (Бренд)"
+#: includes/class-settings.php:501
+msgid "Collections"
+msgstr "Коллекции"
 
-msgid "Import brands"
-msgstr "Импорт брендов"
+#: includes/class-settings.php:504
+msgid "Import collections"
+msgstr "Импортировать коллекции"
 
-msgid "Assign the product brand on import"
-msgstr "Назначать бренд товара при импорте"
+#: includes/class-settings.php:508
+msgid "Create/update collections together with products"
+msgstr "Создавать/обновлять коллекции вместе с товарами"
 
-msgid "Store brand as"
-msgstr "Хранить бренд как"
+#: includes/class-settings.php:513
+msgid "Store collections as"
+msgstr "Хранить коллекции как"
 
-msgid "Whether each brand becomes a post (CPT) or a taxonomy term. Select the specific target below."
-msgstr "Хранить каждый бренд как запись (CPT) или как термин таксономии. Конкретную цель выберите ниже."
-
-msgid "Used when brands are stored as a post type."
-msgstr "Используется, когда бренды хранятся как тип записи."
-
-msgid "Used when brands are stored as a taxonomy."
-msgstr "Используется, когда бренды хранятся как таксономия."
-
-msgid "For each OneCatalog characteristic pick the WooCommerce attribute to bind it to. Characteristics left unbound are skipped on import."
-msgstr "Для каждой характеристики OneCatalog выберите атрибут WooCommerce, к которому её привязать. Непривязанные характеристики при импорте пропускаются."
-
-msgid "No characteristics found. Set the Wiki API token, then use “Refresh characteristics”."
-msgstr "Характеристики не найдены. Укажите токен Wiki API и нажмите «Обновить характеристики»."
-
+#: includes/class-settings.php:517 includes/class-settings.php:592
+#: includes/class-settings.php:664
 msgid "Attribute (characteristic)"
 msgstr "Атрибут (характеристика)"
 
-msgid "Attribute — a product attribute pa_* (legacy WooCommerce, brand shown among attributes). Taxonomy — the product_brand taxonomy (current WooCommerce brands). Post type — a CPT. Select the specific target below."
-msgstr "Атрибут — товарный атрибут pa_* (старый способ WooCommerce, бренд показывается среди атрибутов). Таксономия — таксономия product_brand (новые бренды WooCommerce). Тип записи — CPT. Конкретную цель выберите ниже."
+#: includes/class-settings.php:521 includes/class-settings.php:596
+#: includes/class-settings.php:668
+msgid "Taxonomy"
+msgstr "Таксономию"
 
-msgid "Brand attribute"
-msgstr "Атрибут бренда"
+#: includes/class-settings.php:525 includes/class-settings.php:600
+msgid "Post type"
+msgstr "Тип записи"
 
-msgid "Used when the brand is stored as a product attribute (legacy way). Don’t have a brand attribute? Create one under %s."
-msgstr "Используется, когда бренд хранится как товарный атрибут (старый способ). Нет атрибута для бренда? Создайте его в %s."
+#: includes/class-settings.php:527
+msgid ""
+"Whether each collection becomes a product attribute pa_*, a taxonomy term, "
+"or a post (CPT). Select the specific target below."
+msgstr ""
+"Хранить каждую коллекцию как товарный атрибут pa_*, термин таксономии или "
+"запись (CPT). Конкретную цель выберите ниже."
 
-msgid "Country of origin"
-msgstr "Страна происхождения"
-
-msgid "Import country"
-msgstr "Импорт страны"
-
-msgid "Assign the country of origin on import"
-msgstr "Назначать страну происхождения при импорте"
-
-msgid "Store country as"
-msgstr "Хранить страну как"
-
-msgid "Country is most often a product attribute. Pick the target below."
-msgstr "Страна чаще всего — товарный атрибут. Конкретную цель выберите ниже."
-
-msgid "Country attribute"
-msgstr "Атрибут страны"
-
-msgid "Used when the country is stored as a product attribute. No country attribute yet? Create one under %s."
-msgstr "Используется, когда страна хранится как товарный атрибут. Нет атрибута страны? Создайте его в %s."
-
-msgid "Used when the country is stored as a taxonomy."
-msgstr "Используется, когда страна хранится как таксономия."
-
-msgid "Tags"
-msgstr "Теги"
-
-msgid "Import tags"
-msgstr "Импорт тегов"
-
-msgid "Import product tags into the product_tag taxonomy"
-msgstr "Импортировать теги товара в таксономию product_tag"
-
-msgid "Tags are matched by name (label) — an existing tag is reused, otherwise created."
-msgstr "Теги ищутся по названию: существующий переиспользуется, иначе создаётся."
-
-msgid "yes / no"
-msgstr "да / нет"
-
-msgid "value for “true”"
-msgstr "значение для «true»"
-
-msgid "value for “false”"
-msgstr "значение для «false»"
-
-msgid "e.g. Yes"
-msgstr "напр. Да"
-
-msgid "e.g. No"
-msgstr "напр. Нет"
-
-msgid "Boolean characteristic: the chosen value becomes a term in the bound attribute. Leave empty to skip that case."
-msgstr "Логическая характеристика: выбранное значение становится термином в привязанном атрибуте. Пусто — этот случай пропускается."
-
-msgid "— not set —"
-msgstr "— не задавать —"
-
-msgid "Boolean characteristic: pick a term from the bound attribute for true / false. Empty (or no value from OneCatalog) counts as false."
-msgstr "Логическая характеристика: выберите термин привязанного атрибута для true / false. Пусто (или отсутствие значения из OneCatalog) считается false."
-
-msgid "Whether each collection becomes a product attribute pa_*, a taxonomy term, or a post (CPT). Select the specific target below."
-msgstr "Хранить каждую коллекцию как товарный атрибут pa_*, термин таксономии или запись (CPT). Конкретную цель выберите ниже."
-
+#: includes/class-settings.php:531
 msgid "Collection attribute"
 msgstr "Атрибут коллекции"
 
-msgid "Used when the collection is stored as a product attribute. No collection attribute yet? Create one under %s."
-msgstr "Используется, когда коллекция хранится как товарный атрибут. Нет атрибута коллекции? Создайте его в %s."
+#. translators: %s: link to the WooCommerce attributes admin page
+#: includes/class-settings.php:543
+#, php-format
+msgid ""
+"Used when the collection is stored as a product attribute. No collection "
+"attribute yet? Create one under %s."
+msgstr ""
+"Используется, когда коллекция хранится как товарный атрибут. Нет атрибута "
+"коллекции? Создайте его в %s."
+
+#: includes/class-settings.php:544 includes/class-settings.php:619
+#: includes/class-settings.php:687 includes/class-settings.php:939
+msgid "Products → Attributes"
+msgstr "Товары → Атрибуты"
+
+#: includes/class-settings.php:550 includes/class-settings.php:625
+#: includes/class-settings.php:693
+msgid "Target taxonomy"
+msgstr "Целевая таксономия"
+
+#: includes/class-settings.php:557
+msgid "Used when collections are stored as a taxonomy."
+msgstr "Используется, когда коллекции хранятся как таксономия."
+
+#: includes/class-settings.php:561 includes/class-settings.php:636
+msgid "Target post type"
+msgstr "Целевой тип записи"
+
+#: includes/class-settings.php:568
+msgid "Used when collections are stored as a post type."
+msgstr "Используется, когда коллекции хранятся как тип записи."
+
+#: includes/class-settings.php:572
+msgid ""
+"Imported collection fields: title, slug, OneCatalog ID, cover image, 3D "
+"link, official site link."
+msgstr ""
+"Импортируемые поля коллекции: название, ярлык, ID OneCatalog, обложка, 3D-"
+"ссылка, ссылка на официальный сайт."
+
+#: includes/class-settings.php:576
+msgid "Brand"
+msgstr "Производитель (Бренд)"
+
+#: includes/class-settings.php:579
+msgid "Import brands"
+msgstr "Импорт брендов"
+
+#: includes/class-settings.php:583
+msgid "Assign the product brand on import"
+msgstr "Назначать бренд товара при импорте"
+
+#: includes/class-settings.php:588
+msgid "Store brand as"
+msgstr "Хранить бренд как"
+
+#: includes/class-settings.php:602
+msgid ""
+"Attribute — a product attribute pa_* (legacy WooCommerce, brand shown among "
+"attributes). Taxonomy — the product_brand taxonomy (current WooCommerce "
+"brands). Post type — a CPT. Select the specific target below."
+msgstr ""
+"Атрибут — товарный атрибут pa_* (старый способ WooCommerce, бренд "
+"показывается среди атрибутов). Таксономия — таксономия product_brand (новые "
+"бренды WooCommerce). Тип записи — CPT. Конкретную цель выберите ниже."
+
+#: includes/class-settings.php:606
+msgid "Brand attribute"
+msgstr "Атрибут бренда"
+
+#. translators: %s: link to the WooCommerce attributes admin page
+#: includes/class-settings.php:618
+#, php-format
+msgid ""
+"Used when the brand is stored as a product attribute (legacy way). Don’t "
+"have a brand attribute? Create one under %s."
+msgstr ""
+"Используется, когда бренд хранится как товарный атрибут (старый способ). Нет "
+"атрибута для бренда? Создайте его в %s."
+
+#: includes/class-settings.php:632
+msgid "Used when brands are stored as a taxonomy."
+msgstr "Используется, когда бренды хранятся как таксономия."
+
+#: includes/class-settings.php:643
+msgid "Used when brands are stored as a post type."
+msgstr "Используется, когда бренды хранятся как тип записи."
+
+#: includes/class-settings.php:648
+msgid "Country of origin"
+msgstr "Страна происхождения"
+
+#: includes/class-settings.php:651
+msgid "Import country"
+msgstr "Импорт страны"
+
+#: includes/class-settings.php:655
+msgid "Assign the country of origin on import"
+msgstr "Назначать страну происхождения при импорте"
+
+#: includes/class-settings.php:660
+msgid "Store country as"
+msgstr "Хранить страну как"
+
+#: includes/class-settings.php:670
+msgid "Country is most often a product attribute. Pick the target below."
+msgstr "Страна чаще всего — товарный атрибут. Конкретную цель выберите ниже."
+
+#: includes/class-settings.php:674
+msgid "Country attribute"
+msgstr "Атрибут страны"
+
+#. translators: %s: link to the WooCommerce attributes admin page
+#: includes/class-settings.php:686
+#, php-format
+msgid ""
+"Used when the country is stored as a product attribute. No country attribute "
+"yet? Create one under %s."
+msgstr ""
+"Используется, когда страна хранится как товарный атрибут. Нет атрибута "
+"страны? Создайте его в %s."
+
+#: includes/class-settings.php:700
+msgid "Used when the country is stored as a taxonomy."
+msgstr "Используется, когда страна хранится как таксономия."
+
+#: includes/class-settings.php:705
+msgid "Tags"
+msgstr "Теги"
+
+#: includes/class-settings.php:708
+msgid "Import tags"
+msgstr "Импорт тегов"
+
+#: includes/class-settings.php:712
+msgid "Import product tags into the product_tag taxonomy"
+msgstr "Импортировать теги товара в таксономию product_tag"
+
+#: includes/class-settings.php:714
+msgid ""
+"Tags are matched by name (label) — an existing tag is reused, otherwise "
+"created."
+msgstr ""
+"Теги ищутся по названию: существующий переиспользуется, иначе создаётся."
+
+#: includes/class-settings.php:719
+msgid "Characteristic mapping"
+msgstr "Сопоставление характеристик"
+
+#: includes/class-settings.php:722
+msgid "Manual mapping"
+msgstr "Ручное сопоставление"
+
+#: includes/class-settings.php:726
+msgid "Bind OneCatalog characteristics to existing WooCommerce attributes"
+msgstr ""
+"Привязать характеристики OneCatalog к существующим атрибутам WooCommerce"
+
+#: includes/class-settings.php:728
+msgid ""
+"Off: each characteristic is matched to a global attribute by name, creating "
+"it if missing (default). On: only the characteristics bound on the "
+"“Characteristics” page are imported — unbound ones are skipped."
+msgstr ""
+"Выкл: каждая характеристика сопоставляется с глобальным атрибутом по "
+"названию, при отсутствии создаётся (по умолчанию). Вкл: импортируются только "
+"характеристики, привязанные на странице «Характеристики», — непривязанные "
+"пропускаются."
+
+#: includes/class-settings.php:732
+msgid "Configure characteristics →"
+msgstr "Настроить характеристики →"
+
+#: includes/class-settings.php:736
+msgid ""
+"Enable and save — a “Characteristics” submenu will appear under OneCatalog "
+"for configuring the bindings."
+msgstr ""
+"Включите и сохраните — в меню OneCatalog появится подпункт «Характеристики» "
+"для настройки привязок."
+
+#: includes/class-settings.php:807
+msgid "Manual mapping is off. Enable it on the OneCatalog settings page first."
+msgstr ""
+"Ручное сопоставление выключено. Сначала включите его на странице настроек "
+"OneCatalog."
+
+#: includes/class-settings.php:808
+msgid "← OneCatalog settings"
+msgstr "← Настройки OneCatalog"
+
+#. translators: %d: characteristic id
+#: includes/class-settings.php:854
+#, php-format
+msgid "characteristic #%d (not in list)"
+msgstr "характеристика №%d (нет в списке)"
+
+#: includes/class-settings.php:864
+msgid ""
+"For each OneCatalog characteristic pick the WooCommerce attribute to bind it "
+"to. Characteristics left unbound are skipped on import."
+msgstr ""
+"Для каждой характеристики OneCatalog выберите атрибут WooCommerce, к "
+"которому её привязать. Непривязанные характеристики при импорте пропускаются."
+
+#: includes/class-settings.php:867
+msgid "Bindings saved."
+msgstr "Привязки сохранены."
+
+#: includes/class-settings.php:870
+msgid ""
+"Could not load the characteristics list from the Wiki API (check the token / "
+"connection). Already-saved bindings are kept."
+msgstr ""
+"Не удалось загрузить список характеристик из Wiki API (проверьте токен/"
+"соединение). Уже сохранённые привязки остаются."
+
+#: includes/class-settings.php:879
+msgid "OneCatalog characteristic"
+msgstr "Характеристика OneCatalog"
+
+#: includes/class-settings.php:880
+msgid "WooCommerce attribute"
+msgstr "Атрибут WooCommerce"
+
+#: includes/class-settings.php:888
+msgid "yes / no"
+msgstr "да / нет"
+
+#: includes/class-settings.php:892
+msgid "— skip (no binding) —"
+msgstr "— пропустить (без привязки) —"
+
+#: includes/class-settings.php:902
+msgid "— not set —"
+msgstr "— не задавать —"
+
+#: includes/class-settings.php:916
+msgid "value for “true”"
+msgstr "значение для «true»"
+
+#: includes/class-settings.php:918
+msgid "value for “false”"
+msgstr "значение для «false»"
+
+#: includes/class-settings.php:921
+msgid ""
+"Boolean characteristic: pick a term from the bound attribute for true / "
+"false. Empty (or no value from OneCatalog) counts as false."
+msgstr ""
+"Логическая характеристика: выберите термин привязанного атрибута для true / "
+"false. Пусто (или отсутствие значения из OneCatalog) считается false."
+
+#: includes/class-settings.php:929
+msgid ""
+"No characteristics found. Set the Wiki API token, then use “Refresh "
+"characteristics”."
+msgstr ""
+"Характеристики не найдены. Укажите токен Wiki API и нажмите «Обновить "
+"характеристики»."
+
+#: includes/class-settings.php:932
+msgid "↻ Refresh characteristics"
+msgstr "↻ Обновить характеристики"
+
+#. translators: %s: link to the WooCommerce attributes admin page
+#: includes/class-settings.php:938
+#, php-format
+msgid ""
+"No WooCommerce attributes exist yet — create them under %s, then bind here."
+msgstr ""
+"Атрибутов WooCommerce пока нет — создайте их в %s, затем настройте привязку "
+"здесь."
+
+#: includes/class-settings.php:943
+msgid ""
+"The characteristics list is loaded from the Wiki API (cached). Values are "
+"still matched by name (or created) inside the bound attribute."
+msgstr ""
+"Список характеристик загружается из Wiki API (с кэшем). Значения по-прежнему "
+"сопоставляются по названию (или создаются) внутри привязанного атрибута."
+
+#: includes/class-settings.php:944
+msgid "Save bindings"
+msgstr "Сохранить привязки"
+
+#: includes/class-supplier-codes-field.php:40
+msgid "Supplier codes"
+msgstr "Коды поставщиков"
+
+#: includes/class-supplier-codes-field.php:42
+msgid ""
+"Codes used to match this product against the B2B feed (comma or newline "
+"separated). For known products they are maintained automatically by the "
+"price/stock sync."
+msgstr ""
+"Коды для сопоставления товара с B2B-фидом (через запятую или с новой "
+"строки). Для known-товаров поддерживаются автоматически синхронизацией цен/"
+"остатков."
+
+#: includes/class-supplier-codes-field.php:58
+msgid "Recorded by sync:"
+msgstr "Записано синхронизацией:"
+
+#: includes/class-supplier-codes-field.php:66
+msgid "Last price/stock sync:"
+msgstr "Последняя синхронизация цен/остатков:"
+
+#~ msgid "OneCatalog Import"
+#~ msgstr "OneCatalog Import"
+
+#~ msgid ""
+#~ "Import products from OneCatalog (Wiki API) into WooCommerce: product "
+#~ "picker modal, background queue, dependencies (categories, attributes, "
+#~ "collections, brands), images with quality tracking, separate article "
+#~ "numbers."
+#~ msgstr ""
+#~ "Импорт товаров из OneCatalog (Wiki API) в WooCommerce: модалка выбора "
+#~ "товаров, фоновая очередь, зависимости (категории, характеристики, "
+#~ "коллекции, бренды), изображения с трекингом качества, раздельные артикулы."
+
+#~ msgid "OneCatalog"
+#~ msgstr "OneCatalog"
+
+#~ msgid "https://docs.onecatalog.net/"
+#~ msgstr "https://docs.onecatalog.net/"
+
+#~ msgid ""
+#~ "Whether each collection becomes a post (CPT) or a taxonomy term. Select "
+#~ "the specific target below."
+#~ msgstr ""
+#~ "Сделать каждую коллекцию записью (CPT) или термином таксономии. "
+#~ "Конкретную цель выберите ниже."
+
+#~ msgid ""
+#~ "Bind OneCatalog characteristics to existing WooCommerce attributes. On "
+#~ "import a bound characteristic is resolved to its attribute; unbound "
+#~ "characteristics are skipped."
+#~ msgstr ""
+#~ "Привязка характеристик OneCatalog к существующим атрибутам WooCommerce. "
+#~ "При импорте привязанная характеристика берёт свой атрибут; непривязанные "
+#~ "характеристики пропускаются."
+
+#~ msgid "— select characteristic —"
+#~ msgstr "— выберите характеристику —"
+
+#~ msgid "+ Add binding"
+#~ msgstr "+ Добавить привязку"
+
+#~ msgid ""
+#~ "Whether each brand becomes a post (CPT) or a taxonomy term. Select the "
+#~ "specific target below."
+#~ msgstr ""
+#~ "Хранить каждый бренд как запись (CPT) или как термин таксономии. "
+#~ "Конкретную цель выберите ниже."
+
+#~ msgid "e.g. Yes"
+#~ msgstr "напр. Да"
+
+#~ msgid "e.g. No"
+#~ msgstr "напр. Нет"
+
+#~ msgid ""
+#~ "Boolean characteristic: the chosen value becomes a term in the bound "
+#~ "attribute. Leave empty to skip that case."
+#~ msgstr ""
+#~ "Логическая характеристика: выбранное значение становится термином в "
+#~ "привязанном атрибуте. Пусто — этот случай пропускается."
