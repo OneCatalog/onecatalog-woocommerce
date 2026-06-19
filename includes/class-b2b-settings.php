@@ -259,7 +259,6 @@ final class B2B_Settings
         update_option(self::OPTION_SUPPLIER_PRIO, self::int_list($_POST['onecatalog_b2b_supplier_priority'] ?? []), false);
         update_option(self::OPTION_REGION_PRIO, self::int_list($_POST['onecatalog_b2b_region_priority'] ?? []), false);
         update_option(self::OPTION_SUPPLIER_FIX, (int) ($_POST['onecatalog_b2b_supplier_fixed'] ?? 0), false);
-        update_option(self::OPTION_WAREHOUSES, self::int_list($_POST['onecatalog_b2b_warehouses'] ?? []), false);
         update_option(self::OPTION_MANAGE_STOCK, empty($_POST['onecatalog_b2b_manage_stock']) ? '0' : '1', false);
         update_option(self::OPTION_DECIMAL_STOCK, empty($_POST['onecatalog_b2b_decimal_stock']) ? '0' : '1', false);
         update_option(self::OPTION_PROMO_AS_SALE, empty($_POST['onecatalog_b2b_promo_as_sale']) ? '0' : '1', false);
@@ -300,7 +299,6 @@ final class B2B_Settings
         $region_order   = self::ordered_with_rest(self::region_priority(), array_keys($regions));
         $supplier_order = self::ordered_with_rest(self::supplier_priority(), array_keys($suppliers));
         $strategy       = self::price_strategy();
-        $sel_warehouses = self::warehouses();
 
         wp_enqueue_script('jquery-ui-sortable');
         wp_enqueue_script('onecatalog-b2b', plugins_url('assets/admin-b2b.js', ONECATALOG_IMPORT_FILE), ['jquery', 'jquery-ui-sortable'], ONECATALOG_IMPORT_VERSION, true);
@@ -361,21 +359,6 @@ final class B2B_Settings
                         <td>
                             <?php self::render_sortable('onecatalog_b2b_supplier_priority', $supplier_order, $suppliers); ?>
                             <p class="description"><?php esc_html_e('Drag to order. Used when the price strategy is “Supplier priority”.', 'onecatalog-import'); ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Warehouses (stock)', 'onecatalog-import'); ?></th>
-                        <td>
-                            <?php if (! $warehouses) : ?>
-                                <em><?php esc_html_e('No warehouses loaded.', 'onecatalog-import'); ?></em>
-                            <?php else : foreach ($warehouses as $wid => $wlabel) : ?>
-                                <label style="display:block;margin:2px 0;">
-                                    <input type="checkbox" name="onecatalog_b2b_warehouses[]" value="<?php echo (int) $wid; ?>"
-                                        <?php checked(! $sel_warehouses || in_array((int) $wid, $sel_warehouses, true)); ?>>
-                                    <?php echo esc_html($wlabel . ' (#' . $wid . ')'); ?>
-                                </label>
-                            <?php endforeach; endif; ?>
-                            <p class="description"><?php esc_html_e('Stock quantity is the sum across the checked warehouses. None checked = all.', 'onecatalog-import'); ?></p>
                         </td>
                     </tr>
                     <tr>
