@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OneCatalog Import 1.8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-20 02:17+0300\n"
+"POT-Creation-Date: 2026-06-20 02:41+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,34 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Domain: onecatalog-import\n"
+
+#: includes/class-admin-product-column.php:50
+#: includes/class-admin-product-column.php:54
+msgid "OneCatalog"
+msgstr ""
+
+#: includes/class-admin-product-column.php:80
+#: includes/class-admin-product-column.php:124
+msgid "Click to copy"
+msgstr ""
+
+#: includes/class-admin-product-column.php:82
+#: includes/class-admin-product-column.php:125
+msgid "Copied"
+msgstr ""
+
+#: includes/class-admin-product-column.php:85
+#: includes/class-admin-product-column.php:126
+msgid "Open"
+msgstr ""
+
+#: includes/class-admin-product-column.php:94
+msgid "+ enter code"
+msgstr ""
+
+#: includes/class-admin-product-column.php:127
+msgid "Save error"
+msgstr ""
 
 #: includes/class-admin-ui.php:63 includes/class-settings.php:419
 msgid "OneCatalog (Products)"
@@ -356,11 +384,11 @@ msgstr ""
 msgid "Nothing loaded."
 msgstr ""
 
-#: includes/class-plugin.php:48
+#: includes/class-plugin.php:49
 msgid "Documentation"
 msgstr ""
 
-#: includes/class-plugin.php:59
+#: includes/class-plugin.php:60
 msgid "Settings"
 msgstr ""
 

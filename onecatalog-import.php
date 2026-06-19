@@ -37,6 +37,7 @@ require_once __DIR__ . '/includes/class-b2b-settings.php';
 require_once __DIR__ . '/includes/class-price-stock-sync.php';
 require_once __DIR__ . '/includes/class-supplier-codes-field.php';
 require_once __DIR__ . '/includes/class-admin-ui.php';
+require_once __DIR__ . '/includes/class-admin-product-column.php';
 require_once __DIR__ . '/includes/class-plugin.php';
 
 OneCatalog\Import\Plugin::init();

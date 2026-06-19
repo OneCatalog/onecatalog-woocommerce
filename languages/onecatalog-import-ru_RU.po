@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OneCatalog Import 1.8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-20 02:17+0300\n"
+"POT-Creation-Date: 2026-06-20 02:41+0300\n"
 "PO-Revision-Date: 2026-06-20 02:30+0000\n"
 "Last-Translator: OneCatalog\n"
 "Language-Team: Russian\n"
@@ -12,6 +12,34 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+
+#: includes/class-admin-product-column.php:50
+#: includes/class-admin-product-column.php:54
+msgid "OneCatalog"
+msgstr "OneCatalog"
+
+#: includes/class-admin-product-column.php:80
+#: includes/class-admin-product-column.php:124
+msgid "Click to copy"
+msgstr "Нажмите, чтобы скопировать"
+
+#: includes/class-admin-product-column.php:82
+#: includes/class-admin-product-column.php:125
+msgid "Copied"
+msgstr "Скопировано"
+
+#: includes/class-admin-product-column.php:85
+#: includes/class-admin-product-column.php:126
+msgid "Open"
+msgstr "Открыть"
+
+#: includes/class-admin-product-column.php:94
+msgid "+ enter code"
+msgstr "+ внести код"
+
+#: includes/class-admin-product-column.php:127
+msgid "Save error"
+msgstr "Ошибка сохранения"
 
 #: includes/class-admin-ui.php:63 includes/class-settings.php:419
 msgid "OneCatalog (Products)"
@@ -376,11 +404,11 @@ msgstr "Синхронизировать сейчас"
 msgid "Nothing loaded."
 msgstr "Ничего не загружено."
 
-#: includes/class-plugin.php:48
+#: includes/class-plugin.php:49
 msgid "Documentation"
 msgstr "Документация"
 
-#: includes/class-plugin.php:59
+#: includes/class-plugin.php:60
 msgid "Settings"
 msgstr "Настройки"
 
@@ -860,9 +888,6 @@ msgstr "Последняя синхронизация цен/остатков:"
 #~ "Импорт товаров из OneCatalog (Wiki API) в WooCommerce: модалка выбора "
 #~ "товаров, фоновая очередь, зависимости (категории, характеристики, "
 #~ "коллекции, бренды), изображения с трекингом качества, раздельные артикулы."
-
-#~ msgid "OneCatalog"
-#~ msgstr "OneCatalog"
 
 #~ msgid "https://docs.onecatalog.net/"
 #~ msgstr "https://docs.onecatalog.net/"

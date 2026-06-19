@@ -23,6 +23,7 @@ final class Plugin
         PriceStockSync::init();
         Supplier_Codes_Field::init();
         AdminUI::init();
+        Admin_Product_Column::init();
 
         add_action('init', [self::class, 'load_textdomain']);
         add_action('init', [self::class, 'maybe_migrate']);
