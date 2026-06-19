@@ -19,6 +19,8 @@ final class Plugin
         Queue::init();
         Rest::init();
         Settings::init();
+        B2B_Settings::init();
+        PriceStockSync::init();
         AdminUI::init();
 
         add_action('init', [self::class, 'load_textdomain']);
