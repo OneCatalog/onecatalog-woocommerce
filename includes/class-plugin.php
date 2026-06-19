@@ -21,6 +21,7 @@ final class Plugin
         Settings::init();
         B2B_Settings::init();
         PriceStockSync::init();
+        Supplier_Codes_Field::init();
         AdminUI::init();
 
         add_action('init', [self::class, 'load_textdomain']);

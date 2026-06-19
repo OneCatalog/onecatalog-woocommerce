@@ -30,6 +30,7 @@ final class PriceStockSync
 {
     public const AS_HOOK       = 'onecatalog_b2b_sync_page';   // фаза скана (по страницам)
     public const AS_WRITE_HOOK = 'onecatalog_b2b_write_batch'; // фаза записи (только изменённые)
+    public const CRON_HOOK     = 'onecatalog_b2b_cron';        // авто-синк по расписанию
     public const AS_GROUP      = 'onecatalog-b2b';
 
     public const OPTION_LOG      = 'onecatalog_b2b_log';
@@ -48,6 +49,7 @@ final class PriceStockSync
     {
         add_action(self::AS_HOOK, [self::class, 'process_page'], 10, 1);
         add_action(self::AS_WRITE_HOOK, [self::class, 'process_write_batch'], 10, 1);
+        add_action(self::CRON_HOOK, [self::class, 'cron_run']);
         add_action('rest_api_init', [self::class, 'register_routes']);
 
         if (B2B_Settings::decimal_stock()) {
@@ -208,6 +210,37 @@ final class PriceStockSync
             ($manage && null !== ($r['qty'] ?? null)) ? (string) (float) $r['qty'] : '-',
             (string) ($r['status'] ?? ''),
         ]));
+    }
+
+    // ===================== Авто-расписание =====================
+
+    /** Запуск синка по расписанию (рекуррентное действие). */
+    public static function cron_run(): void
+    {
+        if (B2B_Api::configured()) {
+            self::start();
+        }
+    }
+
+    /** Перепланировать авто-синк: снять старое и при включении поставить рекуррентным. */
+    public static function reschedule(bool $enabled, int $interval): void
+    {
+        if (function_exists('as_unschedule_all_actions')) {
+            as_unschedule_all_actions(self::CRON_HOOK, [], self::AS_GROUP);
+        }
+        if ($enabled && $interval > 0 && function_exists('as_schedule_recurring_action')) {
+            as_schedule_recurring_action(time() + $interval, $interval, self::CRON_HOOK, [], self::AS_GROUP);
+        }
+    }
+
+    /** Время следующего авто-синка (timestamp) или 0. */
+    public static function next_scheduled(): int
+    {
+        if (! function_exists('as_next_scheduled_action')) {
+            return 0;
+        }
+        $ts = as_next_scheduled_action(self::CRON_HOOK, [], self::AS_GROUP);
+        return is_int($ts) ? $ts : 0;
     }
 
     // ===================== Скан и diff (фаза 1) =====================

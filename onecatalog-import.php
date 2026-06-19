@@ -35,7 +35,13 @@ require_once __DIR__ . '/includes/class-settings.php';
 require_once __DIR__ . '/includes/class-b2b-api.php';
 require_once __DIR__ . '/includes/class-b2b-settings.php';
 require_once __DIR__ . '/includes/class-price-stock-sync.php';
+require_once __DIR__ . '/includes/class-supplier-codes-field.php';
 require_once __DIR__ . '/includes/class-admin-ui.php';
 require_once __DIR__ . '/includes/class-plugin.php';
 
 OneCatalog\Import\Plugin::init();
+
+// Снять авто-расписание B2B-синка при деактивации плагина.
+register_deactivation_hook(__FILE__, static function () {
+    OneCatalog\Import\PriceStockSync::reschedule(false, 0);
+});

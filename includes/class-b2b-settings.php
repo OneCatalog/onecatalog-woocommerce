@@ -26,6 +26,7 @@ final class B2B_Settings
     public const OPTION_KNOWN_MISSING = 'onecatalog_b2b_known_missing';     // import | skip
     public const OPTION_UNKNOWN_MODE  = 'onecatalog_b2b_unknown_mode';      // skip | import
     public const OPTION_PAGE_SIZE     = 'onecatalog_b2b_page_size';         // строк за страницу фида
+    public const OPTION_SCHEDULE      = 'onecatalog_b2b_schedule';          // off|hourly|6h|daily|weekly
     public const OPTION_CATALOG_META  = 'onecatalog_b2b_catalog_meta';      // {regions,warehouses,suppliers}
 
     public const PAGE_MIN = 50;
@@ -106,6 +107,30 @@ final class B2B_Settings
     {
         $n = (int) get_option(self::OPTION_PAGE_SIZE, self::PAGE_DEFAULT);
         return max(self::PAGE_MIN, min(self::PAGE_MAX, $n));
+    }
+
+    /** Варианты расписания авто-синка: key => [label, seconds]. */
+    public static function schedule_choices(): array
+    {
+        return [
+            'off'    => ['label' => __('Off (manual only)', 'onecatalog-import'), 'seconds' => 0],
+            'hourly' => ['label' => __('Every hour', 'onecatalog-import'),        'seconds' => HOUR_IN_SECONDS],
+            '6h'     => ['label' => __('Every 6 hours', 'onecatalog-import'),     'seconds' => 6 * HOUR_IN_SECONDS],
+            'daily'  => ['label' => __('Every day', 'onecatalog-import'),         'seconds' => DAY_IN_SECONDS],
+            'weekly' => ['label' => __('Every week', 'onecatalog-import'),        'seconds' => WEEK_IN_SECONDS],
+        ];
+    }
+
+    public static function schedule_key(): string
+    {
+        $k = (string) get_option(self::OPTION_SCHEDULE, 'off');
+        return isset(self::schedule_choices()[$k]) ? $k : 'off';
+    }
+
+    /** Интервал авто-синка в секундах (0 — выключено). */
+    public static function schedule_interval(): int
+    {
+        return (int) (self::schedule_choices()[self::schedule_key()]['seconds'] ?? 0);
     }
 
     /** Разведанные справочники {regions,warehouses,suppliers} (из «Проверить и загрузить»). */
@@ -268,6 +293,12 @@ final class B2B_Settings
         $um = sanitize_key(wp_unslash($_POST['onecatalog_b2b_unknown_mode'] ?? 'skip'));
         update_option(self::OPTION_UNKNOWN_MODE, in_array($um, ['skip', 'import'], true) ? $um : 'skip', false);
         update_option(self::OPTION_PAGE_SIZE, max(self::PAGE_MIN, min(self::PAGE_MAX, (int) ($_POST['onecatalog_b2b_page_size'] ?? self::PAGE_DEFAULT))), false);
+
+        // Расписание авто-синка + перепланировка рекуррентного действия.
+        $sched = sanitize_key(wp_unslash($_POST['onecatalog_b2b_schedule'] ?? 'off'));
+        $sched = isset(self::schedule_choices()[$sched]) ? $sched : 'off';
+        update_option(self::OPTION_SCHEDULE, $sched, false);
+        PriceStockSync::reschedule('off' !== $sched && B2B_Api::configured(), self::schedule_interval());
         return true;
     }
 
@@ -398,6 +429,26 @@ final class B2B_Settings
                     <tr>
                         <th scope="row"><label for="onecatalog_b2b_page_size"><?php esc_html_e('Feed page size', 'onecatalog-import'); ?></label></th>
                         <td><input type="number" min="<?php echo (int) self::PAGE_MIN; ?>" max="<?php echo (int) self::PAGE_MAX; ?>" id="onecatalog_b2b_page_size" name="onecatalog_b2b_page_size" value="<?php echo (int) self::page_size(); ?>" style="width:90px;"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><label for="onecatalog_b2b_schedule"><?php esc_html_e('Auto-sync schedule', 'onecatalog-import'); ?></label></th>
+                        <td>
+                            <select id="onecatalog_b2b_schedule" name="onecatalog_b2b_schedule">
+                                <?php foreach (self::schedule_choices() as $key => $opt) : ?>
+                                    <option value="<?php echo esc_attr($key); ?>" <?php selected(self::schedule_key(), $key); ?>><?php echo esc_html($opt['label']); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <p class="description">
+                                <?php esc_html_e('Runs the sync automatically in the background (Action Scheduler). Only changed products are written.', 'onecatalog-import'); ?>
+                                <?php
+                                $next = PriceStockSync::next_scheduled();
+                                if ($next > 0) {
+                                    echo '<br>' . esc_html__('Next run:', 'onecatalog-import') . ' '
+                                        . esc_html(date_i18n('Y-m-d H:i', $next));
+                                }
+                                ?>
+                            </p>
+                        </td>
                     </tr>
                 </table>
                 <?php submit_button(__('Save settings', 'onecatalog-import')); ?>
