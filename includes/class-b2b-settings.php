@@ -26,7 +26,8 @@ final class B2B_Settings
     public const OPTION_KNOWN_MISSING = 'onecatalog_b2b_known_missing';     // import | skip
     public const OPTION_UNKNOWN_MODE  = 'onecatalog_b2b_unknown_mode';      // skip | import
     public const OPTION_PAGE_SIZE     = 'onecatalog_b2b_page_size';         // строк за страницу фида
-    public const OPTION_SCHEDULE      = 'onecatalog_b2b_schedule';          // off|hourly|6h|daily|weekly
+    public const OPTION_SCHEDULE      = 'onecatalog_b2b_schedule';          // off|hourly|3h|6h|daily|weekly
+    public const OPTION_SCHEDULE_TIME = 'onecatalog_b2b_schedule_time';     // HH:MM (для daily)
     public const OPTION_CATALOG_META  = 'onecatalog_b2b_catalog_meta';      // {regions,warehouses,suppliers}
 
     public const PAGE_MIN = 50;
@@ -115,10 +116,31 @@ final class B2B_Settings
         return [
             'off'    => ['label' => __('Off (manual only)', 'onecatalog-import'), 'seconds' => 0],
             'hourly' => ['label' => __('Every hour', 'onecatalog-import'),        'seconds' => HOUR_IN_SECONDS],
+            '3h'     => ['label' => __('Every 3 hours', 'onecatalog-import'),     'seconds' => 3 * HOUR_IN_SECONDS],
             '6h'     => ['label' => __('Every 6 hours', 'onecatalog-import'),     'seconds' => 6 * HOUR_IN_SECONDS],
             'daily'  => ['label' => __('Every day', 'onecatalog-import'),         'seconds' => DAY_IN_SECONDS],
             'weekly' => ['label' => __('Every week', 'onecatalog-import'),        'seconds' => WEEK_IN_SECONDS],
         ];
+    }
+
+    /** Время суток для ежедневного запуска (HH:MM, в часовом поясе сайта). */
+    public static function schedule_time(): string
+    {
+        $t = (string) get_option(self::OPTION_SCHEDULE_TIME, '03:00');
+        return preg_match('/^([01]\d|2[0-3]):([0-5]\d)$/', $t) ? $t : '03:00';
+    }
+
+    /** Timestamp следующего наступления HH:MM в часовом поясе сайта. */
+    public static function next_daily_ts(string $hhmm): int
+    {
+        [$h, $m] = array_map('intval', array_pad(explode(':', $hhmm), 2, 0));
+        $tz  = wp_timezone();
+        $now = new \DateTimeImmutable('now', $tz);
+        $run = $now->setTime($h, $m, 0);
+        if ($run <= $now) {
+            $run = $run->modify('+1 day');
+        }
+        return $run->getTimestamp();
     }
 
     public static function schedule_key(): string
@@ -298,7 +320,16 @@ final class B2B_Settings
         $sched = sanitize_key(wp_unslash($_POST['onecatalog_b2b_schedule'] ?? 'off'));
         $sched = isset(self::schedule_choices()[$sched]) ? $sched : 'off';
         update_option(self::OPTION_SCHEDULE, $sched, false);
-        PriceStockSync::reschedule('off' !== $sched && B2B_Api::configured(), self::schedule_interval());
+
+        $time = sanitize_text_field(wp_unslash($_POST['onecatalog_b2b_schedule_time'] ?? '03:00'));
+        if (! preg_match('/^([01]\d|2[0-3]):([0-5]\d)$/', $time)) {
+            $time = '03:00';
+        }
+        update_option(self::OPTION_SCHEDULE_TIME, $time, false);
+
+        // Для «каждый день» первый запуск — в выбранное время; иначе через интервал.
+        $first_run = ('daily' === $sched) ? self::next_daily_ts($time) : 0;
+        PriceStockSync::reschedule('off' !== $sched && B2B_Api::configured(), self::schedule_interval(), $first_run);
         return true;
     }
 
@@ -450,6 +481,19 @@ final class B2B_Settings
                             </p>
                         </td>
                     </tr>
+                    <tr class="oc-ps-sched-time"<?php echo self::schedule_key() === 'daily' ? '' : ' style="display:none;"'; ?>>
+                        <th scope="row"><label for="onecatalog_b2b_schedule_time"><?php esc_html_e('Run time', 'onecatalog-import'); ?></label></th>
+                        <td>
+                            <input type="time" id="onecatalog_b2b_schedule_time" name="onecatalog_b2b_schedule_time" value="<?php echo esc_attr(self::schedule_time()); ?>">
+                            <p class="description"><?php
+                                printf(
+                                    /* translators: %s: site timezone */
+                                    esc_html__('Time of day for the daily run, in the site timezone (%s).', 'onecatalog-import'),
+                                    esc_html(wp_timezone_string())
+                                );
+                            ?></p>
+                        </td>
+                    </tr>
                 </table>
                 <?php submit_button(__('Save settings', 'onecatalog-import')); ?>
             </form>
@@ -469,6 +513,13 @@ final class B2B_Settings
                 document.querySelectorAll('.oc-ps-supplier-fixed').forEach(function (r) { r.style.display = (v === 'supplier') ? '' : 'none'; });
             }
             if (sel) { sel.addEventListener('change', sync); sync(); }
+
+            var sched = document.getElementById('onecatalog_b2b_schedule');
+            function syncSched() {
+                var v = sched ? sched.value : 'off';
+                document.querySelectorAll('.oc-ps-sched-time').forEach(function (r) { r.style.display = (v === 'daily') ? '' : 'none'; });
+            }
+            if (sched) { sched.addEventListener('change', syncSched); syncSched(); }
         })();
         </script>
         <?php

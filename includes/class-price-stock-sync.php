@@ -222,14 +222,19 @@ final class PriceStockSync
         }
     }
 
-    /** Перепланировать авто-синк: снять старое и при включении поставить рекуррентным. */
-    public static function reschedule(bool $enabled, int $interval): void
+    /**
+     * Перепланировать авто-синк: снять старое и при включении поставить рекуррентным.
+     * $first_run — момент первого запуска (для «каждый день» в выбранное время);
+     * 0 — стартовать через интервал от текущего момента.
+     */
+    public static function reschedule(bool $enabled, int $interval, int $first_run = 0): void
     {
         if (function_exists('as_unschedule_all_actions')) {
             as_unschedule_all_actions(self::CRON_HOOK, [], self::AS_GROUP);
         }
         if ($enabled && $interval > 0 && function_exists('as_schedule_recurring_action')) {
-            as_schedule_recurring_action(time() + $interval, $interval, self::CRON_HOOK, [], self::AS_GROUP);
+            $start = $first_run > 0 ? $first_run : (time() + $interval);
+            as_schedule_recurring_action($start, $interval, self::CRON_HOOK, [], self::AS_GROUP);
         }
     }
 
