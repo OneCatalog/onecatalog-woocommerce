@@ -48,7 +48,7 @@ final class PriceStockSync
     public static function init(): void
     {
         add_action(self::AS_HOOK, [self::class, 'process_page'], 10, 1);
-        add_action(self::AS_WRITE_HOOK, [self::class, 'process_write_batch'], 10, 1);
+        add_action(self::AS_WRITE_HOOK, [self::class, 'process_write_batch'], 10, 2);
         add_action(self::CRON_HOOK, [self::class, 'cron_run']);
         add_action('rest_api_init', [self::class, 'register_routes']);
 
@@ -288,10 +288,18 @@ final class PriceStockSync
             return false;
         }
 
-        $data    = $page['data'];
+        /** Фильтр: сырые данные страницы фида сразу после чтения (products/regions/warehouses). */
+        $data    = (array) apply_filters('onecatalog_b2b_feed_data', $page['data'], $start);
         $total   = (int) ($page['meta']['counts'] ?? 0);
         $known   = (array) ($data['products']['known'] ?? []);
         $unknown = (array) ($data['products']['unknown'] ?? []);
+
+        // Контекст фида: справочники регионов и складов — пробрасываются в хуки записи,
+        // чтобы сайт мог разложить цены по регионам, а остатки по складам (напр. в ACF).
+        $context = [
+            'regions'    => (array) ($data['regions'] ?? []),
+            'warehouses' => (array) ($data['warehouses'] ?? []),
+        ];
 
         $cfg = [
             'region_prio'   => B2B_Settings::region_priority(),
@@ -326,25 +334,29 @@ final class PriceStockSync
                 continue;
             }
 
-            $rec = self::resolve_record($offers, (int) $product_id, $cfg);
+            /** Фильтр: офферы товара перед резолвом (можно отфильтровать/дополнить). */
+            $offers = (array) apply_filters('onecatalog_b2b_offers', $offers, $public_id, (int) $product_id, $context);
+
+            $rec = self::resolve_record($offers, (int) $product_id, $cfg, $context);
             if (($sigs[(int) $product_id] ?? '') === $rec['sig']) {
                 $unchanged++;
                 continue; // ничего не поменялось → не трогаем товар
             }
 
-            $rec['id']    = (int) $product_id;
-            $rec['codes'] = self::extract_supplier_codes($offers);
-            $changes[]    = $rec;
+            $rec['id']     = (int) $product_id;
+            $rec['codes']  = self::extract_supplier_codes($offers);
+            $rec['offers'] = $offers; // сырые офферы → доступны в хуках записи (ACF и т.п.)
+            $changes[]     = $rec;
             $changed++;
         }
 
         // Запись изменившихся: сразу (inline) или порциями в фоновую очередь.
         if ($changes) {
             if ($inline) {
-                self::process_write_batch($changes);
+                self::process_write_batch($changes, $context);
             } else {
                 foreach (array_chunk($changes, self::WRITE_BATCH) as $batch) {
-                    as_enqueue_async_action(self::AS_WRITE_HOOK, [$batch], self::AS_GROUP);
+                    as_enqueue_async_action(self::AS_WRITE_HOOK, [$batch, $context], self::AS_GROUP);
                 }
             }
         }
@@ -355,7 +367,7 @@ final class PriceStockSync
 
         if ($unknown && 'import' === B2B_Settings::unknown_mode()) {
             foreach ($unknown as $offer) {
-                self::handle_unknown((array) $offer, $cfg);
+                self::handle_unknown((array) $offer, $cfg, $context);
             }
         }
 
@@ -388,7 +400,7 @@ final class PriceStockSync
     }
 
     /** Резолв итоговых значений + сигнатура (чистая логика + фильтры). */
-    private static function resolve_record(array $offers, int $product_id, array $cfg): array
+    private static function resolve_record(array $offers, int $product_id, array $cfg, array $context = []): array
     {
         $price = self::resolve_price($offers, $cfg['region_prio'], $cfg['supplier_prio'], $cfg['strategy'], $cfg['supplier_fix'], $cfg['promo_as_sale']);
         /** Фильтр: цена B2B перед записью. */
@@ -412,26 +424,40 @@ final class PriceStockSync
             'status'     => $available ? 'instock' : 'outofstock',
         ];
         $rec['sig'] = self::signature($rec);
+
+        /**
+         * Фильтр: сигнатура change-detection. РАСШИРЬТЕ её, если раскладываете весь
+         * payload (все регионы/склады, напр. в ACF) — иначе изменения в неосновных
+         * регионах/складах не вызовут обновление (scan-and-diff их пропустит).
+         */
+        $rec['sig'] = (string) apply_filters('onecatalog_b2b_signature', $rec['sig'], $offers, $rec, $context);
         return $rec;
     }
 
     // ===================== Запись (фаза 2) =====================
 
     /** Применить заранее посчитанные значения к товарам (единственное место save()). */
-    public static function process_write_batch($records): void
+    public static function process_write_batch($records, $context = []): void
     {
         foreach ((array) $records as $rec) {
-            self::apply_resolved((array) $rec);
+            self::apply_resolved((array) $rec, (array) $context);
         }
     }
 
-    private static function apply_resolved(array $rec): void
+    private static function apply_resolved(array $rec, array $context = []): void
     {
         $product_id = (int) ($rec['id'] ?? 0);
         $product    = ($product_id && function_exists('wc_get_product')) ? wc_get_product($product_id) : null;
         if (! $product) {
             return;
         }
+        $offers = (array) ($rec['offers'] ?? []);
+
+        /**
+         * Экшен: перед записью товара. Сюда можно разложить цены по регионам и остатки
+         * по складам в свои поля (ACF) — на руках полные офферы и карты regions/warehouses.
+         */
+        do_action('onecatalog_b2b_before_update', $product_id, $offers, $rec, $context);
 
         if (null !== $rec['regular']) {
             $product->set_regular_price((string) $rec['regular']);
@@ -459,12 +485,12 @@ final class PriceStockSync
 
         $product->save();
 
-        /** Экшен: цена/остаток товара обновлены из B2B. */
-        do_action('onecatalog_pricestock_updated', $product_id, $rec);
+        /** Экшен: цена/остаток товара обновлены из B2B (полные офферы + контекст фида). */
+        do_action('onecatalog_pricestock_updated', $product_id, $rec, $offers, $context);
     }
 
     /** Unknown по коду поставщика (не рекомендуется) — с тем же diff по сигнатуре. */
-    private static function handle_unknown(array $offer, array $cfg): void
+    private static function handle_unknown(array $offer, array $cfg, array $context = []): void
     {
         $code = trim((string) ($offer['code'] ?? ''));
         $name = trim((string) ($offer['name'] ?? ''));
@@ -473,13 +499,14 @@ final class PriceStockSync
         }
         $product_id = self::find_by_supplier_code($code);
         if ($product_id) {
-            $rec = self::resolve_record([$offer], $product_id, $cfg);
+            $rec = self::resolve_record([$offer], $product_id, $cfg, $context);
             if ((string) get_post_meta($product_id, self::META_SIG, true) === $rec['sig']) {
                 return; // без изменений
             }
-            $rec['id']    = $product_id;
-            $rec['codes'] = self::extract_supplier_codes([$offer]);
-            self::apply_resolved($rec);
+            $rec['id']     = $product_id;
+            $rec['codes']  = self::extract_supplier_codes([$offer]);
+            $rec['offers'] = [$offer];
+            self::apply_resolved($rec, $context);
             return;
         }
         // создаём
@@ -494,10 +521,11 @@ final class PriceStockSync
             self::log($code, 'error', __('failed to create unknown product', 'onecatalog-import'));
             return;
         }
-        $rec          = self::resolve_record([$offer], $new_id, $cfg);
-        $rec['id']    = $new_id;
-        $rec['codes'] = self::extract_supplier_codes([$offer]);
-        self::apply_resolved($rec);
+        $rec           = self::resolve_record([$offer], $new_id, $cfg, $context);
+        $rec['id']     = $new_id;
+        $rec['codes']  = self::extract_supplier_codes([$offer]);
+        $rec['offers'] = [$offer];
+        self::apply_resolved($rec, $context);
         self::log($code, 'created', '');
     }
 
