@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OneCatalog Import 1.8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-21 01:24+0300\n"
+"POT-Creation-Date: 2026-06-21 02:16+0300\n"
 "PO-Revision-Date: 2026-06-20 02:30+0000\n"
 "Last-Translator: OneCatalog\n"
 "Language-Team: Russian\n"
@@ -104,6 +104,130 @@ msgid ""
 msgstr ""
 "Идентификатор товара в OneCatalog (public_id). Заполняется импортом; по нему "
 "товар обновляется при повторном импорте."
+
+#: includes/class-b2b-log.php:27 includes/class-b2b-log.php:28
+msgid "Sync log"
+msgstr "Журнал обновлений"
+
+#: includes/class-b2b-log.php:38 includes/class-b2b-staging.php:198
+#: includes/class-import-log.php:39
+msgid "Access denied"
+msgstr "Доступ запрещён"
+
+#: includes/class-b2b-log.php:52
+msgid "OneCatalog — price/stock sync log"
+msgstr "OneCatalog — журнал обновлений цен/остатков"
+
+#: includes/class-b2b-log.php:54
+msgid "Go to “Prices & stock”"
+msgstr "Перейти к «Цены и остатки»"
+
+#: includes/class-b2b-log.php:55 includes/class-import-log.php:80
+msgid "Refresh"
+msgstr "Обновить"
+
+#: includes/class-b2b-log.php:61
+msgid "Current run"
+msgstr "Текущий запуск"
+
+#: includes/class-b2b-log.php:61
+msgid "Last run"
+msgstr "Последний запуск"
+
+#. translators: 1: scanned, 2: total, 3: changed, 4: unchanged, 5: queued
+#: includes/class-b2b-log.php:66
+#, php-format
+msgid ""
+"Scanned %1$d/%2$d · changed %3$d · unchanged %4$d · queued for import %5$d"
+msgstr ""
+"Просканировано %1$d/%2$d · изменено %3$d · без изменений %4$d · в очередь "
+"импорта %5$d"
+
+#: includes/class-b2b-log.php:73
+msgid "running"
+msgstr "выполняется"
+
+#: includes/class-b2b-log.php:73
+msgid "finished"
+msgstr "завершён"
+
+#. translators: %d: pending actions
+#: includes/class-b2b-log.php:81
+#, php-format
+msgid ""
+"%d background action(s) pending. Manual “Sync now” runs in the browser and "
+"does not need them; scheduled auto-sync needs WP-Cron / real cron."
+msgstr ""
+"В ожидании фоновых задач: %d. Ручной «Синхронизировать сейчас» работает в "
+"браузере и в них не нуждается; авто-синк по расписанию требует WP-Cron / "
+"системный cron."
+
+#: includes/class-b2b-log.php:85
+msgid "Run history"
+msgstr "История запусков"
+
+#: includes/class-b2b-log.php:89
+msgid "Started"
+msgstr "Начало"
+
+#: includes/class-b2b-log.php:90
+msgid "Finished"
+msgstr "Окончание"
+
+#: includes/class-b2b-log.php:91
+msgid "Duration"
+msgstr "Длительность"
+
+#: includes/class-b2b-log.php:92
+msgid "Scanned"
+msgstr "Просканировано"
+
+#: includes/class-b2b-log.php:93
+msgid "Changed"
+msgstr "Изменено"
+
+#: includes/class-b2b-log.php:94
+msgid "Unchanged"
+msgstr "Без изменений"
+
+#: includes/class-b2b-log.php:95
+msgid "Queued import"
+msgstr "В очередь импорта"
+
+#: includes/class-b2b-log.php:100
+msgid "No runs yet."
+msgstr "Запусков пока не было."
+
+#: includes/class-b2b-log.php:119
+msgid "Last page-by-page details"
+msgstr "Детали последнего прогона (по страницам)"
+
+#: includes/class-b2b-log.php:123 includes/class-import-log.php:100
+msgid "Time"
+msgstr "Время"
+
+#: includes/class-b2b-log.php:124
+msgid "Key"
+msgstr "Ключ"
+
+#: includes/class-b2b-log.php:125 includes/class-import-log.php:102
+msgid "Status"
+msgstr "Статус"
+
+#: includes/class-b2b-log.php:126
+msgid "Message"
+msgstr "Сообщение"
+
+#: includes/class-b2b-log.php:131 includes/class-import-log.php:108
+msgid "No entries yet."
+msgstr "Записей пока нет."
+
+#: includes/class-b2b-log.php:146
+msgid ""
+"History keeps the last 30 runs; details — the last 60 page/item entries."
+msgstr ""
+"История хранит последние 30 запусков; детали — последние 60 записей по "
+"страницам/позициям."
 
 #: includes/class-b2b-settings.php:117
 msgid "Off (manual only)"
@@ -423,10 +547,6 @@ msgstr "Ничего не загружено."
 msgid "Staging (unknown products)"
 msgstr "Отстойник (unknown-товары)"
 
-#: includes/class-b2b-staging.php:198 includes/class-import-log.php:39
-msgid "Access denied"
-msgstr "Доступ запрещён"
-
 #: includes/class-b2b-staging.php:213
 msgid "Staging — unknown supplier products"
 msgstr "Отстойник — unknown-товары поставщиков"
@@ -541,10 +661,6 @@ msgstr "в ожидании — %1$d, в работе — %2$d."
 msgid "Run queue now"
 msgstr "Выполнить очередь сейчас"
 
-#: includes/class-import-log.php:80
-msgid "Refresh"
-msgstr "Обновить"
-
 #: includes/class-import-log.php:82
 msgid "Scheduled Actions (all)"
 msgstr "Запланированные действия (все)"
@@ -575,49 +691,37 @@ msgstr ""
 msgid "Last results"
 msgstr "Последние результаты"
 
-#: includes/class-import-log.php:100
-msgid "Time"
-msgstr "Время"
-
 #: includes/class-import-log.php:101
 msgid "Identifier"
 msgstr "Идентификатор"
-
-#: includes/class-import-log.php:102
-msgid "Status"
-msgstr "Статус"
 
 #: includes/class-import-log.php:103
 msgid "Product / error"
 msgstr "Товар / ошибка"
 
-#: includes/class-import-log.php:108
-msgid "No entries yet."
-msgstr "Записей пока нет."
-
 #: includes/class-import-log.php:130
 msgid "History of the last 100 imported items (most recent first)."
 msgstr "История последних 100 импортированных позиций (свежие сверху)."
 
-#: includes/class-plugin.php:51
+#: includes/class-plugin.php:52
 msgid "Documentation"
 msgstr "Документация"
 
-#: includes/class-plugin.php:62
+#: includes/class-plugin.php:63
 msgid "Settings"
 msgstr "Настройки"
 
-#: includes/class-price-stock-sync.php:309
+#: includes/class-price-stock-sync.php:311
 msgid "feed request failed"
 msgstr "не удалось получить фид"
 
 #. translators: 1: scanned, 2: changed, 3: unchanged
-#: includes/class-price-stock-sync.php:401
+#: includes/class-price-stock-sync.php:403
 #, php-format
 msgid "page %1$d: scanned %2$d, changed %3$d, unchanged %4$d"
 msgstr "страница %1$d: просканировано %2$d, изменено %3$d, без изменений %4$d"
 
-#: includes/class-price-stock-sync.php:568
+#: includes/class-price-stock-sync.php:570
 msgid "failed to create unknown product"
 msgstr "не удалось создать unknown-товар"
 

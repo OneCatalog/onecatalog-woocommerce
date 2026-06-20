@@ -35,6 +35,8 @@ final class PriceStockSync
 
     public const OPTION_LOG      = 'onecatalog_b2b_log';
     public const OPTION_PROGRESS = 'onecatalog_b2b_progress';
+    public const OPTION_HISTORY  = 'onecatalog_b2b_history'; // сводки завершённых запусков
+    public const HISTORY_MAX     = 30;
 
     public const META_SUPPLIER_CODES = '_onecatalog_supplier_codes';
     public const META_SUPPLIER_CODE  = '_onecatalog_supplier_code';
@@ -657,8 +659,28 @@ final class PriceStockSync
     private static function finish(): void
     {
         $p = (array) get_option(self::OPTION_PROGRESS, []);
-        $p['finished'] = true;
+        if (! empty($p['finished'])) {
+            return; // уже завершён — историю не дублируем
+        }
+        $p['finished']    = true;
+        $p['finished_at'] = time();
         update_option(self::OPTION_PROGRESS, $p, false);
+
+        // Сводка запуска → в историю обновлений (последние HISTORY_MAX).
+        $h = get_option(self::OPTION_HISTORY, []);
+        if (! is_array($h)) {
+            $h = [];
+        }
+        array_unshift($h, [
+            'started'       => (int) ($p['started'] ?? 0),
+            'finished'      => (int) $p['finished_at'],
+            'total'         => (int) ($p['total'] ?? 0),
+            'scanned'       => (int) ($p['scanned'] ?? 0),
+            'changed'       => (int) ($p['changed'] ?? 0),
+            'unchanged'     => (int) ($p['unchanged'] ?? 0),
+            'queued_import' => (int) ($p['queued_import'] ?? 0),
+        ]);
+        update_option(self::OPTION_HISTORY, array_slice($h, 0, self::HISTORY_MAX), false);
     }
 
     // ===================== REST =====================

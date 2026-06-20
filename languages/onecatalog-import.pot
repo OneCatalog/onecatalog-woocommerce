@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OneCatalog Import 1.8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-21 01:24+0300\n"
+"POT-Creation-Date: 2026-06-21 02:16+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -103,6 +103,123 @@ msgstr ""
 msgid ""
 "OneCatalog product identifier (public_id). Filled by the import and used to "
 "update the product on re-import."
+msgstr ""
+
+#: includes/class-b2b-log.php:27 includes/class-b2b-log.php:28
+msgid "Sync log"
+msgstr ""
+
+#: includes/class-b2b-log.php:38 includes/class-b2b-staging.php:198
+#: includes/class-import-log.php:39
+msgid "Access denied"
+msgstr ""
+
+#: includes/class-b2b-log.php:52
+msgid "OneCatalog — price/stock sync log"
+msgstr ""
+
+#: includes/class-b2b-log.php:54
+msgid "Go to “Prices & stock”"
+msgstr ""
+
+#: includes/class-b2b-log.php:55 includes/class-import-log.php:80
+msgid "Refresh"
+msgstr ""
+
+#: includes/class-b2b-log.php:61
+msgid "Current run"
+msgstr ""
+
+#: includes/class-b2b-log.php:61
+msgid "Last run"
+msgstr ""
+
+#. translators: 1: scanned, 2: total, 3: changed, 4: unchanged, 5: queued
+#: includes/class-b2b-log.php:66
+#, php-format
+msgid ""
+"Scanned %1$d/%2$d · changed %3$d · unchanged %4$d · queued for import %5$d"
+msgstr ""
+
+#: includes/class-b2b-log.php:73
+msgid "running"
+msgstr ""
+
+#: includes/class-b2b-log.php:73
+msgid "finished"
+msgstr ""
+
+#. translators: %d: pending actions
+#: includes/class-b2b-log.php:81
+#, php-format
+msgid ""
+"%d background action(s) pending. Manual “Sync now” runs in the browser and "
+"does not need them; scheduled auto-sync needs WP-Cron / real cron."
+msgstr ""
+
+#: includes/class-b2b-log.php:85
+msgid "Run history"
+msgstr ""
+
+#: includes/class-b2b-log.php:89
+msgid "Started"
+msgstr ""
+
+#: includes/class-b2b-log.php:90
+msgid "Finished"
+msgstr ""
+
+#: includes/class-b2b-log.php:91
+msgid "Duration"
+msgstr ""
+
+#: includes/class-b2b-log.php:92
+msgid "Scanned"
+msgstr ""
+
+#: includes/class-b2b-log.php:93
+msgid "Changed"
+msgstr ""
+
+#: includes/class-b2b-log.php:94
+msgid "Unchanged"
+msgstr ""
+
+#: includes/class-b2b-log.php:95
+msgid "Queued import"
+msgstr ""
+
+#: includes/class-b2b-log.php:100
+msgid "No runs yet."
+msgstr ""
+
+#: includes/class-b2b-log.php:119
+msgid "Last page-by-page details"
+msgstr ""
+
+#: includes/class-b2b-log.php:123 includes/class-import-log.php:100
+msgid "Time"
+msgstr ""
+
+#: includes/class-b2b-log.php:124
+msgid "Key"
+msgstr ""
+
+#: includes/class-b2b-log.php:125 includes/class-import-log.php:102
+msgid "Status"
+msgstr ""
+
+#: includes/class-b2b-log.php:126
+msgid "Message"
+msgstr ""
+
+#: includes/class-b2b-log.php:131 includes/class-import-log.php:108
+msgid "No entries yet."
+msgstr ""
+
+#: includes/class-b2b-log.php:146
+msgid ""
+"History keeps the last 30 runs; details — the last 60 page/item entries."
 msgstr ""
 
 #: includes/class-b2b-settings.php:117
@@ -402,10 +519,6 @@ msgstr ""
 msgid "Staging (unknown products)"
 msgstr ""
 
-#: includes/class-b2b-staging.php:198 includes/class-import-log.php:39
-msgid "Access denied"
-msgstr ""
-
 #: includes/class-b2b-staging.php:213
 msgid "Staging — unknown supplier products"
 msgstr ""
@@ -518,10 +631,6 @@ msgstr ""
 msgid "Run queue now"
 msgstr ""
 
-#: includes/class-import-log.php:80
-msgid "Refresh"
-msgstr ""
-
 #: includes/class-import-log.php:82
 msgid "Scheduled Actions (all)"
 msgstr ""
@@ -547,49 +656,37 @@ msgstr ""
 msgid "Last results"
 msgstr ""
 
-#: includes/class-import-log.php:100
-msgid "Time"
-msgstr ""
-
 #: includes/class-import-log.php:101
 msgid "Identifier"
-msgstr ""
-
-#: includes/class-import-log.php:102
-msgid "Status"
 msgstr ""
 
 #: includes/class-import-log.php:103
 msgid "Product / error"
 msgstr ""
 
-#: includes/class-import-log.php:108
-msgid "No entries yet."
-msgstr ""
-
 #: includes/class-import-log.php:130
 msgid "History of the last 100 imported items (most recent first)."
 msgstr ""
 
-#: includes/class-plugin.php:51
+#: includes/class-plugin.php:52
 msgid "Documentation"
 msgstr ""
 
-#: includes/class-plugin.php:62
+#: includes/class-plugin.php:63
 msgid "Settings"
 msgstr ""
 
-#: includes/class-price-stock-sync.php:309
+#: includes/class-price-stock-sync.php:311
 msgid "feed request failed"
 msgstr ""
 
 #. translators: 1: scanned, 2: changed, 3: unchanged
-#: includes/class-price-stock-sync.php:401
+#: includes/class-price-stock-sync.php:403
 #, php-format
 msgid "page %1$d: scanned %2$d, changed %3$d, unchanged %4$d"
 msgstr ""
 
-#: includes/class-price-stock-sync.php:568
+#: includes/class-price-stock-sync.php:570
 msgid "failed to create unknown product"
 msgstr ""
 
