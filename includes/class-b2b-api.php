@@ -129,19 +129,26 @@ final class B2B_Api
             $warehouses[(int) $id] = $label !== '' ? $label : ('#' . $id);
         }
 
+        // Поставщики — верхнеуровневый справочник (новый формат API).
         $suppliers = [];
-        $collect = static function (array $offers) use (&$suppliers): void {
-            foreach ($offers as $offer) {
-                $sid = (int) ($offer['supplier']['id'] ?? 0);
-                if ($sid > 0 && ! isset($suppliers[$sid])) {
-                    $suppliers[$sid] = (string) ($offer['supplier']['name'] ?? ('#' . $sid));
-                }
-            }
-        };
-        foreach ((array) ($data['products']['known'] ?? []) as $offers) {
-            $collect((array) $offers);
+        foreach ((array) ($data['suppliers'] ?? []) as $id => $s) {
+            $suppliers[(int) $id] = (string) ($s['name'] ?? ('#' . $id));
         }
-        $collect((array) ($data['products']['unknown'] ?? []));
+        // Фолбэк для старого формата (supplier{id,name} в офферах).
+        if (! $suppliers) {
+            $collect = static function (array $offers) use (&$suppliers): void {
+                foreach ($offers as $offer) {
+                    $sid = (int) ($offer['supplier']['id'] ?? 0);
+                    if ($sid > 0 && ! isset($suppliers[$sid])) {
+                        $suppliers[$sid] = (string) ($offer['supplier']['name'] ?? ('#' . $sid));
+                    }
+                }
+            };
+            foreach ((array) ($data['products']['known'] ?? []) as $offers) {
+                $collect((array) $offers);
+            }
+            $collect((array) ($data['products']['unknown'] ?? []));
+        }
 
         return ['regions' => $regions, 'warehouses' => $warehouses, 'suppliers' => $suppliers];
     }

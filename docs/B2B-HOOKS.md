@@ -36,10 +36,11 @@
 // $offers — массив офферов поставщиков по одному товару:
 $offer = [
     'name' => string, 'code' => string /* код поставщика */, 'public_id' => string, 'status' => bool,
-    'supplier' => ['id' => int, 'name' => string],
-    'product_prices'  => [ ['region_id'=>int,'base_price'=>float,'promo_price'=>float,'purchasing_price'=>?float], … ],
+    'supplier_id' => int,  // поставщик — id; имя в $context['suppliers'][id]['name']
+    'product_prices'  => [ ['region_id'=>int,'base_price'=>float,'promo_price'=>?float,'purchasing_price'=>?float], … ],
     'products_stocks' => [ ['warehouse_id'=>int,'quantity'=>float], … ],
 ];
+// (старый формат API — supplier=>['id','name'] внутри оффера — тоже поддерживается)
 
 // $rec — что плагин записал в товар:
 $rec = ['id'=>int,'regular'=>?float,'sale'=>?float,'purchasing'=>?float,
@@ -50,6 +51,7 @@ $rec = ['id'=>int,'regular'=>?float,'sale'=>?float,'purchasing'=>?float,
 $context = [
     'regions'    => [ region_id => ['slug'=>string,'menutitle'=>string] ],
     'warehouses' => [ warehouse_id => ['name'=>string,'city'=>string,'address'=>?string] ],
+    'suppliers'  => [ supplier_id => ['id'=>int,'name'=>string] ],
 ];
 ```
 

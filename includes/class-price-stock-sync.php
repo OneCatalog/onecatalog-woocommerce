@@ -75,7 +75,7 @@ final class PriceStockSync
         $candidates = [];
         if ('supplier' === $strategy) {
             foreach ($offers as $o) {
-                if ((int) ($o['supplier']['id'] ?? 0) === $supplier_fixed) {
+                if (self::offer_supplier_id($o) === $supplier_fixed) {
                     $candidates[] = $o;
                 }
             }
@@ -100,7 +100,7 @@ final class PriceStockSync
         if ('priority' === $strategy && $supplier_priority) {
             foreach ($supplier_priority as $sid) {
                 foreach ($priced as $row) {
-                    if ((int) ($row['offer']['supplier']['id'] ?? 0) === (int) $sid) {
+                    if (self::offer_supplier_id($row['offer']) === (int) $sid) {
                         return self::price_with_sale($row['price'], $promo_as_sale);
                     }
                 }
@@ -165,6 +165,15 @@ final class PriceStockSync
         return $sum;
     }
 
+    /** ID поставщика оффера (новый формат — supplier_id; старый — supplier.id). */
+    public static function offer_supplier_id(array $offer): int
+    {
+        if (isset($offer['supplier_id'])) {
+            return (int) $offer['supplier_id'];
+        }
+        return (int) ($offer['supplier']['id'] ?? 0);
+    }
+
     public static function any_available(array $offers): bool
     {
         foreach ($offers as $o) {
@@ -181,7 +190,7 @@ final class PriceStockSync
         $seen = [];
         foreach ($offers as $o) {
             $code = trim((string) ($o['code'] ?? ''));
-            $sid  = (int) ($o['supplier']['id'] ?? 0);
+            $sid  = self::offer_supplier_id($o);
             if ('' === $code) {
                 continue;
             }
@@ -308,11 +317,12 @@ final class PriceStockSync
         $known   = (array) ($data['products']['known'] ?? []);
         $unknown = (array) ($data['products']['unknown'] ?? []);
 
-        // Контекст фида: справочники регионов и складов — пробрасываются в хуки записи,
-        // чтобы сайт мог разложить цены по регионам, а остатки по складам (напр. в ACF).
+        // Контекст фида: справочники регионов, складов и поставщиков — пробрасываются в
+        // хуки записи (раскладка цен по регионам, остатков по складам и т.п.).
         $context = [
             'regions'    => (array) ($data['regions'] ?? []),
             'warehouses' => (array) ($data['warehouses'] ?? []),
+            'suppliers'  => (array) ($data['suppliers'] ?? []),
         ];
 
         $cfg = self::cfg();
@@ -524,7 +534,7 @@ final class PriceStockSync
         if ('import' === $mode) {
             self::import_offer($offer, $cfg, $context);
         } elseif ('stage' === $mode) {
-            B2B_Staging::upsert($offer); // в отстойник на ручной отбор
+            B2B_Staging::upsert($offer, (array) ($context['suppliers'] ?? [])); // в отстойник на ручной отбор
         }
         // 'skip' — ничего
     }

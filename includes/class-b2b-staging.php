@@ -68,7 +68,7 @@ final class B2B_Staging
      * Положить unknown-оффер в отстойник. Новый → status 'new'; уже игнорированный —
      * оставляем игнорированным (не воскрешаем), но обновляем last_seen/payload.
      */
-    public static function upsert(array $offer): void
+    public static function upsert(array $offer, array $suppliers = []): void
     {
         global $wpdb;
         $code = trim((string) ($offer['code'] ?? ''));
@@ -79,10 +79,18 @@ final class B2B_Staging
         $now   = current_time('mysql');
         $existing = $wpdb->get_row($wpdb->prepare("SELECT id, status FROM {$table} WHERE code = %s", $code), ARRAY_A);
 
+        // Поставщик: новый формат — supplier_id + карта suppliers; старый — supplier{id,name}.
+        $supplier_id = PriceStockSync::offer_supplier_id($offer);
+        $supplier_name = (string) (
+            $suppliers[$supplier_id]['name']
+            ?? $offer['supplier']['name']
+            ?? (B2B_Settings::catalog_meta()['suppliers'][$supplier_id] ?? '')
+        );
+
         $data = [
             'name'          => (string) ($offer['name'] ?? ''),
-            'supplier_id'   => (int) ($offer['supplier']['id'] ?? 0),
-            'supplier_name' => (string) ($offer['supplier']['name'] ?? ''),
+            'supplier_id'   => $supplier_id,
+            'supplier_name' => $supplier_name,
             'payload'       => wp_json_encode($offer),
             'last_seen'     => $now,
         ];
