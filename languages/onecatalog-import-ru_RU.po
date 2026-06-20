@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OneCatalog Import 1.8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-20 02:41+0300\n"
+"POT-Creation-Date: 2026-06-20 20:54+0300\n"
 "PO-Revision-Date: 2026-06-20 02:30+0000\n"
 "Last-Translator: OneCatalog\n"
 "Language-Team: Russian\n"
@@ -261,7 +261,7 @@ msgstr ""
 "Остаток всегда суммируется по поставщикам и складам; это управляет только "
 "ценой."
 
-#: includes/class-b2b-settings.php:402
+#: includes/class-b2b-settings.php:402 includes/class-b2b-staging.php:240
 msgid "Supplier"
 msgstr "Поставщик"
 
@@ -347,26 +347,37 @@ msgid "Skip (recommended)"
 msgstr "Пропускать (рекомендуется)"
 
 #: includes/class-b2b-settings.php:455
-msgid "Create and record the supplier code"
-msgstr "Создавать и фиксировать код поставщика"
+msgid "Staging — pick manually"
+msgstr "Отстойник — выбрать вручную"
 
-#: includes/class-b2b-settings.php:457
-msgid ""
-"Unknown products have no public_id; if created, the supplier code is stored "
-"for future matching. Not recommended."
-msgstr ""
-"У unknown-товаров нет public_id; при создании сохраняется код поставщика для "
-"будущего сопоставления. Не рекомендуется."
+#: includes/class-b2b-settings.php:456
+msgid "Auto-create all (record supplier code)"
+msgstr "Авто-создание всех (с кодом поставщика)"
 
+#. translators: %s: link to the Staging page
 #: includes/class-b2b-settings.php:461
+#, php-format
+msgid ""
+"Unknown products have no public_id. “Staging” collects them for manual "
+"review on the %s page; “Auto-create” imports them all and records the "
+"supplier code."
+msgstr ""
+"У unknown-товаров нет public_id. «Отстойник» собирает их для ручного отбора "
+"на странице %s; «Авто-создание» импортирует все и фиксирует код поставщика."
+
+#: includes/class-b2b-settings.php:462 includes/class-b2b-staging.php:173
+msgid "Staging"
+msgstr "Отстойник"
+
+#: includes/class-b2b-settings.php:468
 msgid "Feed page size"
 msgstr "Размер страницы фида"
 
-#: includes/class-b2b-settings.php:465
+#: includes/class-b2b-settings.php:472
 msgid "Auto-sync schedule"
 msgstr "Расписание авто-синхронизации"
 
-#: includes/class-b2b-settings.php:473
+#: includes/class-b2b-settings.php:480
 msgid ""
 "Runs the sync automatically in the background (Action Scheduler). Only "
 "changed products are written."
@@ -374,55 +385,145 @@ msgstr ""
 "Автоматически запускает синхронизацию в фоне (Action Scheduler). "
 "Записываются только изменившиеся товары."
 
-#: includes/class-b2b-settings.php:477
+#: includes/class-b2b-settings.php:484
 msgid "Next run:"
 msgstr "Следующий запуск:"
 
-#: includes/class-b2b-settings.php:485
+#: includes/class-b2b-settings.php:492
 msgid "Run time"
 msgstr "Время запуска"
 
 #. translators: %s: site timezone
-#: includes/class-b2b-settings.php:491
+#: includes/class-b2b-settings.php:498
 #, php-format
 msgid "Time of day for the daily run, in the site timezone (%s)."
 msgstr "Время суток для ежедневного запуска, в часовом поясе сайта (%s)."
 
-#: includes/class-b2b-settings.php:498 includes/class-settings.php:743
+#: includes/class-b2b-settings.php:505 includes/class-settings.php:743
 msgid "Save settings"
 msgstr "Сохранить настройки"
 
-#: includes/class-b2b-settings.php:502
+#: includes/class-b2b-settings.php:509
 msgid "Run sync"
 msgstr "Запуск синхронизации"
 
-#: includes/class-b2b-settings.php:503
+#: includes/class-b2b-settings.php:510
 msgid "Sync now"
 msgstr "Синхронизировать сейчас"
 
-#: includes/class-b2b-settings.php:532
+#: includes/class-b2b-settings.php:539
 msgid "Nothing loaded."
 msgstr "Ничего не загружено."
 
-#: includes/class-plugin.php:49
+#: includes/class-b2b-staging.php:179
+msgid "Staging (unknown products)"
+msgstr "Отстойник (unknown-товары)"
+
+#: includes/class-b2b-staging.php:190
+msgid "Access denied"
+msgstr "Доступ запрещён"
+
+#: includes/class-b2b-staging.php:205
+msgid "Staging — unknown supplier products"
+msgstr "Отстойник — unknown-товары поставщиков"
+
+#: includes/class-b2b-staging.php:206
+msgid ""
+"Products from the B2B feed without a OneCatalog public_id. Select the ones "
+"to import; the rest stay here. Ignored ones are not offered again."
+msgstr ""
+"Товары B2B-фида без public_id OneCatalog. Отметьте нужные для импорта; "
+"остальные останутся здесь. Игнорированные больше не предлагаются."
+
+#: includes/class-b2b-staging.php:213
+msgid "New"
+msgstr "Новые"
+
+#: includes/class-b2b-staging.php:213
+msgid "Ignored"
+msgstr "Игнорированные"
+
+#: includes/class-b2b-staging.php:213
+msgid "Imported"
+msgstr "Импортированные"
+
+#: includes/class-b2b-staging.php:227
+msgid "Import selected"
+msgstr "Импортировать выбранные"
+
+#: includes/class-b2b-staging.php:228
+msgid "Ignore selected"
+msgstr "Игнорировать выбранные"
+
+#: includes/class-b2b-staging.php:231
+msgid "Return to “New”"
+msgstr "Вернуть в «Новые»"
+
+#: includes/class-b2b-staging.php:238
+msgid "Name"
+msgstr "Название"
+
+#: includes/class-b2b-staging.php:239
+msgid "Supplier code"
+msgstr "Код поставщика"
+
+#: includes/class-b2b-staging.php:241
+msgid "Price"
+msgstr "Цена"
+
+#: includes/class-b2b-staging.php:242
+msgid "Stock"
+msgstr "Остаток"
+
+#: includes/class-b2b-staging.php:243
+msgid "Last seen"
+msgstr "Последний раз в фиде"
+
+#: includes/class-b2b-staging.php:248
+msgid "Empty."
+msgstr "Пусто."
+
+#: includes/class-b2b-staging.php:259
+msgid "product"
+msgstr "товар"
+
+#. translators: %d: number of products
+#: includes/class-b2b-staging.php:295
+#, php-format
+msgid "Imported: %d"
+msgstr "Импортировано: %d"
+
+#. translators: %d: number of products
+#: includes/class-b2b-staging.php:300
+#, php-format
+msgid "Ignored: %d"
+msgstr "Игнорировано: %d"
+
+#. translators: %d: number of products
+#: includes/class-b2b-staging.php:305
+#, php-format
+msgid "Returned to “New”: %d"
+msgstr "Возвращено в «Новые»: %d"
+
+#: includes/class-plugin.php:50
 msgid "Documentation"
 msgstr "Документация"
 
-#: includes/class-plugin.php:60
+#: includes/class-plugin.php:61
 msgid "Settings"
 msgstr "Настройки"
 
-#: includes/class-price-stock-sync.php:286
+#: includes/class-price-stock-sync.php:300
 msgid "feed request failed"
 msgstr "не удалось получить фид"
 
 #. translators: 1: scanned, 2: changed, 3: unchanged
-#: includes/class-price-stock-sync.php:384
+#: includes/class-price-stock-sync.php:391
 #, php-format
 msgid "page %1$d: scanned %2$d, changed %3$d, unchanged %4$d"
 msgstr "страница %1$d: просканировано %2$d, изменено %3$d, без изменений %4$d"
 
-#: includes/class-price-stock-sync.php:521
+#: includes/class-price-stock-sync.php:558
 msgid "failed to create unknown product"
 msgstr "не удалось создать unknown-товар"
 
@@ -875,6 +976,16 @@ msgstr "Записано синхронизацией:"
 #: includes/class-supplier-codes-field.php:66
 msgid "Last price/stock sync:"
 msgstr "Последняя синхронизация цен/остатков:"
+
+#~ msgid "Create and record the supplier code"
+#~ msgstr "Создавать и фиксировать код поставщика"
+
+#~ msgid ""
+#~ "Unknown products have no public_id; if created, the supplier code is "
+#~ "stored for future matching. Not recommended."
+#~ msgstr ""
+#~ "У unknown-товаров нет public_id; при создании сохраняется код поставщика "
+#~ "для будущего сопоставления. Не рекомендуется."
 
 #~ msgid "OneCatalog Import"
 #~ msgstr "OneCatalog Import"

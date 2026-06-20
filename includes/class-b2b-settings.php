@@ -97,11 +97,11 @@ final class B2B_Settings
         return in_array($v, ['import', 'skip'], true) ? $v : 'skip';
     }
 
-    /** Поведение для unknown-товаров (без wiki): 'skip' | 'import' (создавать и фиксировать код). */
+    /** Поведение для unknown-товаров (без wiki): 'skip' | 'import' | 'stage' (отстойник). */
     public static function unknown_mode(): string
     {
         $v = (string) get_option(self::OPTION_UNKNOWN_MODE, 'skip');
-        return in_array($v, ['skip', 'import'], true) ? $v : 'skip';
+        return in_array($v, ['skip', 'import', 'stage'], true) ? $v : 'skip';
     }
 
     public static function page_size(): int
@@ -313,7 +313,7 @@ final class B2B_Settings
         $km = sanitize_key(wp_unslash($_POST['onecatalog_b2b_known_missing'] ?? 'skip'));
         update_option(self::OPTION_KNOWN_MISSING, in_array($km, ['import', 'skip'], true) ? $km : 'skip', false);
         $um = sanitize_key(wp_unslash($_POST['onecatalog_b2b_unknown_mode'] ?? 'skip'));
-        update_option(self::OPTION_UNKNOWN_MODE, in_array($um, ['skip', 'import'], true) ? $um : 'skip', false);
+        update_option(self::OPTION_UNKNOWN_MODE, in_array($um, ['skip', 'import', 'stage'], true) ? $um : 'skip', false);
         update_option(self::OPTION_PAGE_SIZE, max(self::PAGE_MIN, min(self::PAGE_MAX, (int) ($_POST['onecatalog_b2b_page_size'] ?? self::PAGE_DEFAULT))), false);
 
         // Расписание авто-синка + перепланировка рекуррентного действия.
@@ -452,9 +452,16 @@ final class B2B_Settings
                         <td>
                             <select id="onecatalog_b2b_unknown_mode" name="onecatalog_b2b_unknown_mode">
                                 <option value="skip" <?php selected(self::unknown_mode(), 'skip'); ?>><?php esc_html_e('Skip (recommended)', 'onecatalog-import'); ?></option>
-                                <option value="import" <?php selected(self::unknown_mode(), 'import'); ?>><?php esc_html_e('Create and record the supplier code', 'onecatalog-import'); ?></option>
+                                <option value="stage" <?php selected(self::unknown_mode(), 'stage'); ?>><?php esc_html_e('Staging — pick manually', 'onecatalog-import'); ?></option>
+                                <option value="import" <?php selected(self::unknown_mode(), 'import'); ?>><?php esc_html_e('Auto-create all (record supplier code)', 'onecatalog-import'); ?></option>
                             </select>
-                            <p class="description"><?php esc_html_e('Unknown products have no public_id; if created, the supplier code is stored for future matching. Not recommended.', 'onecatalog-import'); ?></p>
+                            <p class="description"><?php
+                                printf(
+                                    /* translators: %s: link to the Staging page */
+                                    esc_html__('Unknown products have no public_id. “Staging” collects them for manual review on the %s page; “Auto-create” imports them all and records the supplier code.', 'onecatalog-import'),
+                                    '<a href="' . esc_url(admin_url('admin.php?page=onecatalog-staging')) . '">' . esc_html__('Staging', 'onecatalog-import') . '</a>'
+                                );
+                            ?></p>
                         </td>
                     </tr>
                     <tr>

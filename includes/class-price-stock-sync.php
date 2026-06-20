@@ -250,6 +250,20 @@ final class PriceStockSync
 
     // ===================== Скан и diff (фаза 1) =====================
 
+    /** Настройки резолва (общие для скана и ручного импорта из отстойника). */
+    public static function cfg(): array
+    {
+        return [
+            'region_prio'   => B2B_Settings::region_priority(),
+            'supplier_prio' => B2B_Settings::supplier_priority(),
+            'strategy'      => B2B_Settings::price_strategy(),
+            'supplier_fix'  => B2B_Settings::supplier_fixed(),
+            'promo_as_sale' => B2B_Settings::promo_as_sale(),
+            'manage_stock'  => B2B_Settings::manage_stock(),
+            'decimal_stock' => B2B_Settings::decimal_stock(),
+        ];
+    }
+
     public static function start(): array
     {
         update_option(self::OPTION_LOG, [], false);
@@ -301,15 +315,7 @@ final class PriceStockSync
             'warehouses' => (array) ($data['warehouses'] ?? []),
         ];
 
-        $cfg = [
-            'region_prio'   => B2B_Settings::region_priority(),
-            'supplier_prio' => B2B_Settings::supplier_priority(),
-            'strategy'      => B2B_Settings::price_strategy(),
-            'supplier_fix'  => B2B_Settings::supplier_fixed(),
-            'promo_as_sale' => B2B_Settings::promo_as_sale(),
-            'manage_stock'  => B2B_Settings::manage_stock(),
-            'decimal_stock' => B2B_Settings::decimal_stock(),
-        ];
+        $cfg = self::cfg();
         $known_missing = B2B_Settings::known_missing();
 
         $id_map = self::map_public_ids(array_keys($known));         // public_id → product_id
@@ -365,9 +371,10 @@ final class PriceStockSync
             Queue::enqueue($to_import); // ненайденные known → стандартная Wiki-очередь
         }
 
-        if ($unknown && 'import' === B2B_Settings::unknown_mode()) {
+        if ($unknown) {
+            $umode = B2B_Settings::unknown_mode(); // skip | import | stage
             foreach ($unknown as $offer) {
-                self::handle_unknown((array) $offer, $cfg, $context);
+                self::handle_unknown((array) $offer, $cfg, $context, $umode);
             }
         }
 
@@ -489,14 +496,18 @@ final class PriceStockSync
         do_action('onecatalog_pricestock_updated', $product_id, $rec, $offers, $context);
     }
 
-    /** Unknown по коду поставщика (не рекомендуется) — с тем же diff по сигнатуре. */
-    private static function handle_unknown(array $offer, array $cfg, array $context = []): void
+    /**
+     * Unknown-оффер (без public_id). Сначала пытаемся сопоставить по коду поставщика
+     * (тогда — обычное обновление с change-detection). Иначе — по режиму:
+     *   import — авто-создание; stage — в отстойник (ручной отбор); skip — игнор.
+     */
+    private static function handle_unknown(array $offer, array $cfg, array $context, string $mode): void
     {
         $code = trim((string) ($offer['code'] ?? ''));
-        $name = trim((string) ($offer['name'] ?? ''));
         if ('' === $code || ! function_exists('wc_get_product')) {
             return;
         }
+
         $product_id = self::find_by_supplier_code($code);
         if ($product_id) {
             $rec = self::resolve_record([$offer], $product_id, $cfg, $context);
@@ -509,24 +520,53 @@ final class PriceStockSync
             self::apply_resolved($rec, $context);
             return;
         }
-        // создаём
-        $product = new \WC_Product_Simple();
-        $product->set_name('' !== $name ? $name : $code);
-        $product->set_status(Settings::product_status());
-        if ('' === (string) wc_get_product_id_by_sku($code)) {
-            $product->set_sku($code);
+
+        if ('import' === $mode) {
+            self::import_offer($offer, $cfg, $context);
+        } elseif ('stage' === $mode) {
+            B2B_Staging::upsert($offer); // в отстойник на ручной отбор
         }
-        $new_id = (int) $product->save();
-        if (! $new_id) {
-            self::log($code, 'error', __('failed to create unknown product', 'onecatalog-import'));
-            return;
+        // 'skip' — ничего
+    }
+
+    /**
+     * Создать товар из unknown-оффера и применить цену/остаток (+зафиксировать код).
+     * Используется авто-режимом и ручным импортом из отстойника. Возвращает product_id.
+     */
+    public static function import_offer(array $offer, ?array $cfg = null, array $context = []): int
+    {
+        if (! function_exists('wc_get_product')) {
+            return 0;
         }
-        $rec           = self::resolve_record([$offer], $new_id, $cfg, $context);
-        $rec['id']     = $new_id;
+        $cfg  = $cfg ?? self::cfg();
+        $code = trim((string) ($offer['code'] ?? ''));
+        $name = trim((string) ($offer['name'] ?? ''));
+        if ('' === $code) {
+            return 0;
+        }
+
+        $product_id = self::find_by_supplier_code($code);
+        if (! $product_id) {
+            $product = new \WC_Product_Simple();
+            $product->set_name('' !== $name ? $name : $code);
+            $product->set_status(Settings::product_status());
+            if ('' === (string) wc_get_product_id_by_sku($code)) {
+                $product->set_sku($code);
+            }
+            $product_id = (int) $product->save();
+            if (! $product_id) {
+                self::log($code, 'error', __('failed to create unknown product', 'onecatalog-import'));
+                return 0;
+            }
+            self::log($code, 'created', '');
+        }
+
+        $rec           = self::resolve_record([$offer], $product_id, $cfg, $context);
+        $rec['id']     = $product_id;
         $rec['codes']  = self::extract_supplier_codes([$offer]);
         $rec['offers'] = [$offer];
         self::apply_resolved($rec, $context);
-        self::log($code, 'created', '');
+        return $product_id;
     }
 
     // ===================== Хранилища / помощники =====================

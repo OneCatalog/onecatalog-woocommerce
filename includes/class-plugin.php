@@ -20,6 +20,7 @@ final class Plugin
         Rest::init();
         Settings::init();
         B2B_Settings::init();
+        B2B_Staging::init();
         PriceStockSync::init();
         Supplier_Codes_Field::init();
         AdminUI::init();

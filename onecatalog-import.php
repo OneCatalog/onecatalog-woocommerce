@@ -34,6 +34,7 @@ require_once __DIR__ . '/includes/class-rest.php';
 require_once __DIR__ . '/includes/class-settings.php';
 require_once __DIR__ . '/includes/class-b2b-api.php';
 require_once __DIR__ . '/includes/class-b2b-settings.php';
+require_once __DIR__ . '/includes/class-b2b-staging.php';
 require_once __DIR__ . '/includes/class-price-stock-sync.php';
 require_once __DIR__ . '/includes/class-supplier-codes-field.php';
 require_once __DIR__ . '/includes/class-admin-ui.php';
@@ -41,6 +42,11 @@ require_once __DIR__ . '/includes/class-admin-product-column.php';
 require_once __DIR__ . '/includes/class-plugin.php';
 
 OneCatalog\Import\Plugin::init();
+
+// Создать таблицу отстойника при активации плагина.
+register_activation_hook(__FILE__, static function () {
+    OneCatalog\Import\B2B_Staging::install();
+});
 
 // Снять авто-расписание B2B-синка при деактивации плагина.
 register_deactivation_hook(__FILE__, static function () {
