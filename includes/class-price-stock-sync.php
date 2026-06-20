@@ -677,12 +677,49 @@ final class PriceStockSync
         ]);
     }
 
-    public static function rest_sync(): \WP_REST_Response
+    /**
+     * Ручной запуск — браузерный степпер (надёжен без WP-Cron). Каждый вызов
+     * обрабатывает ОДНУ страницу синхронно и возвращает, есть ли ещё. JS гоняет до
+     * конца. reset=true (первый вызов) — сброс прогресса/лога + отмена зависших задач.
+     */
+    public static function rest_sync(\WP_REST_Request $request): \WP_REST_Response
     {
         if (! B2B_Api::configured()) {
             return new \WP_REST_Response(['error' => 'not_configured'], 400);
         }
-        return new \WP_REST_Response(self::start(), 200);
+
+        $reset = (bool) $request->get_param('reset');
+        $start = (int) $request->get_param('start');
+
+        if ($reset) {
+            update_option(self::OPTION_LOG, [], false);
+            update_option(self::OPTION_PROGRESS, [
+                'scanned' => 0, 'changed' => 0, 'unchanged' => 0, 'queued_import' => 0,
+                'total' => B2B_Api::total(), 'finished' => false, 'started' => time(),
+            ], false);
+            self::cancel_pending(); // убрать зависшие в Action Scheduler задачи (те самые "pending")
+            $start = 0;
+        }
+
+        $more = self::process_page($start, true); // inline: и скан, и запись в этом же запросе
+        $size = B2B_Settings::page_size();
+
+        return new \WP_REST_Response([
+            'ok'       => true,
+            'more'     => $more,
+            'next'     => $start + $size,
+            'progress' => (array) get_option(self::OPTION_PROGRESS, []),
+            'log'      => array_slice((array) get_option(self::OPTION_LOG, []), 0, 40),
+        ], 200);
+    }
+
+    /** Отменить запланированные (но не выполненные) задачи B2B-синка. */
+    private static function cancel_pending(): void
+    {
+        if (function_exists('as_unschedule_all_actions')) {
+            as_unschedule_all_actions(self::AS_HOOK, [], self::AS_GROUP);
+            as_unschedule_all_actions(self::AS_WRITE_HOOK, [], self::AS_GROUP);
+        }
     }
 
     public static function rest_status(): \WP_REST_Response

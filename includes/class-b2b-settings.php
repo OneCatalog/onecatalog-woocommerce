@@ -373,6 +373,7 @@ final class B2B_Settings
                 'running'  => __('Syncing…', 'onecatalog-import'),
                 'done'     => __('Done.', 'onecatalog-import'),
                 'error'    => __('Error.', 'onecatalog-import'),
+                'changed'  => __('changed', 'onecatalog-import'),
             ],
         ]);
         ?>

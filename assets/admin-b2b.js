@@ -14,7 +14,6 @@
         var logEl = document.getElementById('oc-b2b-log');
         if (!btn) { return; }
         var I = cfg.i18n || {};
-        var polling = null;
 
         function renderLog(log) {
             logEl.textContent = (log || []).map(function (e) {
@@ -22,41 +21,45 @@
             }).join('\n');
         }
 
-        function poll() {
-            fetch(cfg.restStatus, { headers: { 'X-WP-Nonce': cfg.nonce }, credentials: 'same-origin' })
+        function showProgress(p, finished) {
+            p = p || {};
+            var scanned = p.scanned || 0, total = p.total || 0, changed = p.changed || 0;
+            var label = finished ? (I.done || 'Done.') : (I.running || 'Syncing…');
+            prog.textContent = label + ' ' + scanned + (total ? '/' + total : '')
+                + ' — ' + (I.changed || 'changed') + ': ' + changed;
+        }
+
+        // Браузерный степпер: каждый запрос обрабатывает одну страницу синхронно.
+        function step(start, reset) {
+            var body = reset ? { reset: true } : { start: start };
+            fetch(cfg.restSync, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-WP-Nonce': cfg.nonce },
+                credentials: 'same-origin',
+                body: JSON.stringify(body)
+            })
                 .then(function (r) { return r.json(); })
                 .then(function (d) {
-                    var p = d.progress || {};
-                    var done = p.done || 0, total = p.total || 0;
-                    if (d.log) { renderLog(d.log); }
-                    if (p.finished && !d.pending) {
-                        prog.textContent = (I.done || 'Done.') + ' ' + done + (total ? '/' + total : '');
+                    if (d.error) {
+                        prog.textContent = (I.error || 'Error.') + ' ' + d.error;
                         btn.disabled = false;
-                        clearInterval(polling); polling = null;
+                        return;
+                    }
+                    if (d.log) { renderLog(d.log); }
+                    showProgress(d.progress, !d.more);
+                    if (d.more) {
+                        step(d.next, false);
                     } else {
-                        prog.textContent = (I.running || 'Syncing…') + ' ' + done + (total ? '/' + total : '')
-                            + (d.pending ? ' (' + d.pending + ' pending)' : '');
+                        btn.disabled = false;
                     }
                 })
-                .catch(function () { /* keep polling */ });
+                .catch(function () { prog.textContent = I.error || 'Error.'; btn.disabled = false; });
         }
 
         btn.addEventListener('click', function () {
             btn.disabled = true;
             prog.textContent = I.starting || 'Starting…';
-            fetch(cfg.restSync, { method: 'POST', headers: { 'X-WP-Nonce': cfg.nonce }, credentials: 'same-origin' })
-                .then(function (r) { return r.json(); })
-                .then(function (d) {
-                    if (d.error) { prog.textContent = (I.error || 'Error.') + ' ' + d.error; btn.disabled = false; return; }
-                    if (d.sync) { // синхронный фолбэк — уже всё сделано
-                        poll();
-                        btn.disabled = false;
-                        return;
-                    }
-                    if (!polling) { polling = setInterval(poll, 2000); }
-                    poll();
-                })
-                .catch(function () { prog.textContent = I.error || 'Error.'; btn.disabled = false; });
+            step(0, true); // первый вызов — со сбросом
         });
     });
 })(jQuery);

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OneCatalog Import 1.8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-21 01:12+0300\n"
+"POT-Creation-Date: 2026-06-21 01:24+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Domain: onecatalog-import\n"
 
 #: includes/class-admin-product-column.php:50
 #: includes/class-admin-product-column.php:54
@@ -136,7 +135,7 @@ msgid "B2B connection"
 msgstr ""
 
 #: includes/class-b2b-settings.php:191 includes/class-b2b-settings.php:192
-#: includes/class-b2b-settings.php:347 includes/class-b2b-settings.php:380
+#: includes/class-b2b-settings.php:347 includes/class-b2b-settings.php:381
 msgid "Prices & stock"
 msgstr ""
 
@@ -220,126 +219,130 @@ msgstr ""
 msgid "Error."
 msgstr ""
 
-#: includes/class-b2b-settings.php:381
+#: includes/class-b2b-settings.php:376
+msgid "changed"
+msgstr ""
+
+#: includes/class-b2b-settings.php:382
 msgid ""
 "Updates regular/sale price and stock of products matched by public_id from "
 "the B2B feed. This overwrites price/stock of synced products on every run "
 "(it is a live feed)."
 msgstr ""
 
-#: includes/class-b2b-settings.php:384 includes/class-settings.php:429
+#: includes/class-b2b-settings.php:385 includes/class-settings.php:429
 msgid "Settings saved."
 msgstr ""
 
-#: includes/class-b2b-settings.php:391
+#: includes/class-b2b-settings.php:392
 msgid "Price strategy"
 msgstr ""
 
-#: includes/class-b2b-settings.php:394
+#: includes/class-b2b-settings.php:395
 msgid "Supplier priority (fallback: lowest)"
 msgstr ""
 
-#: includes/class-b2b-settings.php:395
+#: includes/class-b2b-settings.php:396
 msgid "Lowest base price"
 msgstr ""
 
-#: includes/class-b2b-settings.php:396
+#: includes/class-b2b-settings.php:397
 msgid "Specific supplier only"
 msgstr ""
 
-#: includes/class-b2b-settings.php:398
+#: includes/class-b2b-settings.php:399
 msgid ""
 "Stock is always summed across suppliers and selected warehouses; this "
 "controls the price only."
 msgstr ""
 
-#: includes/class-b2b-settings.php:402 includes/class-b2b-staging.php:248
+#: includes/class-b2b-settings.php:403 includes/class-b2b-staging.php:248
 msgid "Supplier"
 msgstr ""
 
-#: includes/class-b2b-settings.php:405 includes/class-settings.php:399
+#: includes/class-b2b-settings.php:406 includes/class-settings.php:399
 #: includes/class-settings.php:535 includes/class-settings.php:610
 #: includes/class-settings.php:678
 msgid "— select —"
 msgstr ""
 
-#: includes/class-b2b-settings.php:413
+#: includes/class-b2b-settings.php:414
 msgid "Region priority"
 msgstr ""
 
-#: includes/class-b2b-settings.php:416
+#: includes/class-b2b-settings.php:417
 msgid ""
 "Drag to order. Price is taken from the first region that has a valid price."
 msgstr ""
 
-#: includes/class-b2b-settings.php:420
+#: includes/class-b2b-settings.php:421
 msgid "Supplier priority"
 msgstr ""
 
-#: includes/class-b2b-settings.php:423
+#: includes/class-b2b-settings.php:424
 msgid "Drag to order. Used when the price strategy is “Supplier priority”."
 msgstr ""
 
-#: includes/class-b2b-settings.php:427
+#: includes/class-b2b-settings.php:428
 msgid "Stock options"
 msgstr ""
 
-#: includes/class-b2b-settings.php:429
+#: includes/class-b2b-settings.php:430
 msgid "Manage stock quantity (set quantity, not just in/out)"
 msgstr ""
 
-#: includes/class-b2b-settings.php:430
+#: includes/class-b2b-settings.php:431
 msgid "Allow fractional stock (e.g. m²) — enables decimal stock amounts"
 msgstr ""
 
-#: includes/class-b2b-settings.php:431
+#: includes/class-b2b-settings.php:432
 msgid "Set products NOT present in the feed to out of stock"
 msgstr ""
 
-#: includes/class-b2b-settings.php:435
+#: includes/class-b2b-settings.php:436
 msgid "Price options"
 msgstr ""
 
-#: includes/class-b2b-settings.php:437
+#: includes/class-b2b-settings.php:438
 msgid "Use promo_price as the WooCommerce sale price (when 0 < promo < base)"
 msgstr ""
 
-#: includes/class-b2b-settings.php:441
+#: includes/class-b2b-settings.php:442
 msgid "Known products not in store"
 msgstr ""
 
-#: includes/class-b2b-settings.php:444
+#: includes/class-b2b-settings.php:445
 msgid "Skip (only update existing)"
 msgstr ""
 
-#: includes/class-b2b-settings.php:445
+#: includes/class-b2b-settings.php:446
 msgid "Import them via the standard Wiki queue"
 msgstr ""
 
-#: includes/class-b2b-settings.php:447
+#: includes/class-b2b-settings.php:448
 msgid ""
 "Known products have a public_id, so they can be imported through the normal "
 "Wiki import pipeline and then priced."
 msgstr ""
 
-#: includes/class-b2b-settings.php:451
+#: includes/class-b2b-settings.php:452
 msgid "Unknown products (no wiki)"
 msgstr ""
 
-#: includes/class-b2b-settings.php:454
+#: includes/class-b2b-settings.php:455
 msgid "Skip (recommended)"
 msgstr ""
 
-#: includes/class-b2b-settings.php:455
+#: includes/class-b2b-settings.php:456
 msgid "Staging — pick manually"
 msgstr ""
 
-#: includes/class-b2b-settings.php:456
+#: includes/class-b2b-settings.php:457
 msgid "Auto-create all (record supplier code)"
 msgstr ""
 
 #. translators: %s: link to the Staging page
-#: includes/class-b2b-settings.php:461
+#: includes/class-b2b-settings.php:462
 #, php-format
 msgid ""
 "Unknown products have no public_id. “Staging” collects them for manual "
@@ -347,51 +350,51 @@ msgid ""
 "supplier code."
 msgstr ""
 
-#: includes/class-b2b-settings.php:462 includes/class-b2b-staging.php:181
+#: includes/class-b2b-settings.php:463 includes/class-b2b-staging.php:181
 msgid "Staging"
 msgstr ""
 
-#: includes/class-b2b-settings.php:468
+#: includes/class-b2b-settings.php:469
 msgid "Feed page size"
 msgstr ""
 
-#: includes/class-b2b-settings.php:472
+#: includes/class-b2b-settings.php:473
 msgid "Auto-sync schedule"
 msgstr ""
 
-#: includes/class-b2b-settings.php:480
+#: includes/class-b2b-settings.php:481
 msgid ""
 "Runs the sync automatically in the background (Action Scheduler). Only "
 "changed products are written."
 msgstr ""
 
-#: includes/class-b2b-settings.php:484
+#: includes/class-b2b-settings.php:485
 msgid "Next run:"
 msgstr ""
 
-#: includes/class-b2b-settings.php:492
+#: includes/class-b2b-settings.php:493
 msgid "Run time"
 msgstr ""
 
 #. translators: %s: site timezone
-#: includes/class-b2b-settings.php:498
+#: includes/class-b2b-settings.php:499
 #, php-format
 msgid "Time of day for the daily run, in the site timezone (%s)."
 msgstr ""
 
-#: includes/class-b2b-settings.php:505 includes/class-settings.php:743
+#: includes/class-b2b-settings.php:506 includes/class-settings.php:743
 msgid "Save settings"
 msgstr ""
 
-#: includes/class-b2b-settings.php:509
+#: includes/class-b2b-settings.php:510
 msgid "Run sync"
 msgstr ""
 
-#: includes/class-b2b-settings.php:510
+#: includes/class-b2b-settings.php:511
 msgid "Sync now"
 msgstr ""
 
-#: includes/class-b2b-settings.php:539
+#: includes/class-b2b-settings.php:540
 msgid "Nothing loaded."
 msgstr ""
 
