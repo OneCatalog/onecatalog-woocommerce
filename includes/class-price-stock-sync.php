@@ -309,6 +309,7 @@ final class PriceStockSync
         $page = B2B_Api::fetch_page($start, $size);
         if (null === $page) {
             self::log('', 'error', __('feed request failed', 'onecatalog-import'));
+            B2B_Notifications::maybe_error_email(__('feed request failed', 'onecatalog-import'));
             self::finish();
             return false;
         }
@@ -326,6 +327,12 @@ final class PriceStockSync
             'warehouses' => (array) ($data['warehouses'] ?? []),
             'suppliers'  => (array) ($data['suppliers'] ?? []),
         ];
+
+        // На первой странице фиксируем состав справочников фида и проверяем на новые
+        // элементы (баннер/письмо админу); новые НЕ применяются автоматически.
+        if (0 === $start) {
+            B2B_Settings::record_feed_seen($context);
+        }
 
         $cfg = self::cfg();
         $known_missing = B2B_Settings::known_missing();

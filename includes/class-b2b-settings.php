@@ -28,7 +28,9 @@ final class B2B_Settings
     public const OPTION_PAGE_SIZE     = 'onecatalog_b2b_page_size';         // строк за страницу фида
     public const OPTION_SCHEDULE      = 'onecatalog_b2b_schedule';          // off|hourly|3h|6h|daily|weekly
     public const OPTION_SCHEDULE_TIME = 'onecatalog_b2b_schedule_time';     // HH:MM (для daily)
-    public const OPTION_CATALOG_META  = 'onecatalog_b2b_catalog_meta';      // {regions,warehouses,suppliers}
+    public const OPTION_CATALOG_META  = 'onecatalog_b2b_catalog_meta';      // подтверждённый («настроенный») справочник
+    public const OPTION_FEED_META     = 'onecatalog_b2b_feed_meta';         // последний справочник, увиденный в фиде
+    public const OPTION_NOTIFY        = 'onecatalog_b2b_notify';            // email-уведомления 1|0
 
     public const PAGE_MIN = 50;
     public const PAGE_MAX = 500;
@@ -155,11 +157,92 @@ final class B2B_Settings
         return (int) (self::schedule_choices()[self::schedule_key()]['seconds'] ?? 0);
     }
 
-    /** Разведанные справочники {regions,warehouses,suppliers} (из «Проверить и загрузить»). */
+    /** Подтверждённый («настроенный») справочник {regions,warehouses,suppliers} id=>label. */
     public static function catalog_meta(): array
     {
         $m = get_option(self::OPTION_CATALOG_META, []);
         return is_array($m) ? $m : [];
+    }
+
+    /** Последний справочник, увиденный в фиде (id=>label). */
+    public static function feed_meta(): array
+    {
+        $m = get_option(self::OPTION_FEED_META, []);
+        return is_array($m) ? $m : [];
+    }
+
+    public static function notify_enabled(): bool
+    {
+        return get_option(self::OPTION_NOTIFY, '1') !== '0';
+    }
+
+    /** Лейблы справочника по типу: последнее из фида + подтверждённое (фид приоритетнее). */
+    public static function ref(string $type): array
+    {
+        $cm = (array) (self::catalog_meta()[$type] ?? []);
+        $fm = (array) (self::feed_meta()[$type] ?? []);
+        return $fm + $cm;
+    }
+
+    /** ID, появившиеся в фиде, но ещё не подтверждённые (новые/не настроенные). */
+    public static function new_ids(string $type): array
+    {
+        $ack = array_map('intval', array_keys((array) (self::catalog_meta()[$type] ?? [])));
+        $cur = array_map('intval', array_keys((array) (self::feed_meta()[$type] ?? [])));
+        return array_values(array_diff($cur, $ack));
+    }
+
+    /** Все новые (не подтверждённые) элементы по всем типам: [type => [id=>label]]. */
+    public static function new_items(): array
+    {
+        $out = [];
+        foreach (['regions', 'suppliers', 'warehouses'] as $type) {
+            $labels = self::ref($type);
+            $new = [];
+            foreach (self::new_ids($type) as $id) {
+                $new[$id] = (string) ($labels[$id] ?? ('#' . $id));
+            }
+            if ($new) {
+                $out[$type] = $new;
+            }
+        }
+        return $out;
+    }
+
+    /**
+     * Зафиксировать справочник, увиденный в фиде (из контекста синка), и проверить
+     * на новые элементы → письмо админу при изменении состава.
+     */
+    public static function record_feed_seen(array $context): void
+    {
+        $meta = [
+            'regions'    => [],
+            'warehouses' => [],
+            'suppliers'  => [],
+        ];
+        foreach ((array) ($context['regions'] ?? []) as $id => $r) {
+            $meta['regions'][(int) $id] = (string) ($r['menutitle'] ?? $r['slug'] ?? ('#' . $id));
+        }
+        foreach ((array) ($context['warehouses'] ?? []) as $id => $w) {
+            $label = trim((string) ($w['name'] ?? '') . (empty($w['city']) ? '' : ' (' . $w['city'] . ')'));
+            $meta['warehouses'][(int) $id] = $label !== '' ? $label : ('#' . $id);
+        }
+        foreach ((array) ($context['suppliers'] ?? []) as $id => $s) {
+            $meta['suppliers'][(int) $id] = (string) ($s['name'] ?? ('#' . $id));
+        }
+        update_option(self::OPTION_FEED_META, $meta, false);
+
+        B2B_Notifications::maybe_notify_change();
+    }
+
+    /** Принять текущий состав фида как подтверждённый (после настройки/просмотра). */
+    public static function acknowledge_feed(): void
+    {
+        $fm = self::feed_meta();
+        if ($fm) {
+            update_option(self::OPTION_CATALOG_META, $fm, false);
+        }
+        delete_option(B2B_Notifications::OPTION_NOTIFIED_HASH);
     }
 
     private static function int_list($raw): array
@@ -224,7 +307,9 @@ final class B2B_Settings
         ) {
             $meta = B2B_Api::discover();
             if (null !== $meta) {
-                update_option(self::OPTION_CATALOG_META, $meta, false);
+                update_option(self::OPTION_CATALOG_META, $meta, false); // подтверждённый
+                update_option(self::OPTION_FEED_META, $meta, false);    // и последний из фида
+                delete_option(B2B_Notifications::OPTION_NOTIFIED_HASH); // состав принят
                 $tested = $meta;
             } else {
                 $tested = false;
@@ -330,16 +415,24 @@ final class B2B_Settings
         // Для «каждый день» первый запуск — в выбранное время; иначе через интервал.
         $first_run = ('daily' === $sched) ? self::next_daily_ts($time) : 0;
         PriceStockSync::reschedule('off' !== $sched && B2B_Api::configured(), self::schedule_interval(), $first_run);
+
+        update_option(self::OPTION_NOTIFY, empty($_POST['onecatalog_b2b_notify']) ? '0' : '1', false);
+
+        // Сохранение настроек = подтверждение текущего состава фида (новые элементы
+        // настроены) → снимаем пометку «новое» и сбрасываем антидубль письма.
+        self::acknowledge_feed();
         return true;
     }
 
     public static function render_sync(): void
     {
         $saved = self::save_sync();
-        $meta  = self::catalog_meta();
-        $regions    = (array) ($meta['regions'] ?? []);
-        $warehouses = (array) ($meta['warehouses'] ?? []);
-        $suppliers  = (array) ($meta['suppliers'] ?? []);
+        // Лейблы — из последнего фида + подтверждённого; новые элементы помечаются.
+        $regions    = self::ref('regions');
+        $warehouses = self::ref('warehouses');
+        $suppliers  = self::ref('suppliers');
+        $new_regions   = self::new_ids('regions');
+        $new_suppliers = self::new_ids('suppliers');
 
         if (! B2B_Api::configured()) {
             ?>
@@ -413,14 +506,14 @@ final class B2B_Settings
                     <tr>
                         <th scope="row"><?php esc_html_e('Region priority', 'onecatalog-import'); ?></th>
                         <td>
-                            <?php self::render_sortable('onecatalog_b2b_region_priority', $region_order, $regions); ?>
+                            <?php self::render_sortable('onecatalog_b2b_region_priority', $region_order, $regions, $new_regions); ?>
                             <p class="description"><?php esc_html_e('Drag to order. Price is taken from the first region that has a valid price.', 'onecatalog-import'); ?></p>
                         </td>
                     </tr>
                     <tr class="oc-ps-supplier-prio"<?php echo $strategy === 'priority' ? '' : ' style="display:none;"'; ?>>
                         <th scope="row"><?php esc_html_e('Supplier priority', 'onecatalog-import'); ?></th>
                         <td>
-                            <?php self::render_sortable('onecatalog_b2b_supplier_priority', $supplier_order, $suppliers); ?>
+                            <?php self::render_sortable('onecatalog_b2b_supplier_priority', $supplier_order, $suppliers, $new_suppliers); ?>
                             <p class="description"><?php esc_html_e('Drag to order. Used when the price strategy is “Supplier priority”.', 'onecatalog-import'); ?></p>
                         </td>
                     </tr>
@@ -502,6 +595,13 @@ final class B2B_Settings
                             ?></p>
                         </td>
                     </tr>
+                    <tr>
+                        <th scope="row"><?php esc_html_e('Email notifications', 'onecatalog-import'); ?></th>
+                        <td>
+                            <label><input type="checkbox" name="onecatalog_b2b_notify" value="1" <?php checked(self::notify_enabled()); ?>>
+                                <?php esc_html_e('Email the site admin when the feed structure changes (new regions/suppliers) or a sync fails', 'onecatalog-import'); ?></label>
+                        </td>
+                    </tr>
                 </table>
                 <?php submit_button(__('Save settings', 'onecatalog-import')); ?>
             </form>
@@ -534,21 +634,29 @@ final class B2B_Settings
     }
 
     /** Рендер сортируемого списка приоритета (li с вложенным hidden input — порядок = DOM). */
-    private static function render_sortable(string $field, array $order, array $labels): void
+    private static function render_sortable(string $field, array $order, array $labels, array $new_ids = []): void
     {
         if (! $labels) {
             echo '<em>' . esc_html__('Nothing loaded.', 'onecatalog-import') . '</em>';
             return;
         }
-        echo '<ul class="oc-sortable" style="margin:0;max-width:420px;">';
+        $new_ids = array_map('intval', $new_ids);
+        echo '<ul class="oc-sortable" style="margin:0;max-width:460px;">';
         foreach ($order as $id) {
             $id = (int) $id;
             if (! isset($labels[$id])) {
                 continue;
             }
-            echo '<li style="padding:6px 10px;margin:3px 0;background:#fff;border:1px solid #ccd0d4;border-radius:3px;cursor:move;">';
+            $is_new = in_array($id, $new_ids, true);
+            $border = $is_new ? '#dba617' : '#ccd0d4';
+            $bg     = $is_new ? '#fcf9e8' : '#fff';
+            echo '<li style="padding:6px 10px;margin:3px 0;background:' . $bg . ';border:1px solid ' . $border . ';border-radius:3px;cursor:move;">';
             echo '<span class="dashicons dashicons-menu" style="color:#999;"></span> ';
             echo esc_html($labels[$id] . ' (#' . $id . ')');
+            if ($is_new) {
+                echo ' <span style="background:#dba617;color:#fff;border-radius:3px;padding:1px 6px;font-size:11px;">'
+                    . esc_html__('new — not configured', 'onecatalog-import') . '</span>';
+            }
             echo '<input type="hidden" name="' . esc_attr($field) . '[]" value="' . $id . '">';
             echo '</li>';
         }

@@ -36,6 +36,7 @@ require_once __DIR__ . '/includes/class-import-log.php';
 require_once __DIR__ . '/includes/class-b2b-api.php';
 require_once __DIR__ . '/includes/class-b2b-settings.php';
 require_once __DIR__ . '/includes/class-b2b-staging.php';
+require_once __DIR__ . '/includes/class-b2b-notifications.php';
 require_once __DIR__ . '/includes/class-price-stock-sync.php';
 require_once __DIR__ . '/includes/class-b2b-log.php';
 require_once __DIR__ . '/includes/class-supplier-codes-field.php';

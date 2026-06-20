@@ -23,6 +23,7 @@ final class Plugin
         B2B_Settings::init();
         B2B_Staging::init();
         B2B_Log::init();
+        B2B_Notifications::init();
         PriceStockSync::init();
         Supplier_Codes_Field::init();
         AdminUI::init();

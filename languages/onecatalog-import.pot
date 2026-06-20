@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OneCatalog Import 1.8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-21 02:16+0300\n"
+"POT-Creation-Date: 2026-06-21 02:28+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -222,244 +222,297 @@ msgid ""
 "History keeps the last 30 runs; details — the last 60 page/item entries."
 msgstr ""
 
-#: includes/class-b2b-settings.php:117
-msgid "Off (manual only)"
+#: includes/class-b2b-notifications.php:36
+msgid "regions"
 msgstr ""
 
-#: includes/class-b2b-settings.php:118
-msgid "Every hour"
+#: includes/class-b2b-notifications.php:37
+msgid "suppliers"
+msgstr ""
+
+#: includes/class-b2b-notifications.php:38
+msgid "warehouses"
+msgstr ""
+
+#: includes/class-b2b-notifications.php:46
+msgid ""
+"The B2B feed structure changed — there are new, not-yet-configured items"
+msgstr ""
+
+#: includes/class-b2b-notifications.php:48
+msgid "Review “Prices & stock” settings"
+msgstr ""
+
+#: includes/class-b2b-notifications.php:78
+msgid ""
+"The OneCatalog B2B feed structure has changed. New items that are not "
+"configured yet (e.g. price region / supplier priority):"
+msgstr ""
+
+#: includes/class-b2b-notifications.php:80
+msgid ""
+"They are not applied automatically. Open “Prices & stock” and set up the "
+"priorities:"
+msgstr ""
+
+#: includes/class-b2b-notifications.php:83
+msgid "OneCatalog: B2B feed changed — review needed"
+msgstr ""
+
+#: includes/class-b2b-notifications.php:98
+msgid "A OneCatalog B2B price/stock sync run failed."
+msgstr ""
+
+#: includes/class-b2b-notifications.php:99
+msgid "Error:"
+msgstr ""
+
+#: includes/class-b2b-notifications.php:100
+msgid "Check the connection keys and the feed:"
+msgstr ""
+
+#: includes/class-b2b-notifications.php:103
+msgid "OneCatalog: B2B sync failed"
 msgstr ""
 
 #: includes/class-b2b-settings.php:119
-msgid "Every 3 hours"
+msgid "Off (manual only)"
 msgstr ""
 
 #: includes/class-b2b-settings.php:120
-msgid "Every 6 hours"
+msgid "Every hour"
 msgstr ""
 
 #: includes/class-b2b-settings.php:121
-msgid "Every day"
+msgid "Every 3 hours"
 msgstr ""
 
 #: includes/class-b2b-settings.php:122
+msgid "Every 6 hours"
+msgstr ""
+
+#: includes/class-b2b-settings.php:123
+msgid "Every day"
+msgstr ""
+
+#: includes/class-b2b-settings.php:124
 msgid "Every week"
 msgstr ""
 
-#: includes/class-b2b-settings.php:183 includes/class-b2b-settings.php:184
-#: includes/class-b2b-settings.php:352
+#: includes/class-b2b-settings.php:266 includes/class-b2b-settings.php:267
+#: includes/class-b2b-settings.php:445
 msgid "B2B connection"
 msgstr ""
 
-#: includes/class-b2b-settings.php:191 includes/class-b2b-settings.php:192
-#: includes/class-b2b-settings.php:347 includes/class-b2b-settings.php:381
+#: includes/class-b2b-settings.php:274 includes/class-b2b-settings.php:275
+#: includes/class-b2b-settings.php:440 includes/class-b2b-settings.php:474
 msgid "Prices & stock"
 msgstr ""
 
-#: includes/class-b2b-settings.php:237
+#: includes/class-b2b-settings.php:322
 msgid "OneCatalog — B2B connection"
 msgstr ""
 
-#: includes/class-b2b-settings.php:238
+#: includes/class-b2b-settings.php:323
 msgid ""
 "Credentials for the B2B price & stock feed. These are separate from the Wiki "
 "API token: a retailer key in the URL path plus a private key."
 msgstr ""
 
-#: includes/class-b2b-settings.php:241
+#: includes/class-b2b-settings.php:326
 msgid "Saved."
 msgstr ""
 
-#: includes/class-b2b-settings.php:244
+#: includes/class-b2b-settings.php:329
 msgid "Could not load the feed — check the keys and try again."
 msgstr ""
 
 #. translators: 1: regions count, 2: warehouses count, 3: suppliers count
-#: includes/class-b2b-settings.php:249
+#: includes/class-b2b-settings.php:334
 #, php-format
 msgid ""
 "Feed loaded: %1$d regions, %2$d warehouses, %3$d suppliers. Configure them "
 "on the “Prices & stock” page."
 msgstr ""
 
-#: includes/class-b2b-settings.php:261
+#: includes/class-b2b-settings.php:346
 msgid "Retailer key (URL)"
 msgstr ""
 
-#: includes/class-b2b-settings.php:266
+#: includes/class-b2b-settings.php:351
 msgid "The key from the share URL path (…/retailer-share-products/KEY/)."
 msgstr ""
 
-#: includes/class-b2b-settings.php:268 includes/class-settings.php:449
+#: includes/class-b2b-settings.php:353 includes/class-settings.php:449
 msgid "Warning:"
 msgstr ""
 
-#: includes/class-b2b-settings.php:269
+#: includes/class-b2b-settings.php:354
 msgid "an environment variable is set — it overrides this field."
 msgstr ""
 
-#: includes/class-b2b-settings.php:275
+#: includes/class-b2b-settings.php:360
 msgid "Private key"
 msgstr ""
 
-#: includes/class-b2b-settings.php:279
+#: includes/class-b2b-settings.php:364
 msgid "The private_key query parameter from the share URL."
 msgstr ""
 
-#: includes/class-b2b-settings.php:284
+#: includes/class-b2b-settings.php:369
 msgid "Save"
 msgstr ""
 
-#: includes/class-b2b-settings.php:286
+#: includes/class-b2b-settings.php:371
 msgid "Save & load (test)"
 msgstr ""
 
 #. translators: %s: link to the B2B connection page
-#: includes/class-b2b-settings.php:351
+#: includes/class-b2b-settings.php:444
 #, php-format
 msgid "Configure the B2B connection first: %s."
 msgstr ""
 
-#: includes/class-b2b-settings.php:372
+#: includes/class-b2b-settings.php:465
 msgid "Starting…"
 msgstr ""
 
-#: includes/class-b2b-settings.php:373
+#: includes/class-b2b-settings.php:466
 msgid "Syncing…"
 msgstr ""
 
-#: includes/class-b2b-settings.php:374
+#: includes/class-b2b-settings.php:467
 msgid "Done."
 msgstr ""
 
-#: includes/class-b2b-settings.php:375
+#: includes/class-b2b-settings.php:468
 msgid "Error."
 msgstr ""
 
-#: includes/class-b2b-settings.php:376
+#: includes/class-b2b-settings.php:469
 msgid "changed"
 msgstr ""
 
-#: includes/class-b2b-settings.php:382
+#: includes/class-b2b-settings.php:475
 msgid ""
 "Updates regular/sale price and stock of products matched by public_id from "
 "the B2B feed. This overwrites price/stock of synced products on every run "
 "(it is a live feed)."
 msgstr ""
 
-#: includes/class-b2b-settings.php:385 includes/class-settings.php:429
+#: includes/class-b2b-settings.php:478 includes/class-settings.php:429
 msgid "Settings saved."
 msgstr ""
 
-#: includes/class-b2b-settings.php:392
+#: includes/class-b2b-settings.php:485
 msgid "Price strategy"
 msgstr ""
 
-#: includes/class-b2b-settings.php:395
+#: includes/class-b2b-settings.php:488
 msgid "Supplier priority (fallback: lowest)"
 msgstr ""
 
-#: includes/class-b2b-settings.php:396
+#: includes/class-b2b-settings.php:489
 msgid "Lowest base price"
 msgstr ""
 
-#: includes/class-b2b-settings.php:397
+#: includes/class-b2b-settings.php:490
 msgid "Specific supplier only"
 msgstr ""
 
-#: includes/class-b2b-settings.php:399
+#: includes/class-b2b-settings.php:492
 msgid ""
 "Stock is always summed across suppliers and selected warehouses; this "
 "controls the price only."
 msgstr ""
 
-#: includes/class-b2b-settings.php:403 includes/class-b2b-staging.php:248
+#: includes/class-b2b-settings.php:496 includes/class-b2b-staging.php:248
 msgid "Supplier"
 msgstr ""
 
-#: includes/class-b2b-settings.php:406 includes/class-settings.php:399
+#: includes/class-b2b-settings.php:499 includes/class-settings.php:399
 #: includes/class-settings.php:535 includes/class-settings.php:610
 #: includes/class-settings.php:678
 msgid "— select —"
 msgstr ""
 
-#: includes/class-b2b-settings.php:414
+#: includes/class-b2b-settings.php:507
 msgid "Region priority"
 msgstr ""
 
-#: includes/class-b2b-settings.php:417
+#: includes/class-b2b-settings.php:510
 msgid ""
 "Drag to order. Price is taken from the first region that has a valid price."
 msgstr ""
 
-#: includes/class-b2b-settings.php:421
+#: includes/class-b2b-settings.php:514
 msgid "Supplier priority"
 msgstr ""
 
-#: includes/class-b2b-settings.php:424
+#: includes/class-b2b-settings.php:517
 msgid "Drag to order. Used when the price strategy is “Supplier priority”."
 msgstr ""
 
-#: includes/class-b2b-settings.php:428
+#: includes/class-b2b-settings.php:521
 msgid "Stock options"
 msgstr ""
 
-#: includes/class-b2b-settings.php:430
+#: includes/class-b2b-settings.php:523
 msgid "Manage stock quantity (set quantity, not just in/out)"
 msgstr ""
 
-#: includes/class-b2b-settings.php:431
+#: includes/class-b2b-settings.php:524
 msgid "Allow fractional stock (e.g. m²) — enables decimal stock amounts"
 msgstr ""
 
-#: includes/class-b2b-settings.php:432
+#: includes/class-b2b-settings.php:525
 msgid "Set products NOT present in the feed to out of stock"
 msgstr ""
 
-#: includes/class-b2b-settings.php:436
+#: includes/class-b2b-settings.php:529
 msgid "Price options"
 msgstr ""
 
-#: includes/class-b2b-settings.php:438
+#: includes/class-b2b-settings.php:531
 msgid "Use promo_price as the WooCommerce sale price (when 0 < promo < base)"
 msgstr ""
 
-#: includes/class-b2b-settings.php:442
+#: includes/class-b2b-settings.php:535
 msgid "Known products not in store"
 msgstr ""
 
-#: includes/class-b2b-settings.php:445
+#: includes/class-b2b-settings.php:538
 msgid "Skip (only update existing)"
 msgstr ""
 
-#: includes/class-b2b-settings.php:446
+#: includes/class-b2b-settings.php:539
 msgid "Import them via the standard Wiki queue"
 msgstr ""
 
-#: includes/class-b2b-settings.php:448
+#: includes/class-b2b-settings.php:541
 msgid ""
 "Known products have a public_id, so they can be imported through the normal "
 "Wiki import pipeline and then priced."
 msgstr ""
 
-#: includes/class-b2b-settings.php:452
+#: includes/class-b2b-settings.php:545
 msgid "Unknown products (no wiki)"
 msgstr ""
 
-#: includes/class-b2b-settings.php:455
+#: includes/class-b2b-settings.php:548
 msgid "Skip (recommended)"
 msgstr ""
 
-#: includes/class-b2b-settings.php:456
+#: includes/class-b2b-settings.php:549
 msgid "Staging — pick manually"
 msgstr ""
 
-#: includes/class-b2b-settings.php:457
+#: includes/class-b2b-settings.php:550
 msgid "Auto-create all (record supplier code)"
 msgstr ""
 
 #. translators: %s: link to the Staging page
-#: includes/class-b2b-settings.php:462
+#: includes/class-b2b-settings.php:555
 #, php-format
 msgid ""
 "Unknown products have no public_id. “Staging” collects them for manual "
@@ -467,52 +520,66 @@ msgid ""
 "supplier code."
 msgstr ""
 
-#: includes/class-b2b-settings.php:463 includes/class-b2b-staging.php:181
+#: includes/class-b2b-settings.php:556 includes/class-b2b-staging.php:181
 msgid "Staging"
 msgstr ""
 
-#: includes/class-b2b-settings.php:469
+#: includes/class-b2b-settings.php:562
 msgid "Feed page size"
 msgstr ""
 
-#: includes/class-b2b-settings.php:473
+#: includes/class-b2b-settings.php:566
 msgid "Auto-sync schedule"
 msgstr ""
 
-#: includes/class-b2b-settings.php:481
+#: includes/class-b2b-settings.php:574
 msgid ""
 "Runs the sync automatically in the background (Action Scheduler). Only "
 "changed products are written."
 msgstr ""
 
-#: includes/class-b2b-settings.php:485
+#: includes/class-b2b-settings.php:578
 msgid "Next run:"
 msgstr ""
 
-#: includes/class-b2b-settings.php:493
+#: includes/class-b2b-settings.php:586
 msgid "Run time"
 msgstr ""
 
 #. translators: %s: site timezone
-#: includes/class-b2b-settings.php:499
+#: includes/class-b2b-settings.php:592
 #, php-format
 msgid "Time of day for the daily run, in the site timezone (%s)."
 msgstr ""
 
-#: includes/class-b2b-settings.php:506 includes/class-settings.php:743
+#: includes/class-b2b-settings.php:599
+msgid "Email notifications"
+msgstr ""
+
+#: includes/class-b2b-settings.php:602
+msgid ""
+"Email the site admin when the feed structure changes (new regions/suppliers) "
+"or a sync fails"
+msgstr ""
+
+#: includes/class-b2b-settings.php:606 includes/class-settings.php:743
 msgid "Save settings"
 msgstr ""
 
-#: includes/class-b2b-settings.php:510
+#: includes/class-b2b-settings.php:610
 msgid "Run sync"
 msgstr ""
 
-#: includes/class-b2b-settings.php:511
+#: includes/class-b2b-settings.php:611
 msgid "Sync now"
 msgstr ""
 
-#: includes/class-b2b-settings.php:540
+#: includes/class-b2b-settings.php:640
 msgid "Nothing loaded."
+msgstr ""
+
+#: includes/class-b2b-settings.php:658
+msgid "new — not configured"
 msgstr ""
 
 #: includes/class-b2b-staging.php:187
@@ -668,25 +735,26 @@ msgstr ""
 msgid "History of the last 100 imported items (most recent first)."
 msgstr ""
 
-#: includes/class-plugin.php:52
+#: includes/class-plugin.php:53
 msgid "Documentation"
 msgstr ""
 
-#: includes/class-plugin.php:63
+#: includes/class-plugin.php:64
 msgid "Settings"
 msgstr ""
 
 #: includes/class-price-stock-sync.php:311
+#: includes/class-price-stock-sync.php:312
 msgid "feed request failed"
 msgstr ""
 
 #. translators: 1: scanned, 2: changed, 3: unchanged
-#: includes/class-price-stock-sync.php:403
+#: includes/class-price-stock-sync.php:410
 #, php-format
 msgid "page %1$d: scanned %2$d, changed %3$d, unchanged %4$d"
 msgstr ""
 
-#: includes/class-price-stock-sync.php:570
+#: includes/class-price-stock-sync.php:577
 msgid "failed to create unknown product"
 msgstr ""
 
