@@ -19,6 +19,7 @@ final class Plugin
         Queue::init();
         Rest::init();
         Settings::init();
+        Import_Log::init();
         B2B_Settings::init();
         B2B_Staging::init();
         PriceStockSync::init();

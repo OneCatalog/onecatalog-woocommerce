@@ -104,6 +104,27 @@ final class Queue
         update_option(self::OPTION_LOG, array_slice($log, 0, 100), false);
     }
 
+    /**
+     * Принудительно прогнать готовые задачи Action Scheduler (когда WP-Cron не срабатывает,
+     * напр. на тестовом сайте без трафика). Возвращает число выполненных действий.
+     */
+    public static function run_now(int $max_batches = 10): array
+    {
+        if (! class_exists('ActionScheduler') || ! method_exists('ActionScheduler', 'runner')) {
+            return ['available' => false, 'ran' => 0];
+        }
+        $runner = \ActionScheduler::runner();
+        $ran = 0;
+        for ($i = 0; $i < max(1, $max_batches); $i++) {
+            $processed = (int) $runner->run('OneCatalog manual');
+            $ran += $processed;
+            if ($processed <= 0) {
+                break; // готовых задач больше нет
+            }
+        }
+        return ['available' => true, 'ran' => $ran];
+    }
+
     /** Статус очереди: порции в ожидании/в работе + последние результаты. */
     public static function status(): array
     {

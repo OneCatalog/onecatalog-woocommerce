@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OneCatalog Import 1.8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-20 20:54+0300\n"
+"POT-Creation-Date: 2026-06-21 01:12+0300\n"
 "PO-Revision-Date: 2026-06-20 02:30+0000\n"
 "Last-Translator: OneCatalog\n"
 "Language-Team: Russian\n"
@@ -261,7 +261,7 @@ msgstr ""
 "Остаток всегда суммируется по поставщикам и складам; это управляет только "
 "ценой."
 
-#: includes/class-b2b-settings.php:402 includes/class-b2b-staging.php:240
+#: includes/class-b2b-settings.php:402 includes/class-b2b-staging.php:248
 msgid "Supplier"
 msgstr "Поставщик"
 
@@ -365,7 +365,7 @@ msgstr ""
 "У unknown-товаров нет public_id. «Отстойник» собирает их для ручного отбора "
 "на странице %s; «Авто-создание» импортирует все и фиксирует код поставщика."
 
-#: includes/class-b2b-settings.php:462 includes/class-b2b-staging.php:173
+#: includes/class-b2b-settings.php:462 includes/class-b2b-staging.php:181
 msgid "Staging"
 msgstr "Отстойник"
 
@@ -415,19 +415,19 @@ msgstr "Синхронизировать сейчас"
 msgid "Nothing loaded."
 msgstr "Ничего не загружено."
 
-#: includes/class-b2b-staging.php:179
+#: includes/class-b2b-staging.php:187
 msgid "Staging (unknown products)"
 msgstr "Отстойник (unknown-товары)"
 
-#: includes/class-b2b-staging.php:190
+#: includes/class-b2b-staging.php:198 includes/class-import-log.php:39
 msgid "Access denied"
 msgstr "Доступ запрещён"
 
-#: includes/class-b2b-staging.php:205
+#: includes/class-b2b-staging.php:213
 msgid "Staging — unknown supplier products"
 msgstr "Отстойник — unknown-товары поставщиков"
 
-#: includes/class-b2b-staging.php:206
+#: includes/class-b2b-staging.php:214
 msgid ""
 "Products from the B2B feed without a OneCatalog public_id. Select the ones "
 "to import; the rest stay here. Ignored ones are not offered again."
@@ -435,95 +435,185 @@ msgstr ""
 "Товары B2B-фида без public_id OneCatalog. Отметьте нужные для импорта; "
 "остальные останутся здесь. Игнорированные больше не предлагаются."
 
-#: includes/class-b2b-staging.php:213
+#: includes/class-b2b-staging.php:221
 msgid "New"
 msgstr "Новые"
 
-#: includes/class-b2b-staging.php:213
+#: includes/class-b2b-staging.php:221
 msgid "Ignored"
 msgstr "Игнорированные"
 
-#: includes/class-b2b-staging.php:213
+#: includes/class-b2b-staging.php:221
 msgid "Imported"
 msgstr "Импортированные"
 
-#: includes/class-b2b-staging.php:227
+#: includes/class-b2b-staging.php:235
 msgid "Import selected"
 msgstr "Импортировать выбранные"
 
-#: includes/class-b2b-staging.php:228
+#: includes/class-b2b-staging.php:236
 msgid "Ignore selected"
 msgstr "Игнорировать выбранные"
 
-#: includes/class-b2b-staging.php:231
+#: includes/class-b2b-staging.php:239
 msgid "Return to “New”"
 msgstr "Вернуть в «Новые»"
 
-#: includes/class-b2b-staging.php:238
+#: includes/class-b2b-staging.php:246
 msgid "Name"
 msgstr "Название"
 
-#: includes/class-b2b-staging.php:239
+#: includes/class-b2b-staging.php:247
 msgid "Supplier code"
 msgstr "Код поставщика"
 
-#: includes/class-b2b-staging.php:241
+#: includes/class-b2b-staging.php:249
 msgid "Price"
 msgstr "Цена"
 
-#: includes/class-b2b-staging.php:242
+#: includes/class-b2b-staging.php:250
 msgid "Stock"
 msgstr "Остаток"
 
-#: includes/class-b2b-staging.php:243
+#: includes/class-b2b-staging.php:251
 msgid "Last seen"
 msgstr "Последний раз в фиде"
 
-#: includes/class-b2b-staging.php:248
+#: includes/class-b2b-staging.php:256
 msgid "Empty."
 msgstr "Пусто."
 
-#: includes/class-b2b-staging.php:259
+#: includes/class-b2b-staging.php:267
 msgid "product"
 msgstr "товар"
 
 #. translators: %d: number of products
-#: includes/class-b2b-staging.php:295
+#: includes/class-b2b-staging.php:303
 #, php-format
 msgid "Imported: %d"
 msgstr "Импортировано: %d"
 
 #. translators: %d: number of products
-#: includes/class-b2b-staging.php:300
+#: includes/class-b2b-staging.php:308
 #, php-format
 msgid "Ignored: %d"
 msgstr "Игнорировано: %d"
 
 #. translators: %d: number of products
-#: includes/class-b2b-staging.php:305
+#: includes/class-b2b-staging.php:313
 #, php-format
 msgid "Returned to “New”: %d"
 msgstr "Возвращено в «Новые»: %d"
 
-#: includes/class-plugin.php:50
+#: includes/class-import-log.php:28 includes/class-import-log.php:29
+msgid "Import log"
+msgstr "Журнал импорта"
+
+#: includes/class-import-log.php:49
+msgid "Action Scheduler is unavailable."
+msgstr "Action Scheduler недоступен."
+
+#. translators: %d: number of processed actions
+#: includes/class-import-log.php:52
+#, php-format
+msgid "Queue run: %d action(s) processed."
+msgstr "Прогон очереди: выполнено действий — %d."
+
+#: includes/class-import-log.php:63
+msgid "OneCatalog — import log"
+msgstr "OneCatalog — журнал импорта"
+
+#: includes/class-import-log.php:70
+msgid "Queue:"
+msgstr "Очередь:"
+
+#. translators: 1: pending batches, 2: running batches
+#: includes/class-import-log.php:73
+#, php-format
+msgid "%1$d pending, %2$d running."
+msgstr "в ожидании — %1$d, в работе — %2$d."
+
+#: includes/class-import-log.php:79
+msgid "Run queue now"
+msgstr "Выполнить очередь сейчас"
+
+#: includes/class-import-log.php:80
+msgid "Refresh"
+msgstr "Обновить"
+
+#: includes/class-import-log.php:82
+msgid "Scheduled Actions (all)"
+msgstr "Запланированные действия (все)"
+
+#: includes/class-import-log.php:88
+msgid ""
+"There are pending batches. The background queue runs via WP-Cron — on low-"
+"traffic or test sites it may not fire on its own. Use “Run queue now”, or "
+"set up a real system cron."
+msgstr ""
+"Есть порции в ожидании. Фоновая очередь работает через WP-Cron — на тестовых "
+"сайтах и при малом трафике он может не срабатывать сам. Нажмите «Выполнить "
+"очередь сейчас» или настройте системный cron."
+
+#: includes/class-import-log.php:90
+msgid "Note:"
+msgstr "Примечание:"
+
+#: includes/class-import-log.php:91
+msgid ""
+"DISABLE_WP_CRON is enabled — a real cron must call wp-cron.php, otherwise "
+"nothing runs automatically."
+msgstr ""
+"Включён DISABLE_WP_CRON — системный cron должен вызывать wp-cron.php, иначе "
+"ничего не выполнится автоматически."
+
+#: includes/class-import-log.php:96
+msgid "Last results"
+msgstr "Последние результаты"
+
+#: includes/class-import-log.php:100
+msgid "Time"
+msgstr "Время"
+
+#: includes/class-import-log.php:101
+msgid "Identifier"
+msgstr "Идентификатор"
+
+#: includes/class-import-log.php:102
+msgid "Status"
+msgstr "Статус"
+
+#: includes/class-import-log.php:103
+msgid "Product / error"
+msgstr "Товар / ошибка"
+
+#: includes/class-import-log.php:108
+msgid "No entries yet."
+msgstr "Записей пока нет."
+
+#: includes/class-import-log.php:130
+msgid "History of the last 100 imported items (most recent first)."
+msgstr "История последних 100 импортированных позиций (свежие сверху)."
+
+#: includes/class-plugin.php:51
 msgid "Documentation"
 msgstr "Документация"
 
-#: includes/class-plugin.php:61
+#: includes/class-plugin.php:62
 msgid "Settings"
 msgstr "Настройки"
 
-#: includes/class-price-stock-sync.php:300
+#: includes/class-price-stock-sync.php:309
 msgid "feed request failed"
 msgstr "не удалось получить фид"
 
 #. translators: 1: scanned, 2: changed, 3: unchanged
-#: includes/class-price-stock-sync.php:391
+#: includes/class-price-stock-sync.php:401
 #, php-format
 msgid "page %1$d: scanned %2$d, changed %3$d, unchanged %4$d"
 msgstr "страница %1$d: просканировано %2$d, изменено %3$d, без изменений %4$d"
 
-#: includes/class-price-stock-sync.php:558
+#: includes/class-price-stock-sync.php:568
 msgid "failed to create unknown product"
 msgstr "не удалось создать unknown-товар"
 
