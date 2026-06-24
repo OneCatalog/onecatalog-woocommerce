@@ -1,95 +1,81 @@
 /**
- * Лоадер OneCatalog Picker.
+ * OneCatalog Picker loader (§2.4): встраивает iframe виджета выбора товаров и
+ * принимает выбор через postMessage. Выбор — по productPublicIds (стабильные ключи).
  *
- * Повторяет контракт https://tools.onecatalog.net/picker.js с двумя отличиями:
- *  - origin виджета задаётся через config.origin (вендорная тест-сборка берёт
- *    window.location.origin, что ломает встраивание на чужом домене);
- *  - реальный picker.html шлёт {productPublicIds, productIds} — поддерживаем
- *    оба, плюс поле products из вендорного примера.
- *
- * API: OneCatalogPicker.init({ mount, token, origin?, button?, onSelect }) → { open, close }
+ * Надёжность: доверяем сообщениям от НАШЕГО iframe (e.source), а не только по строке
+ * origin; разбираем e.data, если это JSON-строка; своя кнопка закрытия (×) и Esc —
+ * чтобы модалку всегда можно было закрыть, даже если виджет не прислал ONECATALOG_CLOSE.
  */
 (function () {
-  'use strict';
+    'use strict';
 
-  function init(config) {
-    var WIDGET_ORIGIN = config.origin || 'https://tools.onecatalog.net';
-    var mount = document.querySelector(config.mount);
-    if (!mount) {
-      console.error('[OneCatalogPicker] Mount element not found');
-      return null;
-    }
-    var showButton = config.button !== false; // button:false — открытие только через .open()
+    window.OneCatalogPicker = {
+        /**
+         * @param {{pickerBase:string, token:string, parentOrigin:string}} cfg
+         * @param {function(string[])} onSelected
+         */
+        open: function (cfg, onSelected) {
+            var base = String(cfg.pickerBase || '').replace(/\/+$/, '');
+            if (!base) { return; }
 
-    var host = document.createElement('div');
-    var shadow = host.attachShadow({ mode: 'open' });
+            var url = base + '/picker.html'
+                + '?token=' + encodeURIComponent(cfg.token || '')
+                + '&parentOrigin=' + encodeURIComponent(cfg.parentOrigin || '');
 
-    shadow.innerHTML =
-      '<style>' +
-      ':host { all: initial; font-family: Arial, sans-serif; }' +
-      '.oc-button { background:#111827; color:#fff; border:none; border-radius:8px; padding:10px 16px; font-size:14px; cursor:pointer; }' +
-      '.oc-overlay { position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:2147483647; display:none; align-items:center; justify-content:center; }' +
-      '.oc-modal { position:relative; width:100%; max-width:1200px; height:80vh; background:#fff; border-radius:16px; overflow:hidden; }' +
-      '.oc-loading { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#6b7280; font-size:15px; }' +
-      '.oc-iframe { position:relative; width:100%; height:100%; border:0; background:transparent; }' +
-      '</style>' +
-      (showButton ? '<button type="button" class="oc-button">Выбрать товары</button>' : '') +
-      '<div class="oc-overlay"><div class="oc-modal"></div></div>';
+            var overlay = document.createElement('div');
+            overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100000;';
 
-    mount.appendChild(host);
+            var frame = document.createElement('iframe');
+            frame.src = url;
+            frame.setAttribute('sandbox', 'allow-scripts allow-forms allow-same-origin allow-popups');
+            frame.style.cssText =
+                'position:absolute;top:4%;left:4%;width:92%;height:92%;border:0;'
+                + 'background:#fff;border-radius:6px;box-shadow:0 4px 24px rgba(0,0,0,.3);';
 
-    var button = shadow.querySelector('.oc-button');
-    var overlay = shadow.querySelector('.oc-overlay');
-    var modal = shadow.querySelector('.oc-modal');
+            // Собственная кнопка закрытия — работает всегда, независимо от виджета.
+            var closeBtn = document.createElement('button');
+            closeBtn.type = 'button';
+            closeBtn.setAttribute('aria-label', 'Close');
+            closeBtn.innerHTML = '×';
+            closeBtn.style.cssText =
+                'position:absolute;top:calc(4% - 14px);right:calc(4% - 14px);width:30px;height:30px;'
+                + 'border:0;border-radius:50%;background:#fff;color:#333;font:20px/30px sans-serif;'
+                + 'cursor:pointer;box-shadow:0 1px 6px rgba(0,0,0,.4);z-index:1;';
 
-    function open() {
-      modal.innerHTML = '';
+            overlay.appendChild(frame);
+            overlay.appendChild(closeBtn);
+            document.body.appendChild(overlay);
 
-      var loading = document.createElement('div');
-      loading.className = 'oc-loading';
-      loading.textContent = config.loadingText || 'Loading OneCatalog…';
-      modal.appendChild(loading);
+            function cleanup() {
+                window.removeEventListener('message', handler);
+                document.removeEventListener('keydown', onKey);
+                if (overlay.parentNode) { overlay.parentNode.removeChild(overlay); }
+            }
 
-      var iframe = document.createElement('iframe');
-      var url = new URL('/picker.html', WIDGET_ORIGIN);
-      url.searchParams.set('token', config.token);
-      url.searchParams.set('parentOrigin', window.location.origin);
-      iframe.src = url.toString();
-      iframe.className = 'oc-iframe';
-      iframe.sandbox = 'allow-scripts allow-forms allow-same-origin';
-      iframe.addEventListener('load', function () {
-        setTimeout(function () { if (loading.parentNode) { loading.remove(); } }, 400);
-      });
-      modal.appendChild(iframe);
-      overlay.style.display = 'flex';
-    }
+            function parseData(d) {
+                if (typeof d === 'string') { try { return JSON.parse(d); } catch (e) { return {}; } }
+                return d || {};
+            }
 
-    function close() {
-      overlay.style.display = 'none';
-      modal.innerHTML = '';
-    }
+            function handler(e) {
+                // Доверяем только сообщениям от нашего iframe (надёжнее строкового origin).
+                if (e.source !== frame.contentWindow && e.origin !== base) { return; }
+                var data = parseData(e.data);
+                var type = data.type || data.event;
+                if (type === 'ONECATALOG_SELECTED') {
+                    var ids = data.productPublicIds || data.publicIds || [];
+                    cleanup();
+                    if (typeof onSelected === 'function') { onSelected(ids); }
+                } else if (type === 'ONECATALOG_CLOSE') {
+                    cleanup();
+                }
+            }
+            function onKey(e) { if (e.key === 'Escape' || e.keyCode === 27) { cleanup(); } }
 
-    if (button) { button.addEventListener('click', open); }
-    overlay.addEventListener('click', function (event) {
-      if (event.target === overlay) { close(); }
-    });
-
-    window.addEventListener('message', function (event) {
-      if (event.origin !== WIDGET_ORIGIN) { return; }
-      if (event.data && event.data.type === 'ONECATALOG_SELECTED') {
-        close();
-        if (typeof config.onSelect === 'function') {
-          var ids = event.data.productPublicIds || event.data.productIds || event.data.products || [];
-          config.onSelect(ids);
+            window.addEventListener('message', handler);
+            document.addEventListener('keydown', onKey);
+            closeBtn.addEventListener('click', cleanup);
+            overlay.addEventListener('click', function (ev) { if (ev.target === overlay) { cleanup(); } });
         }
-      }
-      if (event.data && event.data.type === 'ONECATALOG_CLOSE') {
-        close();
-      }
-    });
-
-    return { open: open, close: close };
-  }
-
-  window.OneCatalogPicker = { init: init };
+    };
 })();

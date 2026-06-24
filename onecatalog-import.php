@@ -2,7 +2,7 @@
 /**
  * Plugin Name: OneCatalog Import
  * Description: Import products from OneCatalog (Wiki API) into WooCommerce: product picker modal, background queue, dependencies (categories, attributes, collections, brands), images with quality tracking, separate article numbers.
- * Version: 1.9.0
+ * Version: 1.9.1
  * Author: OneCatalog
  * Author URI: https://docs.onecatalog.net/
  * Text Domain: onecatalog-import
@@ -16,7 +16,7 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
-define('ONECATALOG_IMPORT_VERSION', '1.9.0');
+define('ONECATALOG_IMPORT_VERSION', '1.9.1');
 define('ONECATALOG_IMPORT_FILE', __FILE__);
 define('ONECATALOG_IMPORT_DIR', __DIR__);
 define('ONECATALOG_MAX_BATCH', 100);
