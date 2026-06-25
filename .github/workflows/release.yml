@@ -1,0 +1,33 @@
+name: Release
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Build plugin zip
+        id: build
+        run: |
+          VER=$(grep -oE 'Version: *[0-9.]+' onecatalog-import.php | head -1 | grep -oE '[0-9.]+')
+          OUT="onecatalog-import-${VER}.zip"
+          git archive --format=zip --prefix=onecatalog-import/ -o "$OUT" HEAD
+          echo "asset=$OUT" >> "$GITHUB_OUTPUT"
+      - name: GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ steps.build.outputs.asset }}
+          generate_release_notes: true
+      - name: Upload artifact
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.build.outputs.asset }}
+          path: ${{ steps.build.outputs.asset }}

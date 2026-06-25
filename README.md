@@ -2,6 +2,11 @@
 
 Документация OneCatalog: **https://docs.onecatalog.net/**
 
+### 📦 Скачать / Download
+
+Готовый плагин — на странице **[Releases](https://github.com/OneCatalog/onecatalog-woocommerce/releases)**: скачайте `onecatalog-import-<версия>.zip` и установите через **Плагины → Добавить новый → Загрузить плагин**. Архив собирается автоматически (GitHub Actions) при публикации тега `vX.Y.Z`.
+
+
 Архитектура и платформо-независимый стандарт (для портирования на другие CMS — Bitrix24/PrestaShop/…): **[OneCatalog/onecatalog-standard](https://github.com/OneCatalog/onecatalog-standard)** (эта реализация — эталонная)
 
 История изменений и бэклог: **[CHANGELOG.md](CHANGELOG.md)** · текущая версия — **1.7.0**
